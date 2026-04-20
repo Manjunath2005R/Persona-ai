@@ -1,29 +1,10 @@
-// File: api/hogwarts.js
-
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
     const { emotion } = req.body;
-
-    // We strictly tell the AI to output JSON so our website can read it as a script!
-    const systemPrompt = `
-    You are writing a short, 3-line interactive script for a magical website.
-    A girl named Rakshi is visiting the Gryffindor common room. Her best friend sent her here.
-    She is currently feeling: ${emotion}.
-    
-    Write a comforting, highly in-character conversation between Harry Potter, Hermione Granger, and/or Ron Weasley addressing her feeling. Make them sound exactly like the books/movies.
-    
-    CRITICAL RULE: You must respond ONLY with a raw JSON array of objects. Do not use markdown blocks (\`\`\`). Do not add any text before or after the array.
-    
-    Format example:
-    [
-      {"name": "Hermione", "text": "Rakshi, come sit by the fire. We heard you were having a hard day."},
-      {"name": "Ron", "text": "I saved you a Chocolate Frog! It always helps me."},
-      {"name": "Harry", "text": "You're safe here with us, Rakshi."}
-    ]
-    `;
+    const systemPrompt = `You are writing a short, 3-line interactive script for a magical website. A girl named Rakshi is visiting the Gryffindor common room. Her best friend sent her here. She is currently feeling: ${emotion}. Write a comforting, highly in-character conversation between Harry Potter, Hermione Granger, and/or Ron Weasley addressing her feeling. Make them sound exactly like the books/movies. CRITICAL RULE: You must respond ONLY with a raw JSON array of objects. Do not use markdown blocks. Format example: [{"name": "Hermione", "text": "Rakshi, come sit by the fire."}]`;
 
     try {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -41,16 +22,20 @@ export default async function handler(req, res) {
         });
 
         const data = await response.json();
-        const aiMessage = data.choices[0].message.content.trim();
-        
-        // Parse the AI's text into an actual Javascript array
-        const scriptArray = JSON.parse(aiMessage);
 
+        // SAFETY NET
+        if (!response.ok) {
+            console.error("GROQ API REJECTED REQUEST:", data);
+            throw new Error("Groq API failed");
+        }
+
+        const aiMessage = data.choices[0].message.content.trim();
+        const scriptArray = JSON.parse(aiMessage);
         res.status(200).json({ script: scriptArray });
 
     } catch (error) {
-        console.error("AI Error:", error);
-        // Fallback script just in case the AI server is down
+        console.error("Hogwarts API Error:", error);
+        // Fallback script if AI fails
         res.status(200).json({ script: [
             {"name": "Hermione", "text": "Rakshi! The magic is a bit unstable today, but we are so glad you're here."},
             {"name": "Harry", "text": "Whatever you are feeling, remember that your best friend is always looking out for you."}
