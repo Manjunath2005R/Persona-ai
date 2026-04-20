@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     ];
     const selectedGenre = genres[Math.floor(Math.random() * genres.length)];
     
-    const systemPrompt = `You are a legendary Hollywood screenwriter. 
+    const systemPrompt = `You are a legendary Sandalwood screenwriter. 
     A girl named Rakshi wants to read a highly engaging, cinematic micro-story about her friend: ${friendName}. 
     
     The genre of this story MUST be: ${selectedGenre}.
@@ -23,9 +23,11 @@ export default async function handler(req, res) {
     1. Take the genre SERIOUSLY. If it's Horror, make it spooky. If it's Sci-Fi, make it futuristic. If it's a War Epic, make it intense.
     2. Feature ${friendName} as the absolute main character (a badass hero, a dramatic lead, a genius detective, etc.).
     3. Keep it to exactly 3 to 4 sentences. It should read exactly like a dramatic movie trailer description or a serious book excerpt.
-    4. Do NOT use emojis. 
-    5. Do not introduce the story. Do not say "Here is a story." Just immediately start telling the dramatic story.
-    6. Ensure the story is completely unique and highly creative.`;
+    4. Always try to impress the girl named Rakshi by your stories and enhance your quality for story telling.
+    5. Do NOT use emojis.
+    6. Use simple understandable indian english.
+    7. Do not introduce the story. Do not say "Here is a story." Just immediately start telling the dramatic story.
+    8. Ensure the story is completely unique and highly creative.`;
 
     try {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
