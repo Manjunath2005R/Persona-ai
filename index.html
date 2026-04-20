@@ -42,7 +42,24 @@
         .btn-back { background: transparent; border: 1px solid #bfa1e6; color: #bfa1e6; width: 100%; margin-top: 20px; }
         .btn-back:hover { background: rgba(191, 161, 230, 0.1); }
 
-        .message-box { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: #e6d5fa; min-height: 80px; margin-top: 20px; text-shadow: 0 0 10px rgba(230,213,250,0.4); line-height: 1.5; }
+        .message-box { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.1rem; 
+            font-style: italic; 
+            color: #e6d5fa; 
+            min-height: 80px; 
+            max-height: 35vh; /* This stops the box from growing off the screen */
+            overflow-y: auto; /* THIS ENABLES SCROLLING! */
+            margin-top: 20px; 
+            padding-right: 10px;
+            text-shadow: 0 0 10px rgba(230,213,250,0.4); 
+            line-height: 1.5; 
+        }
+
+        /* 🪄 Magical Custom Scrollbar */
+        .message-box::-webkit-scrollbar { width: 6px; }
+        .message-box::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .message-box::-webkit-scrollbar-thumb { background: #8a2be2; border-radius: 10px; box-shadow: 0 0 10px #8a2be2; }
         .loading-text { animation: pulse 1.5s infinite; color: #d4af37; }
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
@@ -63,7 +80,19 @@
         .character-header { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; }
         .char-avatar { width: 50px; height: 50px; border-radius: 50%; background: #d4af37; margin-right: 15px; transition: background 0.5s; }
         .character-name { font-family: 'Cinzel', serif; color: #d4af37; font-size: 1.5rem; font-weight: bold; text-transform: uppercase; }
-        .dialogue-text { font-size: 1.25rem; line-height: 1.7; color: #f0f0f0; min-height: 100px; font-family: 'Playfair Display', serif; }
+        .dialogue-text { 
+            font-size: 1.15rem; 
+            line-height: 1.7; 
+            color: #f0f0f0; 
+            min-height: 100px; 
+            max-height: 40vh; 
+            overflow-y: auto; 
+            padding-right: 10px;
+            font-family: 'Playfair Display', serif; 
+        }
+        .dialogue-text::-webkit-scrollbar { width: 6px; }
+        .dialogue-text::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .dialogue-text::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
         .typewriter-cursor { display: inline-block; width: 3px; height: 1.2em; background: #d4af37; animation: blink 0.7s infinite; vertical-align: middle; }
         @keyframes blink { 50% { opacity: 0; } }
         .btn-next { background: transparent; border: 1px solid #d4af37; color: #d4af37; width: 100%; margin-top: 20px; font-family: 'Cinzel', serif; }
