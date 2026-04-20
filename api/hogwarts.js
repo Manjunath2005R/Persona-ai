@@ -14,7 +14,7 @@ export default async function handler(req, res) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama3-8b-8192", 
+                model: "llama-3.1-8b-instant", // <-- THIS IS THE NEW FIXED MODEL NAME
                 messages: [{ role: "system", content: systemPrompt }],
                 max_tokens: 300,
                 temperature: 0.7
@@ -23,7 +23,6 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        // SAFETY NET
         if (!response.ok) {
             console.error("GROQ API REJECTED REQUEST:", data);
             throw new Error("Groq API failed");
@@ -35,7 +34,6 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error("Hogwarts API Error:", error);
-        // Fallback script if AI fails
         res.status(200).json({ script: [
             {"name": "Hermione", "text": "Rakshi! The magic is a bit unstable today, but we are so glad you're here."},
             {"name": "Harry", "text": "Whatever you are feeling, remember that your best friend is always looking out for you."}
