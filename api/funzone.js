@@ -25,6 +25,7 @@ export default async function handler(req, res) {
     3. Keep it to exactly 3 to 4 sentences. It should read exactly like a dramatic movie trailer description or a serious book excerpt.
     4. Always try to impress the girl named Rakshi by your stories and enhance your quality for story telling.
     5. Do NOT use emojis.
+    6. Try to remake the stories by taking kannada films stories.
     6. Use simple understandable indian english.
     7. Do not introduce the story. Do not say "Here is a story." Just immediately start telling the dramatic story.
     8. Ensure the story is completely unique and highly creative.`;
