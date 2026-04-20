@@ -6,15 +6,26 @@ export default async function handler(req, res) {
 
     const { friendName } = req.body;
     
-    const systemPrompt = `You are a hilarious, highly imaginative storyteller. A girl named Rakshi wants to hear a completely fake, absurd, and funny story about her friend named ${friendName}. 
+    // We force the code to randomly pick a genre BEFORE it even talks to the AI!
+    const genres = [
+        "Horror", "Thriller", "Mystery", "Romantic Love", "Dramatic Comedy", 
+        "Heavy Drama", "Action-Packed", "Sci-Fi", "Epic Fantasy", 
+        "Gritty Western", "Crime Mafia", "Animated Feature", "Musical", "War Epic"
+    ];
+    const selectedGenre = genres[Math.floor(Math.random() * genres.length)];
     
-    Randomly pick ONE of these themes for the story: Love, marriage, trip, home activity, fight, silly horror, thriller, or drama. 
+    const systemPrompt = `You are a legendary Hollywood screenwriter. 
+    A girl named Rakshi wants to read a highly engaging, cinematic micro-story about her friend: ${friendName}. 
+    
+    The genre of this story MUST be: ${selectedGenre}.
     
     Rules:
-    1. Make it incredibly ridiculous, lighthearted, and guaranteed to make Rakshi smile or laugh.
-    2. Keep it short (2 to 3 sentences maximum).
-    3. Do NOT use emojis.
-    4. Do not act like an AI, just tell the story directly.`;
+    1. Take the genre SERIOUSLY. If it's Horror, make it spooky. If it's Sci-Fi, make it futuristic. If it's a War Epic, make it intense.
+    2. Feature ${friendName} as the absolute main character (a badass hero, a dramatic lead, a genius detective, etc.).
+    3. Keep it to exactly 3 to 4 sentences. It should read exactly like a dramatic movie trailer description or a serious book excerpt.
+    4. Do NOT use emojis. 
+    5. Do not introduce the story. Do not say "Here is a story." Just immediately start telling the dramatic story.
+    6. Ensure the story is completely unique and highly creative.`;
 
     try {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -27,7 +38,7 @@ export default async function handler(req, res) {
                 model: "llama-3.1-8b-instant",
                 messages: [{ role: "system", content: systemPrompt }],
                 max_tokens: 150,
-                temperature: 0.9 // High temperature means it will NEVER repeat the same story!
+                temperature: 0.9 // High temperature ensures completely unique stories every time
             })
         });
 
@@ -38,11 +49,15 @@ export default async function handler(req, res) {
             throw new Error("Groq API failed");
         }
 
-        const aiMessage = data.choices[0].message.content.replace(/"/g, '');
+        let aiMessage = data.choices[0].message.content.replace(/"/g, '').trim();
+        
+        // Add a small tag at the end so Rakshi knows what genre she got!
+        aiMessage += `<br><br><span style="font-size: 0.8rem; color: #d4af37;">[Genre: ${selectedGenre}]</span>`;
+
         res.status(200).json({ message: aiMessage });
 
     } catch (error) {
         console.error("Fun Zone API Error:", error);
-        res.status(500).json({ message: `The joke machine is resting, but just imagine ${friendName} tripping over a banana peel while trying to look cool.` });
+        res.status(500).json({ message: `The storyteller is resting. But just imagine ${friendName} fighting a dragon. It's basically the same thing.` });
     }
 }
