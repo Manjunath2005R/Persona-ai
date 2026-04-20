@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rakshi's Magical Sanctuary ✨</title>
+    <style>
+        /* ... [KEEP ALL YOUR EXISTING CSS FROM THE PREVIOUS MESSAGE HERE] ... */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap');
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; padding: 0; background: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #020005 100%); color: #fff; font-family: 'Poppins', sans-serif; height: 100dvh; overflow: hidden; perspective: 1200px; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 1s ease; visibility: hidden; background: transparent; }
+        .active-view { opacity: 1; pointer-events: all; z-index: 10; visibility: visible; }
+
+        /* GATES */
+        #gate-view { z-index: 100; flex-direction: row; }
+        .gate-panel { width: 50vw; height: 100vh; position: relative; background: repeating-linear-gradient(90deg, #0a0a0a, #0a0a0a 20px, transparent 20px, transparent 60px), linear-gradient(to bottom, #111, #000); border: 5px solid #222; transform-origin: left; transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: inset 0 0 50px rgba(0,0,0,0.9); pointer-events: all; }
+        .gate-panel.right { transform-origin: right; border-left: 2px solid #333; }
+        .gate-panel.left { border-right: 2px solid #333; }
+        .gate-open .gate-panel.left { transform: rotateY(-105deg); }
+        .gate-open .gate-panel.right { transform: rotateY(105deg); }
+        .gate-open #gate-note { opacity: 0; transform: scale(0.5); pointer-events: none; }
+        #gate-note { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #f4e8d4; padding: 30px 40px; border-radius: 5px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); text-align: center; color: #4a0e17; cursor: pointer; border: 2px solid #d4af37; z-index: 101; pointer-events: all; transition: all 0.5s ease; animation: floatNote 3s infinite alternate; }
+        #gate-note h2 { font-family: 'Cinzel', serif; margin: 0 0 5px 0; font-size: 26px; }
+        #gate-note p { font-style: italic; margin: 0; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: bold; }
+        @keyframes floatNote { 0% { top: 49%; } 100% { top: 51%; } }
+
+        /* DASHBOARD */
+        .dashboard-container { width: 90%; max-width: 550px; padding: 30px; background: rgba(20, 10, 40, 0.4); border-radius: 20px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(138, 43, 226, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(138,43,226,0.1); text-align: center; z-index: 20; position: relative; }
+        h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; color: #d4af37; margin: 0 0 5px 0; text-shadow: 0 0 15px rgba(212,175,55,0.4); }
+        select { width: 100%; padding: 15px; margin: 20px 0; background: rgba(0, 0, 0, 0.8); color: #fff; border: 1px solid #8a2be2; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.95rem; cursor: pointer; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        button { padding: 15px; border: none; border-radius: 12px; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1rem; transition: all 0.2s ease; color: white; position: relative; z-index: 30; }
+        button:active { transform: scale(0.95); } 
+        .btn-spell { background: linear-gradient(135deg, #7c22ce, #3b0764); box-shadow: 0 5px 15px rgba(138,43,226,0.3); }
+        .btn-game { background: linear-gradient(135deg, #005f73, #0a9396); box-shadow: 0 5px 15px rgba(10,147,150,0.3); }
+        .btn-trip { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-family: 'Cinzel', serif; font-weight: bold; grid-column: span 2; box-shadow: 0 5px 20px rgba(212,175,55,0.4); }
+        #message-box { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: #e6d5fa; min-height: 80px; margin-top: 20px; text-shadow: 0 0 10px rgba(230,213,250,0.4); }
+        .loading-text { animation: pulse 1.5s infinite; color: #d4af37; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* SNITCH GAME */
+        #game-ui { position: absolute; top: 20px; right: 20px; z-index: 200; display: none; }
+        .btn-stop { background: #d00000; padding: 10px 20px; font-size: 0.9rem; }
+        #snitch { position: absolute; width: 35px; height: 35px; background: radial-gradient(circle, #ffea00, #b8860b); border-radius: 50%; box-shadow: 0 0 30px #ffea00; cursor: pointer; z-index: 100; transition: top 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1); display: none; }
+        #snitch::before, #snitch::after { content: ''; position: absolute; top: 12px; width: 30px; height: 10px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: flap 0.08s infinite alternate; }
+        #snitch::before { left: -25px; transform-origin: right; }
+        #snitch::after { right: -25px; transform-origin: left; }
+        @keyframes flap { 0% { transform: rotate(25deg); } 100% { transform: rotate(-25deg); } }
+
+        /* HOGWARTS TRIP */
+        #hogwarts-view { background: linear-gradient(rgba(15, 5, 5, 0.95), rgba(0, 0, 0, 1)); z-index: 50; }
+        .fireplace-container { position: absolute; bottom: 0; width: 100%; height: 50%; display: flex; justify-content: center; }
+        .fire-glow { position: absolute; bottom: -20%; width: 80vw; height: 80vw; max-width: 600px; max-height: 600px; background: radial-gradient(ellipse, rgba(255, 100, 0, 0.3) 0%, rgba(200, 50, 0, 0.1) 40%, transparent 70%); animation: firePulse 2s infinite alternate; pointer-events: none; }
+        @keyframes firePulse { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.05); opacity: 1; } }
+        .dialogue-box { width: 90%; max-width: 700px; background: rgba(10, 5, 5, 0.85); border: 2px solid #d4af37; border-radius: 15px; padding: 30px; z-index: 20; position: relative; box-shadow: 0 0 50px rgba(212, 175, 55, 0.15); }
+        .character-header { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; }
+        .char-avatar { width: 50px; height: 50px; border-radius: 50%; background: #d4af37; margin-right: 15px; transition: background 0.5s; }
+        .character-name { font-family: 'Cinzel', serif; color: #d4af37; font-size: 1.5rem; font-weight: bold; text-transform: uppercase; }
+        .dialogue-text { font-size: 1.25rem; line-height: 1.7; color: #f0f0f0; min-height: 100px; font-family: 'Playfair Display', serif; }
+        .typewriter-cursor { display: inline-block; width: 3px; height: 1.2em; background: #d4af37; animation: blink 0.7s infinite; vertical-align: middle; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .btn-next { background: transparent; border: 1px solid #d4af37; color: #d4af37; width: 100%; margin-top: 20px; font-family: 'Cinzel', serif; }
+        .btn-next:hover { background: #d4af37; color: #000; }
+    </style>
+</head>
+<body>
+
+    <canvas id="magic-particles"></canvas>
+
+    <!-- UI FOR SNITCH GAME -->
+    <div id="game-ui">
+        <button class="btn-stop" onclick="stopGame()">End Game 🛑</button>
+    </div>
+    <div id="snitch" onclick="catchSnitch()"></div>
+
+    <!-- VIEW 1: THE GATES -->
+    <div id="gate-view" class="view active-view">
+        <div class="gate-panel left"></div>
+        <div class="gate-panel right"></div>
+        <div id="gate-note" onclick="openGates()">
+            <h2>To: Rakshi</h2>
+            <p>Push to enter...</p>
+        </div>
+    </div>
+
+    <!-- VIEW 2: DASHBOARD -->
+    <div id="dashboard-view" class="view">
+        <div class="dashboard-container">
+            <h1>Hey Rakshi ✨</h1>
+            <p style="color: #bfa1e6; margin-bottom: 10px;">What is your heart feeling today?</p>
+
+            <select id="mood-selector">
+                <option value="Sadness">Sadness</option>
+                <option value="Anger">Anger</option>
+                <option value="Fear">Fear</option>
+                <option value="Disgust">Disgust</option>
+                <option value="Surprise">Surprise</option>
+                <option value="Trust">Trust</option>
+                <option value="Anticipation">Anticipation</option>
+                <option value="Admiration">Admiration</option>
+                <option value="Adoration">Adoration</option>
+                <option value="Aesthetic Appreciation">Aesthetic Appreciation</option>
+                <option value="Amusement">Amusement</option>
+                <option value="Anxiety">Anxiety</option>
+                <option value="Awe">Awe</option>
+                <option value="Awkwardness">Awkwardness</option>
+                <option value="Boredom">Boredom</option>
+                <option value="Calmness">Calmness</option>
+                <option value="Confusion">Confusion</option>
+                <option value="Craving">Craving</option>
+                <option value="Empathetic Pain">Empathetic Pain</option>
+                <option value="Entrancement">Entrancement</option>
+                <option value="Envy">Envy</option>
+                <option value="Excitement">Excitement</option>
+                <option value="Horror">Horror</option>
+                <option value="Interest">Interest</option>
+                <option value="Joy">Joy</option>
+                <option value="Nostalgia">Nostalgia</option>
+                <option value="Romance">Romance</option>
+                <option value="Satisfaction">Satisfaction</option>
+                <option value="Sympathy">Sympathy</option>
+                <option value="Triumph">Triumph</option>
+                <option value="Shame">Shame</option>
+                <option value="Guilt">Guilt</option>
+                <option value="Pride">Pride</option>
+                <option value="Embarrassment">Embarrassment</option>
+                <option value="Jealousy">Jealousy</option>
+                <option value="Contempt">Contempt</option>
+                <option value="Optimism">Optimism</option>
+                <option value="Remorse">Remorse</option>
+                <option value="Submission">Submission</option>
+                <option value="Aggression">Aggression</option>
+            </select>
+
+            <div class="action-grid">
+                <button class="btn-spell" onclick="castAISpell()">🪄 Cast Spell</button>
+                <button class="btn-game" onclick="startGame()">🧹 Catch Snitch</button>
+                <button class="btn-trip" id="trip-btn" onclick="startTrip()">🚂 Hogwarts Trip</button>
+            </div>
+
+            <div id="message-box">Select how you feel...</div>
+        </div>
+    </div>
+
+    <!-- VIEW 3: HOGWARTS -->
+    <div id="hogwarts-view" class="view">
+        <div class="fireplace-container"><div class="fire-glow"></div></div>
+        <div class="dialogue-box">
+            <div class="character-header">
+                <div class="char-avatar" id="char-avatar"></div>
+                <div class="character-name" id="char-name">Waiting...</div>
+            </div>
+            <div class="dialogue-text"><span id="dialogue-text"></span><span class="typewriter-cursor"></span></div>
+            <button class="btn-next" onclick="nextDialogue()">Continue...</button>
+        </div>
+    </div>
+
+    <script>
+        function openGates() {
+            document.getElementById("gate-view").classList.add("gate-open");
+            setTimeout(() => {
+                document.getElementById("gate-view").classList.remove("active-view");
+                document.getElementById("dashboard-view").classList.add("active-view");
+            }, 1500);
+        }
+
+        async function castAISpell() {
+            const mood = document.getElementById("mood-selector").value;
+            const msgBox = document.getElementById("message-box");
+            msgBox.innerHTML = '<span class="loading-text">Brewing magic... ✨</span>';
+            burstParticles(window.innerWidth/2, window.innerHeight/2);
+
+            try {
+                const response = await fetch('/api/magic', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ emotion: mood })
+                });
+                const data = await response.json();
+                msgBox.innerHTML = `"${data.message}"`;
+                burstParticles(window.innerWidth/2, window.innerHeight/2);
+            } catch (error) {
+                msgBox.innerHTML = `"I am always in your corner, Rakshi. Even when the magic rests."`;
+            }
+        }
+
+        // --- NEW AI-POWERED HOGWARTS ENGINE ---
+        let currentScript = [];
+        let scriptIndex = 0;
+        let typeInterval;
+
+        async function startTrip() {
+            const mood = document.getElementById("mood-selector").value;
+            const btn = document.getElementById("trip-btn");
+            const originalText = btn.innerHTML;
+            
+            // Start the train animation to mask the loading time!
+            btn.innerHTML = "🚂 Boarding Train...";
+            document.body.style.animation = "shake 0.5s ease-in-out infinite";
+
+            try {
+                // Call the new Hogwarts AI
+                const response = await fetch('/api/hogwarts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ emotion: mood })
+                });
+                
+                const data = await response.json();
+                currentScript = data.script;
+
+                // Dynamically assign Gryffindor colors based on who is speaking
+                currentScript.forEach(line => {
+                    const nameLower = line.name.toLowerCase();
+                    if(nameLower.includes("hermione")) line.color = "#8B0000"; // Red
+                    else if(nameLower.includes("harry")) line.color = "#00008B"; // Blue
+                    else if(nameLower.includes("ron")) line.color = "#B8860B"; // Gold
+                    else line.color = "#4B0082"; // Purple default
+                });
+
+            } catch (error) {
+                console.error("Failed to load script", error);
+                currentScript = [
+                    { name: "Hermione", color: "#8B0000", text: "Rakshi! The magic is a bit unstable today, but we are so glad you're here." },
+                    { name: "Harry", color: "#00008B", text: "Whatever you are feeling, remember that your best friend is always looking out for you." }
+                ];
+            }
+
+            // Stop shaking and transition views
+            document.body.style.animation = "";
+            btn.innerHTML = originalText;
+            document.getElementById("dashboard-view").classList.remove("active-view");
+            document.getElementById("hogwarts-view").classList.add("active-view");
+            
+            scriptIndex = 0;
+            playDialogue();
+        }
+
+        function playDialogue() {
+            if(scriptIndex >= currentScript.length) {
+                document.getElementById("hogwarts-view").classList.remove("active-view");
+                document.getElementById("dashboard-view").classList.add("active-view");
+                return;
+            }
+            
+            clearInterval(typeInterval);
+            const line = currentScript[scriptIndex];
+            document.getElementById("char-name").innerText = line.name;
+            document.getElementById("char-avatar").style.backgroundColor = line.color;
+            
+            const textBox = document.getElementById("dialogue-text");
+            textBox.innerText = "";
+            let charIndex = 0;
+            
+            typeInterval = setInterval(() => {
+                if(charIndex < line.text.length) {
+                    textBox.innerText += line.text.charAt(charIndex);
+                    charIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, 30);
+        }
+
+        function nextDialogue() { scriptIndex++; playDialogue(); }
+
+        // --- SNITCH GAME ---
+        let snitchTimer;
+        function startGame() {
+            document.getElementById("game-ui").style.display = "block";
+            const snitch = document.getElementById("snitch");
+            snitch.style.display = "block";
+            document.getElementById("message-box").innerHTML = "Catch it! 🧹";
+            
+            snitchTimer = setInterval(() => {
+                snitch.style.top = Math.random() * 80 + 10 + "%";
+                snitch.style.left = Math.random() * 80 + 10 + "%";
+            }, 700);
+        }
+
+        function catchSnitch() {
+            stopGame();
+            document.getElementById("message-box").innerHTML = "🎉 150 POINTS TO RAKSHI! 🎉";
+            burstParticles(window.innerWidth/2, window.innerHeight/2);
+        }
+
+        function stopGame() {
+            clearInterval(snitchTimer);
+            document.getElementById("snitch").style.display = "none";
+            document.getElementById("game-ui").style.display = "none";
+        }
+
+        // --- PARTICLES ENGINE ---
+        const canvas = document.getElementById("magic-particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('touchmove', (e) => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; });
+
+        class Particle {
+            constructor(x, y, isBurst) {
+                this.x = x || Math.random() * canvas.width; this.y = y || Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedY = isBurst ? (Math.random() * 10 - 5) : (Math.random() * -0.5 - 0.2);
+                this.speedX = isBurst ? (Math.random() * 10 - 5) : (Math.random() * 0.4 - 0.2);
+                this.life = isBurst ? 1 : Infinity;
+                const colors = ['rgba(212, 175, 55,', 'rgba(138, 43, 226,', 'rgba(255, 255, 255,'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                if(this.life === Infinity && mouse.x != null) {
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 80) { this.x -= dx / 10; this.y -= dy / 10; }
+                }
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.life !== Infinity) this.life -= 0.02; else if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                if (this.life <= 0) return;
+                ctx.fillStyle = `${this.color}${this.life === Infinity ? 0.6 : this.life})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+            }
+        }
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+        function burstParticles(x, y) { for(let i=0; i<50; i++) particles.push(new Particle(x, y, true)); }
+        function animateParticles() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            for(let i=0; i<particles.length; i++) { particles[i].update(); particles[i].draw(); if(particles[i].life <= 0) { particles.splice(i,1); i--; } }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes shake { 0% { transform: translate(2px, 2px) } 25% { transform: translate(-2px, -2px) } 50% { transform: translate(2px, -2px) } 75% { transform: translate(-2px, 2px) } 100% { transform: translate(2px, 2px) } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
