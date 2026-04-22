@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Rakshi's Magical Sanctuary ✨</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap');
 
         :root {
             --gold: #d4af37;
@@ -18,69 +18,59 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { margin: 0; padding: 0; }
         body {
-            background: radial-gradient(ellipse at 30% 20%, #2a1048 0%, #0d0620 40%, #020005 100%);
-            color: #fff; font-family: 'Poppins', sans-serif;
-            height: 100dvh; overflow: hidden; perspective: 1400px;
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='3' fill='%23f5d98a'/><circle cx='14' cy='14' r='8' fill='none' stroke='%23d4af37' stroke-width='1' opacity='0.5'/></svg>") 14 14, auto;
+            background:
+              radial-gradient(ellipse at 30% 10%, #2a1048 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 90%, #1a0838 0%, transparent 60%),
+              #060214;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            height: 100dvh; overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeSpeed;
         }
 
-        /* ============ LAYERED BACKGROUNDS ============ */
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-        #stars-canvas { z-index: 0; }
-        #magic-particles { z-index: 2; }
-        .aurora {
-            position: fixed; inset: 0; z-index: 1; pointer-events: none;
-            background:
-              radial-gradient(ellipse 60% 40% at 20% 20%, rgba(138,43,226,0.25), transparent 60%),
-              radial-gradient(ellipse 40% 30% at 80% 70%, rgba(212,175,55,0.18), transparent 60%),
-              radial-gradient(ellipse 50% 40% at 50% 100%, rgba(0,150,180,0.18), transparent 70%);
-            filter: blur(40px);
-            animation: auroraDrift 18s ease-in-out infinite alternate;
+        /* Lightweight starfield using CSS radial-gradients only — zero JS cost */
+        .sky {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+              radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent),
+              radial-gradient(1px 1px at 30% 80%, #fff, transparent),
+              radial-gradient(1.5px 1.5px at 60% 40%, #f5d98a, transparent),
+              radial-gradient(1px 1px at 75% 15%, #fff, transparent),
+              radial-gradient(1.2px 1.2px at 85% 70%, #fff, transparent),
+              radial-gradient(1px 1px at 15% 55%, #f5d98a, transparent),
+              radial-gradient(1px 1px at 45% 25%, #fff, transparent),
+              radial-gradient(1.3px 1.3px at 92% 35%, #fff, transparent),
+              radial-gradient(1px 1px at 25% 90%, #fff, transparent),
+              radial-gradient(1px 1px at 55% 65%, #fff, transparent),
+              radial-gradient(1.2px 1.2px at 70% 95%, #f5d98a, transparent),
+              radial-gradient(1px 1px at 5% 70%, #fff, transparent);
+            animation: twinkle 6s ease-in-out infinite alternate;
         }
-        @keyframes auroraDrift {
-            0%   { transform: translate(0,0) scale(1);   opacity: 0.8; }
-            50%  { transform: translate(-30px,20px) scale(1.05); opacity: 1;  }
-            100% { transform: translate(20px,-15px) scale(0.98); opacity: 0.85;}
-        }
+        @keyframes twinkle { from { opacity: 0.6; } to { opacity: 1; } }
+
         .moon {
-            position: fixed; top: 6%; right: 6%; width: 90px; height: 90px;
+            position: fixed; top: 5%; right: 5%; width: 80px; height: 80px;
             background: radial-gradient(circle at 35% 35%, #fff8e7, #f5d98a 60%, #b8860b);
-            border-radius: 50%; box-shadow: 0 0 60px rgba(245,217,138,0.6), 0 0 120px rgba(212,175,55,0.3);
-            z-index: 1; animation: moonGlow 5s ease-in-out infinite alternate;
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(245,217,138,0.5);
+            z-index: 1;
         }
-        @keyframes moonGlow {
-            from { box-shadow: 0 0 40px rgba(245,217,138,0.5), 0 0 100px rgba(212,175,55,0.25); }
-            to   { box-shadow: 0 0 80px rgba(245,217,138,0.8), 0 0 160px rgba(212,175,55,0.45); }
-        }
-        .rune-ring {
-            position: fixed; top: 5%; right: 5%; width: 110px; height: 110px;
-            border: 1px dashed rgba(212,175,55,0.45); border-radius: 50%;
-            z-index: 1; animation: spin 60s linear infinite; pointer-events: none;
-        }
-        .rune-ring::before {
-            content: '⚡ ✧ ☽ ✦ ⚕ ☉ ✶ ⟡';
-            position: absolute; inset: -12px; font-family: 'Cinzel', serif;
-            font-size: 10px; color: var(--gold-soft); letter-spacing: 18px;
-            opacity: 0.6;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #particles { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
 
         .view {
             position: absolute; inset: 0;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; visibility: hidden;
-            transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1), filter 0.9s;
-            transform: scale(0.96); filter: blur(8px);
-            background: transparent;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(8px);
+            padding: 20px;
         }
-        .active-view {
-            opacity: 1; pointer-events: all; visibility: visible; z-index: 10;
-            transform: scale(1); filter: blur(0);
-        }
+        .active-view { opacity: 1; pointer-events: all; visibility: visible; z-index: 10; transform: translateY(0); }
 
         /* ============ GATES ============ */
-        #gate-view { z-index: 100; flex-direction: row; transform: none; filter: none; }
-        #gate-view.active-view { transform: none; filter: none; }
+        #gate-view { z-index: 100; flex-direction: row; padding: 0; transform: none; }
         .gate-panel {
             width: 50vw; height: 100vh; position: relative;
             background:
@@ -88,179 +78,124 @@
               linear-gradient(to bottom, #1a1018, #000);
             border: 5px solid #222;
             transform-origin: left;
-            transition: transform 2.6s cubic-bezier(.77,0,.18,1), filter 2.6s;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.95), 0 0 50px rgba(138,43,226,0.2);
-            pointer-events: all; overflow: hidden;
+            transition: transform 2s cubic-bezier(.77,0,.18,1);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9);
+            pointer-events: all;
         }
-        .gate-panel::before {
-            content: ''; position: absolute; inset: 20px;
-            border: 2px solid rgba(212,175,55,0.2);
-            box-shadow: inset 0 0 30px rgba(212,175,55,0.1);
-        }
-        .gate-panel::after {
-            content: ''; position: absolute; top: 50%; width: 60px; height: 60px;
-            background: radial-gradient(circle, var(--gold-soft) 0%, transparent 70%);
-            filter: blur(2px);
-            animation: keyholeGlow 2s ease-in-out infinite alternate;
-        }
-        .gate-panel.left::after  { right: -30px; transform: translateY(-50%); }
-        .gate-panel.right::after { left:  -30px; transform: translateY(-50%); }
-        @keyframes keyholeGlow { from{opacity:0.4} to{opacity:1} }
         .gate-panel.right { transform-origin: right; border-left: 2px solid #333; }
-        .gate-panel.left  { border-right: 2px solid #333; }
-        .gate-open .gate-panel.left  { transform: rotateY(-110deg); filter: brightness(0.4); }
-        .gate-open .gate-panel.right { transform: rotateY( 110deg); filter: brightness(0.4); }
-        .gate-open #gate-note { opacity: 0; transform: translate(-50%,-50%) scale(0.5) rotateZ(-8deg); pointer-events: none; }
+        .gate-panel.left { border-right: 2px solid #333; }
+        .gate-open .gate-panel.left  { transform: rotateY(-100deg); }
+        .gate-open .gate-panel.right { transform: rotateY( 100deg); }
+        .gate-open #gate-note { opacity: 0; transform: translate(-50%,-50%) scale(0.6); pointer-events: none; }
 
         #gate-note {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background: linear-gradient(180deg, #f8efd8, #ecd9ad);
-            padding: 30px 40px; border-radius: 5px;
-            box-shadow: 0 0 60px rgba(255,215,0,0.45), 0 10px 30px rgba(0,0,0,0.5);
+            padding: 26px 36px; border-radius: 5px;
+            box-shadow: 0 0 40px rgba(255,215,0,0.4), 0 8px 20px rgba(0,0,0,0.5);
             text-align: center; color: #4a0e17; cursor: pointer;
             border: 2px solid var(--gold); z-index: 101; pointer-events: all;
-            transition: all 0.6s cubic-bezier(.22,1,.36,1);
-            animation: floatNote 4s ease-in-out infinite alternate;
-            clip-path: polygon(2% 0, 98% 0, 100% 3%, 100% 97%, 98% 100%, 2% 100%, 0 97%, 0 3%);
+            transition: opacity 0.5s, transform 0.5s;
         }
-        #gate-note::before {
-            content: ''; position: absolute; inset: -6px; border-radius: 8px;
-            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.6), transparent 40%);
-            z-index: -1; animation: spin 6s linear infinite;
-        }
-        #gate-note h2 { font-family: 'Cinzel', serif; margin: 0 0 5px 0; font-size: 26px; letter-spacing: 2px; }
-        #gate-note p  { font-family: 'Cormorant Garamond', serif; font-style: italic; margin: 0; font-size: 18px; font-weight: 600; }
-        #gate-note .seal {
-            width: 30px; height: 30px; border-radius: 50%;
+        #gate-note h2 { font-family: 'Cinzel', serif; margin: 0 0 5px 0; font-size: 24px; letter-spacing: 2px; }
+        #gate-note p  { font-family: 'Cormorant Garamond', serif; font-style: italic; margin: 0; font-size: 17px; font-weight: 600; }
+        .seal {
+            width: 28px; height: 28px; border-radius: 50%;
             background: radial-gradient(circle, #a8002b, #4a0e17);
-            margin: 10px auto 0; box-shadow: 0 0 15px rgba(168,0,43,0.5);
-        }
-        @keyframes floatNote {
-            0%   { top: 49%; transform: translate(-50%,-50%) rotate(-1deg); }
-            100% { top: 51%; transform: translate(-50%,-50%) rotate( 1deg); }
+            margin: 10px auto 0;
         }
 
-        /* ============ DASHBOARD ============ */
-        .dashboard-container {
-            width: 92%; max-width: 560px; padding: 34px 28px;
-            background: linear-gradient(180deg, rgba(30,15,55,0.55), rgba(12,5,25,0.55));
-            border-radius: 22px;
-            backdrop-filter: blur(16px) saturate(140%);
-            -webkit-backdrop-filter: blur(16px) saturate(140%);
+        /* ============ CARDS / DASHBOARD ============ */
+        .card {
+            width: 100%; max-width: 560px; padding: 30px 24px;
+            background: rgba(22, 12, 40, 0.75);
+            border-radius: 20px;
             border: 1px solid rgba(212,175,55,0.3);
-            box-shadow:
-              0 25px 60px rgba(0,0,0,0.55),
-              inset 0 0 30px rgba(138,43,226,0.12),
-              0 0 60px rgba(138,43,226,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             text-align: center; z-index: 20; position: relative;
-            transform-style: preserve-3d;
-            animation: cardFloat 6s ease-in-out infinite alternate;
+            max-height: calc(100dvh - 40px);
+            overflow-y: auto;
         }
-        .dashboard-container::before {
-            content: ''; position: absolute; inset: -1px; border-radius: 22px;
-            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.5), transparent 25%, transparent 50%, rgba(138,43,226,0.5), transparent 75%);
-            z-index: -1; animation: spin 12s linear infinite; filter: blur(1px);
-        }
-        @keyframes cardFloat {
-            from { transform: translateY(0)    rotateX(0)   rotateY(0); }
-            to   { transform: translateY(-6px) rotateX(1.2deg) rotateY(-1.2deg); }
-        }
+        .card::-webkit-scrollbar { width: 6px; }
+        .card::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 10px; }
 
         h1 {
-            font-family: 'Cinzel', serif; font-size: 2.3rem; color: var(--gold);
+            font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold);
             margin: 0 0 6px 0; letter-spacing: 2px;
-            text-shadow: 0 0 18px rgba(212,175,55,0.55), 0 0 35px rgba(212,175,55,0.25);
-            animation: titleShimmer 3s ease-in-out infinite alternate;
+            text-shadow: 0 0 15px rgba(212,175,55,0.4);
         }
-        @keyframes titleShimmer {
-            from { text-shadow: 0 0 18px rgba(212,175,55,0.5), 0 0 30px rgba(212,175,55,0.2); }
-            to   { text-shadow: 0 0 28px rgba(245,217,138,0.9), 0 0 55px rgba(212,175,55,0.4); }
+        .sub {
+            color: #bfa1e6; margin: 0 0 12px 0;
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem;
         }
 
         select {
-            width: 100%; padding: 15px; margin: 16px 0;
-            background: rgba(0,0,0,0.75); color: #fff;
-            border: 1px solid var(--violet); border-radius: 12px;
+            width: 100%; padding: 14px; margin: 12px 0;
+            background: rgba(0,0,0,0.7); color: #fff;
+            border: 1px solid var(--violet); border-radius: 10px;
             font-family: 'Poppins', sans-serif; font-size: 0.95rem; cursor: pointer;
-            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+        select:focus { outline: none; border-color: var(--gold); }
 
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
         .btn-full { grid-column: 1 / -1; }
-        .btn-caption { background: linear-gradient(135deg, #ff9a8b, #ff6a88 50%, #d64c7f); box-shadow: 0 8px 25px rgba(214,76,127,0.45); font-family: 'Cinzel', serif; font-weight: bold; }
-        button {
-            padding: 15px; border: none; border-radius: 12px; cursor: pointer;
-            font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1rem;
-            transition: transform 0.18s cubic-bezier(.22,1,.36,1), box-shadow 0.25s, filter 0.25s;
-            color: white; position: relative; z-index: 30; overflow: hidden;
-        }
-        button::after {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.35), transparent 40%);
-            opacity: 0; transition: opacity 0.25s;
-        }
-        button:hover::after { opacity: 1; }
-        button:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.12); }
-        button:active { transform: scale(0.95); }
 
-        .btn-spell { background: linear-gradient(135deg, #7c22ce, #3b0764); box-shadow: 0 8px 20px rgba(138,43,226,0.35); }
-        .btn-game  { background: linear-gradient(135deg, #005f73, #0a9396); box-shadow: 0 8px 20px rgba(10,147,150,0.35); }
-        .btn-trip  { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-family: 'Cinzel', serif; font-weight: bold; box-shadow: 0 8px 25px rgba(212,175,55,0.5); }
-        .btn-fun   { background: linear-gradient(135deg, #e63946, #9b2226); font-family: 'Cinzel', serif; font-weight: bold; box-shadow: 0 8px 25px rgba(230,57,70,0.45); }
-        .btn-back  { background: transparent; border: 1px solid #bfa1e6; color: #bfa1e6; width: 100%; margin-top: 18px; }
-        .btn-back:hover { background: rgba(191,161,230,0.12); }
+        button {
+            padding: 14px; border: none; border-radius: 12px; cursor: pointer;
+            font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 0.95rem;
+            transition: transform 0.15s ease, filter 0.15s ease;
+            color: white; position: relative; z-index: 30;
+        }
+        button:active { transform: scale(0.96); }
+        @media (hover: hover) { button:hover { filter: brightness(1.12); } }
+
+        .btn-spell   { background: linear-gradient(135deg, #7c22ce, #3b0764); }
+        .btn-game    { background: linear-gradient(135deg, #005f73, #0a9396); }
+        .btn-trip    { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-fun     { background: linear-gradient(135deg, #e63946, #9b2226); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-caption { background: linear-gradient(135deg, #ff9a8b, #d64c7f); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-menu    { background: linear-gradient(135deg, #f59e0b, #b45309); font-family: 'Cinzel', serif; font-weight: bold; color: #000; }
+        .btn-back    { background: transparent; border: 1px solid #bfa1e6; color: #bfa1e6; width: 100%; margin-top: 14px; }
+        .btn-chip    { background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.4); color: #fff; padding: 12px 10px; font-size: 0.9rem; }
+        .btn-chip.selected { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-weight: 700; }
 
         .message-box {
             font-family: 'Playfair Display', serif;
-            font-size: 1.12rem; font-style: italic; color: #efe2ff;
-            min-height: 80px; max-height: 35vh; overflow-y: auto;
-            margin-top: 18px; padding: 12px 14px;
-            background: rgba(0,0,0,0.2); border-radius: 12px;
+            font-size: 1.08rem; font-style: italic; color: #efe2ff;
+            min-height: 70px; max-height: 32vh; overflow-y: auto;
+            margin-top: 14px; padding: 12px 14px;
+            background: rgba(0,0,0,0.25); border-radius: 12px;
             border: 1px solid rgba(212,175,55,0.15);
-            text-shadow: 0 0 10px rgba(230,213,250,0.35);
             line-height: 1.55;
-            transition: border-color 0.4s, box-shadow 0.4s;
         }
-        .message-box.revealed {
-            border-color: rgba(212,175,55,0.45);
-            box-shadow: inset 0 0 25px rgba(212,175,55,0.08);
-            animation: revealPulse 0.9s ease-out;
-        }
-        @keyframes revealPulse {
-            from { box-shadow: inset 0 0 0 rgba(212,175,55,0);   }
-            50%  { box-shadow: inset 0 0 40px rgba(212,175,55,0.25);}
-            to   { box-shadow: inset 0 0 25px rgba(212,175,55,0.08);}
-        }
+        .message-box.revealed { border-color: rgba(212,175,55,0.45); }
         .message-box::-webkit-scrollbar { width: 6px; }
-        .message-box::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
-        .message-box::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 10px; box-shadow: 0 0 10px var(--violet); }
-        .loading-text { animation: pulse 1.4s ease-in-out infinite; color: var(--gold); display:inline-flex; gap:8px; align-items:center; }
-        .loading-text .orbit { width:12px; height:12px; border-radius:50%; border:2px dashed var(--gold); animation: spin 2s linear infinite; }
-        @keyframes pulse { 0%,100%{opacity:0.55} 50%{opacity:1} }
+        .message-box::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 10px; }
+        .loading-text { color: var(--gold); display: inline-flex; gap: 8px; align-items: center; }
+        .orbit { width: 12px; height: 12px; border-radius: 50%; border: 2px dashed var(--gold); animation: spin 1.2s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ============ SNITCH ============ */
         #game-ui { position: absolute; top: 20px; right: 20px; z-index: 200; display: none; }
         .btn-stop { background: #d00000; padding: 10px 20px; font-size: 0.9rem; }
         #snitch {
-            position: absolute; width: 36px; height: 36px;
+            position: absolute; width: 34px; height: 34px;
             background: radial-gradient(circle at 35% 30%, #fff8c5, #ffea00 35%, #b8860b);
             border-radius: 50%;
-            box-shadow: 0 0 35px #ffea00, 0 0 70px rgba(255,234,0,0.5);
+            box-shadow: 0 0 25px #ffea00;
             cursor: pointer; z-index: 100;
-            transition: top 0.55s cubic-bezier(.25,1,.5,1), left 0.55s cubic-bezier(.25,1,.5,1), transform 0.2s;
+            transition: top 0.55s cubic-bezier(.25,1,.5,1), left 0.55s cubic-bezier(.25,1,.5,1);
             display: none;
         }
         #snitch::before, #snitch::after {
-            content: ''; position: absolute; top: 12px; width: 34px; height: 12px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.3));
-            border-radius: 50%; animation: flap 0.08s infinite alternate;
-            filter: blur(0.5px);
+            content: ''; position: absolute; top: 12px; width: 28px; height: 10px;
+            background: rgba(255,255,255,0.85); border-radius: 50%;
+            animation: flap 0.12s infinite alternate;
         }
-        #snitch::before { left: -28px; transform-origin: right; }
-        #snitch::after  { right: -28px; transform-origin: left; }
-        @keyframes flap { 0% { transform: rotate(30deg) scaleY(1);} 100% { transform: rotate(-30deg) scaleY(0.7);} }
+        #snitch::before { left: -24px; transform-origin: right; }
+        #snitch::after  { right: -24px; transform-origin: left; }
+        @keyframes flap { from { transform: rotate(25deg);} to { transform: rotate(-25deg);} }
 
         /* ============ HOGWARTS ============ */
         #hogwarts-view {
@@ -269,204 +204,195 @@
               linear-gradient(rgba(15,5,5,0.9), rgba(0,0,0,1));
             z-index: 50;
         }
-        .fireplace-container { position: absolute; bottom: 0; width: 100%; height: 55%; display: flex; justify-content: center; pointer-events: none; }
-        .stone-arch {
-            position: absolute; bottom: 0; width: min(520px, 75vw); height: 70%;
-            background:
-              radial-gradient(ellipse at 50% 0%, transparent 40%, #1c1210 41%, #0d0604 70%);
-            border-radius: 50% 50% 0 0 / 60% 60% 0 0;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.8);
-        }
         .fire-glow {
-            position: absolute; bottom: -10%; width: 80vw; height: 80vw;
-            max-width: 620px; max-height: 620px;
-            background: radial-gradient(ellipse, rgba(255,120,20,0.35) 0%, rgba(200,50,0,0.12) 40%, transparent 70%);
-            animation: firePulse 2.2s ease-in-out infinite alternate;
+            position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
+            width: 80vw; height: 80vw; max-width: 600px; max-height: 600px;
+            background: radial-gradient(ellipse, rgba(255,120,20,0.3) 0%, transparent 70%);
+            pointer-events: none;
+            animation: firePulse 2s ease-in-out infinite alternate;
         }
-        .flame {
-            position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
-            width: 70px; height: 120px; border-radius: 50% 50% 35% 35%;
-            background: radial-gradient(ellipse at 50% 80%, #fff5a0 0%, #ffae3d 30%, #ff5722 60%, transparent 90%);
-            filter: blur(2px); animation: flicker 0.2s ease-in-out infinite alternate;
-            mix-blend-mode: screen;
-        }
-        .flame.f2 { width: 50px; height: 90px;  opacity: 0.8; animation-duration: 0.28s; }
-        .flame.f3 { width: 30px; height: 60px;  opacity: 0.7; animation-duration: 0.15s; }
-        @keyframes firePulse { from {transform: scale(0.95); opacity:0.8} to {transform: scale(1.08); opacity:1} }
-        @keyframes flicker   { from {transform: translateX(-50%) scaleY(1) skewX(-2deg)} to {transform: translateX(-50%) scaleY(0.94) skewX(3deg)} }
-
-        .ember { position:absolute; bottom:10%; width:3px; height:3px; border-radius:50%; background:#ffae3d; box-shadow:0 0 8px #ff7043; }
+        @keyframes firePulse { from { opacity: 0.75; } to { opacity: 1; } }
 
         .dialogue-box {
             width: 92%; max-width: 720px;
-            background: linear-gradient(180deg, rgba(14,7,7,0.92), rgba(8,4,4,0.92));
+            background: rgba(14,7,7,0.9);
             border: 2px solid var(--gold); border-radius: 16px;
-            padding: 28px; z-index: 20; position: relative;
-            box-shadow: 0 0 60px rgba(212,175,55,0.22), 0 25px 60px rgba(0,0,0,0.6);
-            animation: dialogueIn 0.8s cubic-bezier(.22,1,.36,1);
+            padding: 24px; z-index: 20; position: relative;
+            box-shadow: 0 0 40px rgba(212,175,55,0.18);
+            max-height: calc(100dvh - 40px);
+            display: flex; flex-direction: column;
         }
-        @keyframes dialogueIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0)    scale(1); }
-        }
-        .dialogue-box::before {
-            content:''; position:absolute; inset:-2px; border-radius:16px;
-            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.45), transparent 30%);
-            z-index:-1; animation: spin 10s linear infinite;
-        }
-        .character-header { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 12px; }
+        .character-header { display: flex; align-items: center; margin-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 10px; }
         .char-avatar {
-            width: 58px; height: 58px; border-radius: 50%;
-            margin-right: 16px;
-            position: relative;
+            width: 54px; height: 54px; border-radius: 50%;
+            margin-right: 14px; position: relative;
             background: #d4af37;
-            transition: background 0.5s, box-shadow 0.5s;
-            box-shadow: 0 0 25px currentColor;
-            overflow: hidden;
+            box-shadow: 0 0 20px currentColor;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700;
+            color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
-        .char-avatar::before {
-            content: attr(data-initial);
-            position: absolute; inset: 0; display: flex;
-            align-items: center; justify-content: center;
-            font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 900;
-            color: rgba(255,255,255,0.95); text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-        .char-avatar::after {
-            content: ''; position: absolute; inset: -4px; border-radius: 50%;
-            border: 2px solid currentColor; opacity: 0.5;
-            animation: avatarRing 3s ease-in-out infinite;
-        }
-        @keyframes avatarRing { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.1);opacity:0.8} }
-
-        .character-name {
-            font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.5rem;
-            font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(212,175,55,0.45);
-        }
-        .character-house { display:block; font-size: 0.7rem; color: #bfa1e6; letter-spacing: 3px; margin-top: 2px; font-family: 'Poppins', sans-serif; font-weight: 300; }
+        .character-name { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.35rem; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        .character-house { display: block; font-size: 0.65rem; color: #bfa1e6; letter-spacing: 3px; margin-top: 2px; font-weight: 300; }
+        .dialogue-progress { margin-left: auto; font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold-soft); letter-spacing: 1px; }
         .dialogue-text {
-            font-size: 1.18rem; line-height: 1.75; color: #f4ecd8;
-            min-height: 100px; max-height: 40vh; overflow-y: auto; padding-right: 10px;
+            font-size: 1.1rem; line-height: 1.7; color: #f4ecd8;
+            min-height: 90px; flex: 1; overflow-y: auto; padding-right: 10px;
             font-family: 'Cormorant Garamond', serif; font-style: italic;
         }
         .dialogue-text::-webkit-scrollbar { width: 6px; }
-        .dialogue-text::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
         .dialogue-text::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         .typewriter-cursor {
-            display: inline-block; width: 8px; height: 1.1em; margin-left: 2px;
-            background: var(--gold);
-            box-shadow: 0 0 10px var(--gold);
-            animation: blink 0.7s infinite;
-            vertical-align: middle;
-            clip-path: polygon(0 0, 100% 10%, 85% 50%, 100% 90%, 0 100%);
+            display: inline-block; width: 6px; height: 1.1em; margin-left: 2px;
+            background: var(--gold); animation: blink 0.7s infinite; vertical-align: middle;
         }
         @keyframes blink { 50% { opacity: 0; } }
-        .btn-next { background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; margin-top: 18px; font-family: 'Cinzel', serif; letter-spacing: 2px; }
-        .btn-next:hover { background: var(--gold); color: #000; }
-
-        /* ============ SHOOTING STARS / SIGIL ============ */
-        .shooting-star {
-            position: fixed; width: 2px; height: 2px; background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #fff, 0 0 20px var(--gold-soft);
-            pointer-events: none; z-index: 3;
-            animation: shoot 1.6s ease-out forwards;
-        }
-        @keyframes shoot {
-            0%   { transform: translate(0,0) scale(1); opacity: 1; }
-            100% { transform: translate(-300px, 220px) scale(0.2); opacity: 0; }
-        }
-
-        .sigil {
-            position: fixed; width: 220px; height: 220px;
-            border: 1px solid rgba(212,175,55,0.8);
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(212,175,55,0.6), inset 0 0 40px rgba(212,175,55,0.3);
-            pointer-events: none; z-index: 50;
-            opacity: 0; transition: opacity 0.4s;
-        }
-        .sigil.visible { opacity: 1; animation: sigilPop 1.2s cubic-bezier(.22,1,.36,1); }
-        .sigil::before, .sigil::after {
-            content:''; position:absolute; inset: 15%;
-            border: 1px dashed rgba(212,175,55,0.7); border-radius: 50%;
-            animation: spin 6s linear infinite;
-        }
-        .sigil::after { inset: 30%; animation-duration: 4s; animation-direction: reverse;
-            border-style: solid; border-color: rgba(245,217,138,0.4); }
-        @keyframes sigilPop {
-            from { transform: translate(-50%,-50%) scale(0.2) rotate(0);     opacity: 0; }
-            30%  { transform: translate(-50%,-50%) scale(1.1) rotate(120deg); opacity: 1; }
-            to   { transform: translate(-50%,-50%) scale(1)   rotate(360deg); opacity: 0; }
-        }
-
-        /* ============ BODY SHAKE ============ */
-        @keyframes shake {
-            0%,100% { transform: translate(0,0); }
-            20%     { transform: translate(-4px, 2px); }
-            40%     { transform: translate(3px, -3px); }
-            60%     { transform: translate(-3px, 3px); }
-            80%     { transform: translate(3px, 2px); }
-        }
+        .btn-next { background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; margin-top: 14px; font-family: 'Cinzel', serif; letter-spacing: 2px; }
+        @media (hover: hover) { .btn-next:hover { background: var(--gold); color: #000; } }
 
         /* ============ MAGICAL CAPTION ============ */
         .cap-zone {
-            position: relative; margin: 14px 0 6px;
-            border: 2px dashed rgba(212,175,55,0.55);
-            border-radius: 16px; padding: 28px 14px;
-            background: linear-gradient(180deg, rgba(214,76,127,0.10), rgba(138,43,226,0.10));
-            cursor: pointer; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
+            position: relative; margin: 12px 0 6px;
+            border: 2px dashed rgba(212,175,55,0.5);
+            border-radius: 14px; padding: 24px 14px;
+            background: rgba(214,76,127,0.08);
+            cursor: pointer; transition: border-color 0.2s;
         }
-        .cap-zone::before {
-            content: ''; position: absolute; inset: -2px; border-radius: 18px; z-index: -1;
-            background: conic-gradient(from 0deg, transparent, rgba(214,76,127,0.6), transparent 30%, transparent 60%, rgba(212,175,55,0.6), transparent 90%);
-            animation: spin 8s linear infinite; filter: blur(2px); opacity: 0.7;
-        }
-        .cap-zone:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(214,76,127,0.25); }
-        .cap-zone-inner { text-align: center; }
-        .cap-icon { font-size: 2.6rem; margin-bottom: 8px; animation: floatIcon 3s ease-in-out infinite alternate; }
-        .cap-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: #f4ecd8; }
-        @keyframes floatIcon { from { transform: translateY(0) rotate(-2deg);} to { transform: translateY(-6px) rotate(2deg);} }
-
+        .cap-zone:active { border-color: var(--gold); }
+        .cap-icon { font-size: 2.4rem; margin-bottom: 8px; }
+        .cap-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #f4ecd8; }
         .cap-preview-frame {
-            position: relative; margin: 14px auto 6px; width: 100%;
-            max-height: 260px; border-radius: 14px; overflow: hidden;
+            position: relative; margin: 12px auto 6px; width: 100%;
+            max-height: 240px; border-radius: 12px; overflow: hidden;
             border: 2px solid var(--gold);
-            box-shadow: 0 0 30px rgba(212,175,55,0.3), 0 10px 30px rgba(0,0,0,0.4);
-            animation: frameIn 0.6s cubic-bezier(.22,1,.36,1);
         }
-        @keyframes frameIn { from { opacity: 0; transform: scale(0.9) rotate(-2deg);} to { opacity: 1; transform: scale(1) rotate(0);} }
-        .cap-preview-frame img { display: block; width: 100%; max-height: 260px; object-fit: cover; }
-        .cap-preview-glow {
-            position: absolute; inset: 0; pointer-events: none;
-            background: radial-gradient(circle at 50% 0%, rgba(245,217,138,0.25), transparent 60%);
-            mix-blend-mode: screen;
+        .cap-preview-frame img { display: block; width: 100%; max-height: 240px; object-fit: cover; }
+
+        /* ============ MAGICAL MENU ============ */
+        .menu-categories { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 8px 0 4px; }
+        .recipe {
+            text-align: left; margin-top: 14px; padding: 16px;
+            background: rgba(0,0,0,0.3); border-radius: 12px;
+            border: 1px solid rgba(212,175,55,0.35);
+            max-height: 45vh; overflow-y: auto;
         }
-        .cap-preview-frame.scanning::after {
-            content: ''; position: absolute; left: 0; right: 0; height: 40%;
-            background: linear-gradient(180deg, transparent, rgba(245,217,138,0.35), transparent);
-            animation: scanLine 1.6s linear infinite;
+        .recipe::-webkit-scrollbar { width: 6px; }
+        .recipe::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .recipe h2 {
+            font-family: 'Cinzel', serif; color: var(--gold); margin: 0 0 4px 0;
+            font-size: 1.4rem; letter-spacing: 1px;
         }
-        @keyframes scanLine { from { top: -40%; } to { top: 100%; } }
+        .recipe .region { color: #bfa1e6; font-style: italic; font-size: 0.88rem; margin-bottom: 8px; font-family: 'Cormorant Garamond', serif; }
+        .recipe .meta {
+            display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px 0;
+        }
+        .recipe .meta span {
+            background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.35);
+            padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; color: var(--gold-soft);
+        }
+        .recipe .desc { font-family: 'Cormorant Garamond', serif; font-style: italic; color: #f4ecd8; margin-bottom: 12px; line-height: 1.5; }
+        .recipe h3 {
+            font-family: 'Cinzel', serif; color: var(--gold-soft); margin: 12px 0 6px;
+            font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .recipe ul, .recipe ol { margin: 0; padding-left: 20px; color: #efe2ff; }
+        .recipe li { margin-bottom: 6px; line-height: 1.5; font-size: 0.95rem; }
+        .recipe .tip {
+            margin-top: 12px; padding: 10px 12px;
+            background: rgba(138,43,226,0.15); border-left: 3px solid var(--violet);
+            border-radius: 6px; font-size: 0.92rem; color: #efe2ff;
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+        }
+
+        /* ============ BIRTHDAY CELEBRATION ============ */
+        #bday-overlay {
+            position: fixed; inset: 0; z-index: 500;
+            display: none; align-items: center; justify-content: center;
+            background: rgba(5,2,20,0.85);
+            padding: 20px;
+        }
+        #bday-overlay.show { display: flex; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .bday-card {
+            background: linear-gradient(180deg, #2a1048, #0d0620);
+            border: 2px solid var(--gold); border-radius: 20px;
+            padding: 30px 26px; max-width: 420px; width: 100%;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(255,120,200,0.4);
+        }
+        .bday-card h1 {
+            font-size: 1.8rem; margin-bottom: 8px;
+            background: linear-gradient(90deg, #ff9a8b, #d4af37, #8a2be2);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowShift 4s linear infinite;
+        }
+        @keyframes rainbowShift {
+            from { filter: hue-rotate(0deg);} to { filter: hue-rotate(360deg);}
+        }
+        .cake {
+            font-size: 4rem; margin: 10px 0;
+            animation: bounceCake 1.5s ease-in-out infinite alternate;
+            display: inline-block;
+        }
+        @keyframes bounceCake {
+            from { transform: translateY(0) rotate(-3deg);}
+            to   { transform: translateY(-10px) rotate(3deg);}
+        }
+        .bday-msg {
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+            font-size: 1.1rem; color: #f4ecd8; line-height: 1.6; margin: 12px 0 18px;
+        }
+        .confetti-canvas { position: fixed; inset: 0; z-index: 499; pointer-events: none; display: none; }
+        .confetti-canvas.show { display: block; }
+        .bday-banner {
+            display: none;
+            position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(90deg, #d4af37, #ff9a8b);
+            color: #000; font-family: 'Cinzel', serif; font-weight: 700;
+            padding: 8px 16px; border-radius: 20px; font-size: 0.85rem;
+            box-shadow: 0 4px 20px rgba(255,154,139,0.4);
+            z-index: 400; letter-spacing: 1px; cursor: pointer;
+            max-width: 90vw; text-align: center;
+        }
+        .bday-banner.show { display: block; }
 
         /* ============ MOBILE ============ */
         @media (max-width: 480px) {
-            h1 { font-size: 1.8rem; }
-            .moon, .rune-ring { width: 64px; height: 64px; top: 3%; right: 3%; }
-            .dashboard-container { padding: 24px 18px; }
+            h1 { font-size: 1.6rem; }
+            .moon { width: 56px; height: 56px; top: 3%; right: 3%; }
+            .card { padding: 22px 16px; }
+            .recipe { padding: 12px; }
+            .menu-categories { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+            .btn-chip { padding: 10px 6px; font-size: 0.82rem; }
+            .dialogue-box { padding: 18px; }
+            .character-name { font-size: 1.15rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001s !important;
+                transition-duration: 0.1s !important;
+            }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="stars-canvas"></canvas>
-    <div class="aurora"></div>
+    <div class="sky"></div>
     <div class="moon"></div>
-    <div class="rune-ring"></div>
-    <canvas id="magic-particles"></canvas>
+    <canvas id="particles"></canvas>
 
-    <!-- Sigil overlay for major magical moments -->
-    <div id="sigil" class="sigil"></div>
+    <!-- Birthday layers -->
+    <div id="bday-banner" class="bday-banner" onclick="replayBirthday()">🎉 Tap for a Birthday Surprise 🎂</div>
+    <canvas id="confetti" class="confetti-canvas"></canvas>
+    <div id="bday-overlay">
+        <div class="bday-card">
+            <div class="cake">🎂</div>
+            <h1>Happy Birthday, Rakshi!</h1>
+            <div class="bday-msg" id="bday-msg">Loading wishes...</div>
+            <button class="btn-trip btn-full" onclick="closeBirthday()">✨ Enter the Sanctuary</button>
+        </div>
+    </div>
 
     <!-- SNITCH UI -->
     <div id="game-ui"><button class="btn-stop" onclick="stopGame()">End Game 🛑</button></div>
@@ -485,53 +411,25 @@
 
     <!-- VIEW 2: DASHBOARD -->
     <div id="dashboard-view" class="view">
-        <div class="dashboard-container" id="dash-card">
+        <div class="card">
             <h1>Hey Rakshi ✨</h1>
-            <p style="color: #bfa1e6; margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem;">What is your heart feeling today?</p>
+            <p class="sub">What is your heart feeling today?</p>
 
             <select id="mood-selector">
-                <option value="Sadness">Sadness</option>
-                <option value="Anger">Anger</option>
-                <option value="Fear">Fear</option>
-                <option value="Disgust">Disgust</option>
-                <option value="Surprise">Surprise</option>
-                <option value="Trust">Trust</option>
-                <option value="Anticipation">Anticipation</option>
-                <option value="Admiration">Admiration</option>
-                <option value="Adoration">Adoration</option>
-                <option value="Aesthetic Appreciation">Aesthetic Appreciation</option>
-                <option value="Amusement">Amusement</option>
-                <option value="Anxiety">Anxiety</option>
-                <option value="Awe">Awe</option>
-                <option value="Awkwardness">Awkwardness</option>
-                <option value="Boredom">Boredom</option>
-                <option value="Calmness">Calmness</option>
-                <option value="Confusion">Confusion</option>
-                <option value="Craving">Craving</option>
-                <option value="Empathetic Pain">Empathetic Pain</option>
-                <option value="Entrancement">Entrancement</option>
-                <option value="Envy">Envy</option>
-                <option value="Excitement">Excitement</option>
-                <option value="Horror">Horror</option>
-                <option value="Interest">Interest</option>
-                <option value="Joy">Joy</option>
-                <option value="Loneliness">Loneliness</option>
-                <option value="Love">Love</option>
-                <option value="Nostalgia">Nostalgia</option>
-                <option value="Romance">Romance</option>
-                <option value="Satisfaction">Satisfaction</option>
-                <option value="Sympathy">Sympathy</option>
-                <option value="Triumph">Triumph</option>
-                <option value="Shame">Shame</option>
-                <option value="Guilt">Guilt</option>
-                <option value="Pride">Pride</option>
-                <option value="Embarrassment">Embarrassment</option>
-                <option value="Jealousy">Jealousy</option>
-                <option value="Contempt">Contempt</option>
-                <option value="Optimism">Optimism</option>
-                <option value="Remorse">Remorse</option>
-                <option value="Submission">Submission</option>
-                <option value="Aggression">Aggression</option>
+                <option>Sadness</option><option>Anger</option><option>Fear</option>
+                <option>Disgust</option><option>Surprise</option><option>Trust</option>
+                <option>Anticipation</option><option>Admiration</option><option>Adoration</option>
+                <option>Aesthetic Appreciation</option><option>Amusement</option><option>Anxiety</option>
+                <option>Awe</option><option>Awkwardness</option><option>Boredom</option>
+                <option>Calmness</option><option>Confusion</option><option>Craving</option>
+                <option>Empathetic Pain</option><option>Entrancement</option><option>Envy</option>
+                <option>Excitement</option><option>Horror</option><option>Interest</option>
+                <option>Joy</option><option>Loneliness</option><option>Love</option>
+                <option>Nostalgia</option><option>Romance</option><option>Satisfaction</option>
+                <option>Sympathy</option><option>Triumph</option><option>Shame</option>
+                <option>Guilt</option><option>Pride</option><option>Embarrassment</option>
+                <option>Jealousy</option><option>Contempt</option><option>Optimism</option>
+                <option>Remorse</option><option>Submission</option><option>Aggression</option>
             </select>
 
             <div class="action-grid">
@@ -540,6 +438,7 @@
                 <button class="btn-trip"  id="trip-btn" onclick="startTrip()">🚂 Hogwarts Trip</button>
                 <button class="btn-fun"   onclick="openFunZone()">🎭 Fun Zone</button>
                 <button class="btn-caption btn-full" onclick="openCaption()">📸 Magical Caption</button>
+                <button class="btn-menu btn-full" onclick="openMenu()">🍲 Magical Menu</button>
             </div>
 
             <div id="message-box" class="message-box">Select how you feel, and let the magic find its words...</div>
@@ -548,372 +447,251 @@
 
     <!-- VIEW 3: FUN ZONE -->
     <div id="funzone-view" class="view">
-        <div class="dashboard-container">
+        <div class="card">
             <h1>Fun Zone 🎭</h1>
-            <p style="color: #bfa1e6; margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem;">Who stars in today's trailer?</p>
-
+            <p class="sub">Who stars in today's trailer?</p>
             <select id="friend-selector">
                 <option value="Manjunath">Manjunath</option>
                 <option value="Ankush">Ankush</option>
                 <option value="Vidya">Vidya</option>
                 <option value="Manoj">Manoj</option>
             </select>
-
-            <button class="btn-fun" style="width: 100%; margin-top: 10px;" onclick="generateFunStory()">📖 Roll the Trailer</button>
-
+            <button class="btn-fun btn-full" onclick="generateFunStory()">📖 Roll the Trailer</button>
             <div id="fun-message-box" class="message-box">Pick a hero above...</div>
-
             <button class="btn-back" onclick="closeFunZone()">🔙 Back to Main Menu</button>
+        </div>
+    </div>
+
+    <!-- VIEW 4: HOGWARTS -->
+    <div id="hogwarts-view" class="view">
+        <div class="fire-glow"></div>
+        <div class="dialogue-box">
+            <div class="character-header">
+                <div class="char-avatar" id="char-avatar">?</div>
+                <div>
+                    <div class="character-name" id="char-name">Waiting...</div>
+                    <span class="character-house" id="char-house">&nbsp;</span>
+                </div>
+                <div class="dialogue-progress" id="dialogue-progress">0 / 0</div>
+            </div>
+            <div class="dialogue-text"><span id="dialogue-text"></span><span class="typewriter-cursor"></span></div>
+            <button class="btn-next" id="btn-next" onclick="nextDialogue()">Continue ▸</button>
         </div>
     </div>
 
     <!-- VIEW 5: MAGICAL CAPTION -->
     <div id="caption-view" class="view">
-        <div class="dashboard-container">
+        <div class="card">
             <h1>Magical Caption 📸</h1>
-            <p style="color: #bfa1e6; margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem;">Feed the oracle an image; it will whisper the perfect words back.</p>
+            <p class="sub">Feed the oracle an image; it will whisper the perfect words back.</p>
 
             <div id="cap-upload-zone" class="cap-zone" onclick="document.getElementById('cap-file').click()">
-                <div class="cap-zone-inner">
-                    <div class="cap-icon">🖼️</div>
-                    <div class="cap-text">Tap to choose an image<br><span style="opacity:0.7; font-size:0.85rem;">(jpg / png / webp — under 4 MB)</span></div>
-                </div>
+                <div class="cap-icon">🖼️</div>
+                <div class="cap-text">Tap to choose an image<br><span style="opacity:0.7; font-size:0.85rem;">(jpg / png / webp — under 4 MB)</span></div>
                 <input type="file" id="cap-file" accept="image/*" style="display:none" onchange="handleImageChosen(event)">
             </div>
 
             <div id="cap-preview-wrap" style="display:none;">
-                <div class="cap-preview-frame">
-                    <img id="cap-preview" alt="Your image">
-                    <div class="cap-preview-glow"></div>
-                </div>
-                <button class="btn-back" style="margin-top:10px;" onclick="resetCaption()">🔁 Choose a different image</button>
+                <div class="cap-preview-frame"><img id="cap-preview" alt="Your image"></div>
+                <button class="btn-back" style="margin-top:6px;" onclick="resetCaption()">🔁 Choose a different image</button>
             </div>
 
             <div id="cap-message-box" class="message-box">Your caption will appear here...</div>
 
-            <div class="action-grid" style="margin-top: 16px;">
-                <button id="cap-generate-btn" class="btn-caption" onclick="generateCaption(false)" disabled style="opacity:0.5; cursor:not-allowed;">✨ Generate Caption</button>
-                <button id="cap-regen-btn" class="btn-spell" onclick="generateCaption(true)" disabled style="opacity:0.5; cursor:not-allowed;">🔮 Generate Again</button>
+            <div class="action-grid" style="margin-top: 12px;">
+                <button id="cap-generate-btn" class="btn-caption" onclick="generateCaption(false)" disabled style="opacity:0.5;">✨ Generate Caption</button>
+                <button id="cap-regen-btn" class="btn-spell" onclick="generateCaption(true)" disabled style="opacity:0.5;">🔮 Generate Again</button>
             </div>
 
             <button class="btn-back" onclick="exitCaption()">🚪 Exit to Home</button>
         </div>
     </div>
 
-    <!-- VIEW 4: HOGWARTS -->
-    <div id="hogwarts-view" class="view">
-        <div class="fireplace-container">
-            <div class="stone-arch"></div>
-            <div class="fire-glow"></div>
-            <div class="flame"></div>
-            <div class="flame f2"></div>
-            <div class="flame f3"></div>
-        </div>
-        <div class="dialogue-box">
-            <div class="character-header">
-                <div class="char-avatar" id="char-avatar" data-initial="?"></div>
-                <div>
-                    <div class="character-name" id="char-name">Waiting...</div>
-                    <span class="character-house" id="char-house">&nbsp;</span>
-                </div>
+    <!-- VIEW 6: MAGICAL MENU -->
+    <div id="menu-view" class="view">
+        <div class="card">
+            <h1>Magical Menu 🍲</h1>
+            <p class="sub">Pick a kitchen — the oracle will cook up a dish for you.</p>
+
+            <div class="menu-categories">
+                <button class="btn-chip" data-cat="North" onclick="selectMenuCat('North')">🍛 North</button>
+                <button class="btn-chip" data-cat="South" onclick="selectMenuCat('South')">🥥 South</button>
+                <button class="btn-chip" data-cat="Snacks" onclick="selectMenuCat('Snacks')">🥟 Snacks</button>
             </div>
-            <div class="dialogue-text"><span id="dialogue-text"></span><span class="typewriter-cursor"></span></div>
-            <button class="btn-next" onclick="nextDialogue()">Continue ▸</button>
+
+            <div class="action-grid" style="margin-top: 10px;">
+                <button id="menu-generate-btn" class="btn-menu" onclick="generateMenu(false)" disabled style="opacity:0.5;">🍳 Generate Recipe</button>
+                <button id="menu-regen-btn" class="btn-spell" onclick="generateMenu(true)" disabled style="opacity:0.5;">🔮 Generate Again</button>
+            </div>
+
+            <div id="menu-recipe" class="recipe" style="display:none;"></div>
+            <div id="menu-status" class="message-box">Select a category above...</div>
+
+            <button class="btn-back" onclick="exitMenu()">🚪 Exit to Home</button>
         </div>
     </div>
 
     <script>
-    /* ================================================================== */
-    /* ===================== CHARACTER PROFILES ========================= */
-    /* ================================================================== */
-    const CHAR_PROFILES = {
-        hermione:   { name: "Hermione Granger", color: "#b7132e", house: "GRYFFINDOR",  initial: "H", glow: "#ff5c6c" },
-        harry:      { name: "Harry Potter",     color: "#1a3c8a", house: "GRYFFINDOR",  initial: "H", glow: "#6ba6ff" },
-        ron:        { name: "Ron Weasley",      color: "#d87c1f", house: "GRYFFINDOR",  initial: "R", glow: "#ffb870" },
-        luna:       { name: "Luna Lovegood",    color: "#3f6cc8", house: "RAVENCLAW",   initial: "L", glow: "#9ecbff" },
-        dumbledore: { name: "Albus Dumbledore", color: "#7a5fb5", house: "HEADMASTER",  initial: "A", glow: "#c7b0ff" },
-        mcgonagall: { name: "Minerva McGonagall", color: "#1f5e3a", house: "GRYFFINDOR", initial: "M", glow: "#6fcf97" },
-        hagrid:     { name: "Rubeus Hagrid",    color: "#5a3b1d", house: "KEEPER OF KEYS", initial: "H", glow: "#c89a62" },
-        neville:    { name: "Neville Longbottom", color: "#9b2226", house: "GRYFFINDOR", initial: "N", glow: "#ff8a80" }
-    };
+    'use strict';
 
+    /* ================== DEVICE / PERF DETECTION ================== */
+    const IS_MOBILE = matchMedia('(pointer: coarse)').matches || innerWidth < 720;
+    const REDUCED   = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const PARTICLE_COUNT = REDUCED ? 0 : (IS_MOBILE ? 22 : 45);
+    const CONFETTI_COUNT = REDUCED ? 0 : (IS_MOBILE ? 80 : 140);
+
+    /* ================== CHARACTER PROFILES ================== */
+    const CHAR_PROFILES = {
+        hermione:   { name: "Hermione Granger",    color: "#b7132e", house: "GRYFFINDOR",     initial: "H", glow: "#ff5c6c" },
+        harry:      { name: "Harry Potter",        color: "#1a3c8a", house: "GRYFFINDOR",     initial: "H", glow: "#6ba6ff" },
+        ron:        { name: "Ron Weasley",         color: "#d87c1f", house: "GRYFFINDOR",     initial: "R", glow: "#ffb870" },
+        luna:       { name: "Luna Lovegood",       color: "#3f6cc8", house: "RAVENCLAW",      initial: "L", glow: "#9ecbff" },
+        dumbledore: { name: "Albus Dumbledore",    color: "#7a5fb5", house: "HEADMASTER",     initial: "A", glow: "#c7b0ff" },
+        mcgonagall: { name: "Minerva McGonagall",  color: "#1f5e3a", house: "GRYFFINDOR",     initial: "M", glow: "#6fcf97" },
+        hagrid:     { name: "Rubeus Hagrid",       color: "#5a3b1d", house: "KEEPER OF KEYS", initial: "H", glow: "#c89a62" },
+        neville:    { name: "Neville Longbottom",  color: "#9b2226", house: "GRYFFINDOR",     initial: "N", glow: "#ff8a80" }
+    };
     function resolveChar(rawName) {
         const k = (rawName || "").toLowerCase();
         for (const key in CHAR_PROFILES) if (k.includes(key)) return CHAR_PROFILES[key];
         return { name: rawName, color: "#4B0082", house: "FRIEND", initial: (rawName||'?').charAt(0).toUpperCase(), glow: "#b38cff" };
     }
 
-    /* ================================================================== */
-    /* ======================== NAVIGATION ============================== */
-    /* ================================================================== */
-    function switchView(fromId, toId) {
-        const from = document.getElementById(fromId);
-        const to   = document.getElementById(toId);
-        if (from) from.classList.remove('active-view');
-        // brief magical sweep
-        summonSigil();
-        setTimeout(() => { if (to) to.classList.add('active-view'); }, 120);
-    }
+    /* ================== NAVIGATION ================== */
+    function show(id) { document.getElementById(id).classList.add('active-view'); }
+    function hide(id) { document.getElementById(id).classList.remove('active-view'); }
 
     function openGates() {
         document.getElementById("gate-view").classList.add("gate-open");
-        summonSigil();
-        for (let i = 0; i < 8; i++) setTimeout(spawnShootingStar, i * 200);
-        setTimeout(() => {
-            document.getElementById("gate-view").classList.remove("active-view");
-            document.getElementById("dashboard-view").classList.add("active-view");
-            burstParticles(window.innerWidth/2, window.innerHeight/2, 120);
-        }, 1700);
+        setTimeout(() => { hide("gate-view"); show("dashboard-view"); }, 1400);
     }
+    function openFunZone()  { hide('dashboard-view'); show('funzone-view'); }
+    function closeFunZone() { hide('funzone-view'); show('dashboard-view'); document.getElementById("fun-message-box").innerHTML = "Pick a hero above..."; }
+    function openCaption()  { hide('dashboard-view'); show('caption-view'); }
+    function exitCaption()  { resetCaption(); hide('caption-view'); show('dashboard-view'); }
+    function openMenu()     { hide('dashboard-view'); show('menu-view'); }
+    function exitMenu()     { resetMenu(); hide('menu-view'); show('dashboard-view'); }
 
-    function openFunZone()  { switchView('dashboard-view', 'funzone-view'); burstParticles(window.innerWidth/2, window.innerHeight/2, 80); }
-    function closeFunZone() { switchView('funzone-view',   'dashboard-view'); document.getElementById("fun-message-box").innerHTML = "Pick a hero above..."; }
-
-    function openCaption() {
-        switchView('dashboard-view', 'caption-view');
-        burstParticles(window.innerWidth/2, window.innerHeight/2, 80);
-    }
-    function exitCaption() {
-        resetCaption();
-        switchView('caption-view', 'dashboard-view');
-    }
-
-    /* ================================================================== */
-    /* ===================== MAGICAL CAPTION FLOW ======================= */
-    /* ================================================================== */
-    let capImageData = null;   // base64 data URL kept in memory for regenerate
-    let capLastCaption = '';
-
-    function resetCaption() {
-        capImageData = null;
-        capLastCaption = '';
-        document.getElementById('cap-preview-wrap').style.display = 'none';
-        document.getElementById('cap-upload-zone').style.display = 'block';
-        document.getElementById('cap-file').value = '';
-        document.getElementById('cap-message-box').innerHTML = 'Your caption will appear here...';
-        document.getElementById('cap-message-box').classList.remove('revealed');
-        const gen = document.getElementById('cap-generate-btn');
-        const regen = document.getElementById('cap-regen-btn');
-        [gen, regen].forEach(b => { b.disabled = true; b.style.opacity = 0.5; b.style.cursor = 'not-allowed'; });
-    }
-
-    function handleImageChosen(event) {
-        const file = event.target.files && event.target.files[0];
-        if (!file) return;
-        if (file.size > 4 * 1024 * 1024) {
-            document.getElementById('cap-message-box').innerHTML = 'That image is above 4 MB. Please pick a smaller one.';
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            capImageData = e.target.result;
-            document.getElementById('cap-preview').src = capImageData;
-            document.getElementById('cap-upload-zone').style.display = 'none';
-            document.getElementById('cap-preview-wrap').style.display = 'block';
-            const gen = document.getElementById('cap-generate-btn');
-            gen.disabled = false; gen.style.opacity = 1; gen.style.cursor = 'pointer';
-            document.getElementById('cap-message-box').innerHTML = 'Image received. Tap <b>Generate Caption</b> to begin the spell.';
-            burstParticles(window.innerWidth/2, window.innerHeight/2, 60);
-            summonSigil();
-        };
-        reader.readAsDataURL(file);
-    }
-
-    async function generateCaption(isRegenerate) {
-        if (!capImageData) return;
-        const msgBox = document.getElementById('cap-message-box');
-        const gen   = document.getElementById('cap-generate-btn');
-        const regen = document.getElementById('cap-regen-btn');
-        const frame = document.querySelector('.cap-preview-frame');
-
-        msgBox.classList.remove('revealed');
-        msgBox.innerHTML = '<span class="loading-text"><span class="orbit"></span> The oracle is gazing into your image...</span>';
-        frame && frame.classList.add('scanning');
-        gen.disabled = true; regen.disabled = true;
-        gen.style.opacity = 0.5; regen.style.opacity = 0.5;
-        summonSigil();
-
-        try {
-            const response = await fetch('/api/caption', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    imageBase64: capImageData,
-                    regenerate: !!isRegenerate,
-                    avoid: isRegenerate ? capLastCaption : ''
-                })
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                msgBox.innerHTML = data.message || 'The oracle could not read this one. Try another image.';
-            } else {
-                capLastCaption = data.caption || '';
-                await revealTextInto(msgBox, capLastCaption);
-                msgBox.classList.add('revealed');
-                const styleTag = data.style ? `<br><br><span style="font-size:0.8rem; color: var(--gold); letter-spacing:2px;">— [ ${data.style.toUpperCase()} ] —</span>` : '';
-                msgBox.innerHTML += styleTag;
-                burstParticles(window.innerWidth/2, window.innerHeight/2, 90);
-                for (let i = 0; i < 4; i++) setTimeout(spawnShootingStar, i * 250);
-            }
-        } catch (err) {
-            msgBox.innerHTML = 'The oracle is resting. Please try again in a moment.';
-        } finally {
-            frame && frame.classList.remove('scanning');
-            gen.disabled = false; regen.disabled = false;
-            gen.style.opacity = 1; regen.style.opacity = 1;
-            gen.style.cursor = 'pointer'; regen.style.cursor = 'pointer';
-        }
-    }
-
-    /* ================================================================== */
-    /* ====================== SPELL (COMFORT AI) ======================== */
-    /* ================================================================== */
+    /* ================== SPELL ================== */
     async function castAISpell() {
         const mood = document.getElementById("mood-selector").value;
         const msgBox = document.getElementById("message-box");
         msgBox.classList.remove('revealed');
         msgBox.innerHTML = '<span class="loading-text"><span class="orbit"></span> Brewing magic just for you...</span>';
-        burstParticles(window.innerWidth/2, window.innerHeight/2, 40);
-        summonSigil();
-
         try {
-            const response = await fetch('/api/magic', {
+            const r = await fetch('/api/magic', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emotion: mood })
             });
-            const data = await response.json();
+            const data = await r.json();
             await revealTextInto(msgBox, data.message);
             msgBox.classList.add('revealed');
-            burstParticles(window.innerWidth/2, window.innerHeight/2, 60);
-            for (let i = 0; i < 3; i++) setTimeout(spawnShootingStar, i * 300);
-        } catch (error) {
+        } catch (e) {
             msgBox.innerHTML = `"I am always in your corner, Rakshi. Even when the magic rests."`;
         }
     }
 
-    /* ================================================================== */
-    /* ====================== FUN ZONE STORY ============================ */
-    /* ================================================================== */
+    /* ================== FUN STORY ================== */
     async function generateFunStory() {
         const friend = document.getElementById("friend-selector").value;
         const msgBox = document.getElementById("fun-message-box");
         msgBox.classList.remove('revealed');
         msgBox.innerHTML = '<span class="loading-text"><span class="orbit"></span> Rolling the trailer...</span>';
-        burstParticles(window.innerWidth/2, window.innerHeight/2, 40);
-
         try {
-            const response = await fetch('/api/funzone', {
+            const r = await fetch('/api/funzone', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ friendName: friend })
             });
-            const data = await response.json();
+            const data = await r.json();
             msgBox.innerHTML = data.message;
             msgBox.classList.add('revealed');
-            burstParticles(window.innerWidth/2, window.innerHeight/2, 60);
-        } catch (error) {
-            msgBox.innerHTML = `The storyteller is resting. But just imagine ${friend} walking out of a burning garage in slow motion. That's the trailer.`;
+        } catch (e) {
+            msgBox.innerHTML = `The storyteller is resting. Imagine ${friend} walking out of a burning garage in slow motion.`;
         }
     }
 
-    /* ================================================================== */
-    /* ====================== HOGWARTS DIALOGUE ========================= */
-    /* ================================================================== */
+    /* ================== HOGWARTS ================== */
     let currentScript = [];
     let scriptIndex = 0;
-    let typeInterval;
+    let typeInterval = null;
 
     async function startTrip() {
         const mood = document.getElementById("mood-selector").value;
         const btn = document.getElementById("trip-btn");
-        const originalText = btn.innerHTML;
-        btn.innerHTML = "🚂 Boarding the Train...";
-        document.body.style.animation = "shake 0.45s ease-in-out infinite";
-        summonSigil();
-
+        const orig = btn.innerHTML;
+        btn.innerHTML = "🚂 Boarding...";
         try {
-            const response = await fetch('/api/hogwarts', {
+            const r = await fetch('/api/hogwarts', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emotion: mood })
             });
-            const data = await response.json();
-            currentScript = (data.script || []).map(line => {
-                const prof = resolveChar(line.name);
-                return { ...line, _profile: prof };
-            });
-            if (currentScript.length === 0) throw new Error("empty");
-        } catch (error) {
+            const data = await r.json();
+            currentScript = (data.script || []).map(line => ({ ...line, _profile: resolveChar(line.name) }));
+            if (!currentScript.length) throw new Error('empty');
+        } catch (e) {
             currentScript = [
-                { name: "Hermione", text: "Come and sit, Rakshi — the fire is warmest on this side, and whatever this is, we will think it through together.", _profile: resolveChar("Hermione") },
-                { name: "Ron",      text: "Honestly, you look like you need a chocolate frog and someone to be daft on your behalf. Lucky for you — I'm here.", _profile: resolveChar("Ron") },
-                { name: "Harry",    text: "I know that ache. It gets quieter. Until it does, you don't have to carry it on your own.", _profile: resolveChar("Harry") }
-            ];
+                { name: "Hermione", text: "Come and sit, Rakshi — the fire is warmest on this side, and whatever this is, we will think it through together." },
+                { name: "Ron",      text: "Blimey, budge up, you lot. Honestly, there's room for four if Harry stops hogging the armrest." },
+                { name: "Harry",    text: "I know that ache. It doesn't ask permission; it just shows up. You don't have to talk if you don't want to." },
+                { name: "Luna",     text: "When I miss my mother, I imagine her brushing my hair. The feeling doesn't go. It just becomes less sharp." },
+                { name: "Hermione", text: "Breathe with me. In for four, hold for four, out for six. Books call it grounding. I call it remembering you are here." },
+                { name: "Ron",      text: "And there's treacle tart afterwards. There's always treacle tart. That's basically a rule of the castle." }
+            ].map(line => ({ ...line, _profile: resolveChar(line.name) }));
         }
-
-        document.body.style.animation = "";
-        btn.innerHTML = originalText;
-        switchView('dashboard-view', 'hogwarts-view');
+        btn.innerHTML = orig;
+        hide('dashboard-view'); show('hogwarts-view');
         scriptIndex = 0;
-        setTimeout(playDialogue, 400);
+        setTimeout(playDialogue, 300);
     }
 
     function playDialogue() {
-        if (scriptIndex >= currentScript.length) {
-            switchView('hogwarts-view', 'dashboard-view');
-            return;
-        }
-        clearInterval(typeInterval);
+        if (scriptIndex >= currentScript.length) { hide('hogwarts-view'); show('dashboard-view'); return; }
+        if (typeInterval) clearInterval(typeInterval);
+
         const line = currentScript[scriptIndex];
         const p = line._profile || resolveChar(line.name);
+        document.getElementById("char-name").textContent  = p.name;
+        document.getElementById("char-house").textContent = p.house;
+        const av = document.getElementById("char-avatar");
+        av.style.background = `radial-gradient(circle at 35% 30%, ${p.glow}, ${p.color})`;
+        av.style.color = p.glow;
+        av.textContent = p.initial;
+        document.getElementById("dialogue-progress").textContent = `${scriptIndex+1} / ${currentScript.length}`;
+        document.getElementById("btn-next").textContent = (scriptIndex === currentScript.length - 1) ? 'Close the Portrait ✦' : 'Continue ▸';
 
-        const nameEl   = document.getElementById("char-name");
-        const houseEl  = document.getElementById("char-house");
-        const avatar   = document.getElementById("char-avatar");
-        nameEl.innerText  = p.name;
-        houseEl.innerText = p.house;
-        avatar.style.background = `radial-gradient(circle at 35% 30%, ${p.glow}, ${p.color})`;
-        avatar.style.color = p.glow;
-        avatar.setAttribute('data-initial', p.initial);
-
-        // avatar entrance
-        avatar.animate(
-            [{ transform:'scale(0.4) rotate(-20deg)', opacity:0 }, { transform:'scale(1) rotate(0)', opacity:1 }],
-            { duration: 500, easing:'cubic-bezier(.22,1,.36,1)' }
-        );
-
-        const textBox = document.getElementById("dialogue-text");
-        textBox.innerText = "";
-        let charIndex = 0;
+        const box = document.getElementById("dialogue-text");
+        box.textContent = "";
+        let i = 0;
         typeInterval = setInterval(() => {
-            if (charIndex < line.text.length) {
-                textBox.innerText += line.text.charAt(charIndex);
-                charIndex++;
-                if (Math.random() < 0.08) spawnEmber();
-            } else {
-                clearInterval(typeInterval);
-            }
-        }, 28);
+            if (i < line.text.length) { box.textContent += line.text.charAt(i); i++; }
+            else { clearInterval(typeInterval); typeInterval = null; }
+        }, 26);
     }
-    function nextDialogue() { scriptIndex++; playDialogue(); }
+    function nextDialogue() {
+        // If still typing, complete the line instantly on tap (smooth UX)
+        if (typeInterval) {
+            clearInterval(typeInterval); typeInterval = null;
+            document.getElementById("dialogue-text").textContent = currentScript[scriptIndex].text;
+            return;
+        }
+        scriptIndex++; playDialogue();
+    }
 
-    /* ================================================================== */
-    /* ========================== SNITCH GAME =========================== */
-    /* ================================================================== */
+    /* ================== SNITCH ================== */
     let snitchTimer;
     function startGame() {
         document.getElementById("game-ui").style.display = "block";
-        const snitch = document.getElementById("snitch");
-        snitch.style.display = "block";
-        document.getElementById("message-box").innerHTML = "Catch it! 🧹";
+        const s = document.getElementById("snitch");
+        s.style.display = "block";
+        document.getElementById("message-box").textContent = "Catch it! 🧹";
         snitchTimer = setInterval(() => {
-            snitch.style.top  = Math.random() * 75 + 10 + "%";
-            snitch.style.left = Math.random() * 75 + 10 + "%";
-            if (Math.random() < 0.3) spawnShootingStar();
-        }, 650);
+            s.style.top  = Math.random() * 75 + 10 + "%";
+            s.style.left = Math.random() * 75 + 10 + "%";
+        }, 700);
     }
     function catchSnitch() {
         stopGame();
-        document.getElementById("message-box").innerHTML = "🎉 150 POINTS TO RAKSHI! 🎉";
-        burstParticles(window.innerWidth/2, window.innerHeight/2, 180);
-        summonSigil();
+        document.getElementById("message-box").textContent = "🎉 150 POINTS TO RAKSHI! 🎉";
     }
     function stopGame() {
         clearInterval(snitchTimer);
@@ -921,226 +699,298 @@
         document.getElementById("game-ui").style.display = "none";
     }
 
-    /* ================================================================== */
-    /* ====================== TEXT REVEAL EFFECT ======================== */
-    /* ================================================================== */
+    /* ================== TEXT REVEAL ================== */
     async function revealTextInto(el, text) {
         el.innerHTML = '"<span id="reveal-target"></span>"';
-        const target = el.querySelector('#reveal-target');
+        const t = el.querySelector('#reveal-target');
         for (let i = 0; i < text.length; i++) {
-            target.innerText += text.charAt(i);
-            if (Math.random() < 0.05) {
-                const r = el.getBoundingClientRect();
-                burstParticles(r.left + Math.random()*r.width, r.top + Math.random()*r.height, 3);
-            }
-            await new Promise(r => setTimeout(r, 18));
+            t.textContent += text.charAt(i);
+            await new Promise(r => setTimeout(r, 16));
         }
     }
 
-    /* ================================================================== */
-    /* ==================== STARRY BACKGROUND =========================== */
-    /* ================================================================== */
-    const starsCanvas = document.getElementById('stars-canvas');
-    const starsCtx = starsCanvas.getContext('2d');
-    let stars = [];
-    function resizeStars() {
-        starsCanvas.width  = window.innerWidth;
-        starsCanvas.height = window.innerHeight;
-        stars = Array.from({length: 180}, () => ({
-            x: Math.random()*starsCanvas.width,
-            y: Math.random()*starsCanvas.height,
-            r: Math.random()*1.3 + 0.2,
-            tw: Math.random()*Math.PI*2,
-            speed: 0.01 + Math.random()*0.02
-        }));
+    /* ================== CAPTION ================== */
+    let capImageData = null;
+    let capLastCaption = '';
+    function resetCaption() {
+        capImageData = null; capLastCaption = '';
+        document.getElementById('cap-preview-wrap').style.display = 'none';
+        document.getElementById('cap-upload-zone').style.display = 'block';
+        document.getElementById('cap-file').value = '';
+        const mb = document.getElementById('cap-message-box');
+        mb.textContent = 'Your caption will appear here...';
+        mb.classList.remove('revealed');
+        disableBtn('cap-generate-btn'); disableBtn('cap-regen-btn');
     }
-    resizeStars();
-    function drawStars() {
-        starsCtx.clearRect(0,0,starsCanvas.width,starsCanvas.height);
-        for (const s of stars) {
-            s.tw += s.speed;
-            const a = 0.5 + Math.sin(s.tw) * 0.5;
-            starsCtx.globalAlpha = a;
-            starsCtx.fillStyle = a > 0.85 ? '#fff8c5' : '#ffffff';
-            starsCtx.beginPath();
-            starsCtx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-            starsCtx.fill();
-        }
-        starsCtx.globalAlpha = 1;
-        requestAnimationFrame(drawStars);
+    function disableBtn(id) {
+        const b = document.getElementById(id); b.disabled = true; b.style.opacity = 0.5; b.style.cursor = 'not-allowed';
     }
-    drawStars();
-
-    /* ================================================================== */
-    /* ==================== PARTICLE ENGINE ============================= */
-    /* ================================================================== */
-    const canvas = document.getElementById("magic-particles");
-    const ctx = canvas.getContext("2d");
-    function resizeParticles() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resizeParticles();
-    window.addEventListener('resize', () => { resizeParticles(); resizeStars(); });
-
-    let particles = [];
-    let mouse = { x: null, y: null };
-    let trail  = [];
-
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x; mouse.y = e.y;
-        if (Math.random() < 0.35) particles.push(new Particle(e.x, e.y, false, true));
-    });
-    window.addEventListener('touchmove', (e) => {
-        mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY;
-        if (Math.random() < 0.5) particles.push(new Particle(mouse.x, mouse.y, false, true));
-    }, { passive: true });
-
-    class Particle {
-        constructor(x, y, isBurst, isWand) {
-            this.x = x ?? Math.random() * canvas.width;
-            this.y = y ?? Math.random() * canvas.height;
-            this.size = isWand ? Math.random()*2.5 + 1 : (isBurst ? Math.random()*3 + 1 : Math.random()*2 + 0.6);
-            this.speedY = isBurst ? (Math.random()*10 - 5) : isWand ? (Math.random()*-1) : (Math.random()*-0.5 - 0.15);
-            this.speedX = isBurst ? (Math.random()*10 - 5) : isWand ? (Math.random()*2 - 1) : (Math.random()*0.4 - 0.2);
-            this.life = (isBurst || isWand) ? 1 : Infinity;
-            this.decay = isBurst ? 0.018 : (isWand ? 0.03 : 0);
-            const palette = [
-                'rgba(212, 175, 55,',   // gold
-                'rgba(245, 217, 138,',  // soft gold
-                'rgba(138, 43, 226,',   // violet
-                'rgba(191, 161, 230,',  // soft violet
-                'rgba(255, 255, 255,'   // white
-            ];
-            this.color = palette[Math.floor(Math.random()*palette.length)];
-            this.spin  = Math.random()*Math.PI*2;
-            this.spinRate = (Math.random()-0.5) * 0.05;
-        }
-        update() {
-            if (this.life === Infinity && mouse.x != null) {
-                const dx = mouse.x - this.x, dy = mouse.y - this.y;
-                const d  = Math.sqrt(dx*dx + dy*dy);
-                if (d < 110) { this.x -= dx / 12; this.y -= dy / 12; }
-            }
-            this.x += this.speedX; this.y += this.speedY;
-            this.spin += this.spinRate;
-            if (this.life !== Infinity) this.life -= this.decay;
-            else if (this.y < -10) this.y = canvas.height + 10;
-        }
-        draw() {
-            if (this.life <= 0) return;
-            const a = this.life === Infinity ? 0.6 : this.life;
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.spin);
-            // glow
-            ctx.fillStyle = `${this.color}${a*0.2})`;
-            ctx.beginPath(); ctx.arc(0, 0, this.size*3, 0, Math.PI*2); ctx.fill();
-            // core
-            ctx.fillStyle = `${this.color}${a})`;
-            ctx.beginPath(); ctx.arc(0, 0, this.size, 0, Math.PI*2); ctx.fill();
-            ctx.restore();
-        }
+    function enableBtn(id) {
+        const b = document.getElementById(id); b.disabled = false; b.style.opacity = 1; b.style.cursor = 'pointer';
     }
-    for (let i = 0; i < 140; i++) particles.push(new Particle());
-    function burstParticles(x, y, count = 50) {
-        for (let i = 0; i < count; i++) particles.push(new Particle(x, y, true));
-    }
-
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // subtle trail fade for extra smoothness
-        ctx.fillStyle = 'rgba(2,0,5,0.08)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-            if (particles[i].life <= 0) { particles.splice(i, 1); i--; }
-        }
-        requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-
-    /* ================================================================== */
-    /* ==================== SHOOTING STAR & SIGIL ======================= */
-    /* ================================================================== */
-    function spawnShootingStar() {
-        const s = document.createElement('div');
-        s.className = 'shooting-star';
-        s.style.top  = (Math.random()*40) + 'vh';
-        s.style.left = (50 + Math.random()*50) + 'vw';
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 1700);
-    }
-
-    let sigilTimer;
-    function summonSigil() {
-        const sigil = document.getElementById('sigil');
-        sigil.style.left = '50%';
-        sigil.style.top  = '50%';
-        sigil.style.transform = 'translate(-50%,-50%)';
-        sigil.classList.remove('visible');
-        void sigil.offsetWidth;
-        sigil.classList.add('visible');
-        clearTimeout(sigilTimer);
-        sigilTimer = setTimeout(() => sigil.classList.remove('visible'), 1200);
-    }
-
-    /* ================================================================== */
-    /* ========================= EMBERS ================================= */
-    /* ================================================================== */
-    function spawnEmber() {
-        const view = document.getElementById('hogwarts-view');
-        if (!view.classList.contains('active-view')) return;
-        const e = document.createElement('div');
-        e.className = 'ember';
-        e.style.left = (40 + Math.random()*20) + '%';
-        e.style.bottom = '12%';
-        e.style.background = Math.random() < 0.5 ? '#ffae3d' : '#ffd54f';
-        view.appendChild(e);
-        const drift = (Math.random()-0.5) * 80;
-        e.animate(
-            [
-                { transform: 'translate(0,0)',        opacity: 1 },
-                { transform: `translate(${drift}px, -${window.innerHeight*0.45}px)`, opacity: 0 }
-            ],
-            { duration: 2400 + Math.random()*1200, easing: 'ease-out' }
-        ).onfinish = () => e.remove();
-    }
-    // ambient embers when hogwarts active
-    setInterval(() => {
-        if (document.getElementById('hogwarts-view').classList.contains('active-view')) {
-            if (Math.random() < 0.6) spawnEmber();
-        }
-    }, 350);
-
-    /* ================================================================== */
-    /* ================== CARD PARALLAX ON POINTER ====================== */
-    /* ================================================================== */
-    const card = document.getElementById('dash-card');
-    document.addEventListener('mousemove', (e) => {
-        if (!card) return;
-        const r = card.getBoundingClientRect();
-        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
-            card.style.setProperty('transform', '');
+    function handleImageChosen(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        if (file.size > 4 * 1024 * 1024) {
+            document.getElementById('cap-message-box').textContent = 'That image is above 4 MB. Please pick a smaller one.';
             return;
         }
-        const mx = ((e.clientX - r.left) / r.width - 0.5);
-        const my = ((e.clientY - r.top)  / r.height - 0.5);
-        card.style.transform = `rotateX(${-my*6}deg) rotateY(${mx*6}deg) translateY(-4px)`;
-    });
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            capImageData = ev.target.result;
+            document.getElementById('cap-preview').src = capImageData;
+            document.getElementById('cap-upload-zone').style.display = 'none';
+            document.getElementById('cap-preview-wrap').style.display = 'block';
+            enableBtn('cap-generate-btn');
+            document.getElementById('cap-message-box').innerHTML = 'Image received. Tap <b>Generate Caption</b> to begin.';
+        };
+        reader.readAsDataURL(file);
+    }
+    async function generateCaption(isRegen) {
+        if (!capImageData) return;
+        const mb = document.getElementById('cap-message-box');
+        mb.classList.remove('revealed');
+        mb.innerHTML = '<span class="loading-text"><span class="orbit"></span> The oracle is gazing into your image...</span>';
+        disableBtn('cap-generate-btn'); disableBtn('cap-regen-btn');
+        try {
+            const r = await fetch('/api/caption', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ imageBase64: capImageData, regenerate: !!isRegen, avoid: isRegen ? capLastCaption : '' })
+            });
+            const data = await r.json();
+            if (!r.ok) { mb.textContent = data.message || 'The oracle could not read this one.'; }
+            else {
+                capLastCaption = data.caption || '';
+                await revealTextInto(mb, capLastCaption);
+                mb.classList.add('revealed');
+                if (data.style) mb.innerHTML += `<br><br><span style="font-size:0.8rem; color: var(--gold); letter-spacing:2px;">— [ ${data.style.toUpperCase()} ] —</span>`;
+            }
+        } catch (err) {
+            mb.textContent = 'The oracle is resting. Please try again.';
+        } finally {
+            enableBtn('cap-generate-btn'); enableBtn('cap-regen-btn');
+        }
+    }
 
-    // Button shimmer tracking
-    document.querySelectorAll('button').forEach(b => {
-        b.addEventListener('mousemove', (e) => {
-            const r = b.getBoundingClientRect();
-            b.style.setProperty('--mx', ((e.clientX - r.left)/r.width)*100 + '%');
-            b.style.setProperty('--my', ((e.clientY - r.top)/r.height)*100 + '%');
-        });
-    });
+    /* ================== MAGICAL MENU ================== */
+    let menuCat = null;
+    let menuHistory = { North: [], South: [], Snacks: [] };
 
-    /* ================================================================== */
-    /* ============== RANDOM AMBIENT SHOOTING STARS ===================== */
-    /* ================================================================== */
-    setInterval(() => { if (Math.random() < 0.4) spawnShootingStar(); }, 3500);
+    function selectMenuCat(cat) {
+        menuCat = cat;
+        document.querySelectorAll('.btn-chip').forEach(b => b.classList.toggle('selected', b.dataset.cat === cat));
+        enableBtn('menu-generate-btn');
+        disableBtn('menu-regen-btn');
+        document.getElementById('menu-recipe').style.display = 'none';
+        document.getElementById('menu-status').innerHTML = `Category set to <b>${cat}</b>. Tap <b>Generate Recipe</b>.`;
+    }
+    function resetMenu() {
+        menuCat = null;
+        document.querySelectorAll('.btn-chip').forEach(b => b.classList.remove('selected'));
+        document.getElementById('menu-recipe').style.display = 'none';
+        document.getElementById('menu-recipe').innerHTML = '';
+        document.getElementById('menu-status').textContent = 'Select a category above...';
+        disableBtn('menu-generate-btn'); disableBtn('menu-regen-btn');
+    }
+    async function generateMenu(isRegen) {
+        if (!menuCat) return;
+        const status = document.getElementById('menu-status');
+        const recipeEl = document.getElementById('menu-recipe');
+        status.innerHTML = '<span class="loading-text"><span class="orbit"></span> The kitchen oracle is stirring the pot...</span>';
+        recipeEl.style.display = 'none';
+        disableBtn('menu-generate-btn'); disableBtn('menu-regen-btn');
+        try {
+            const r = await fetch('/api/menu', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ category: menuCat, avoidList: menuHistory[menuCat] })
+            });
+            const data = await r.json();
+            if (!r.ok || !data.recipe) { status.textContent = data.message || 'The kitchen is closed for a moment.'; return; }
+            const rec = data.recipe;
+            const nameLower = rec.name.toLowerCase();
+            if (!menuHistory[menuCat].some(n => n.toLowerCase() === nameLower)) menuHistory[menuCat].push(rec.name);
+            if (menuHistory[menuCat].length > 20) menuHistory[menuCat].shift();
+            renderRecipe(rec);
+            status.textContent = 'Hot and ready. Like it? Cook it. Don\'t like it? Generate again.';
+            enableBtn('menu-regen-btn');
+        } catch (err) {
+            status.textContent = 'The kitchen oracle is resting. Please try again.';
+        } finally {
+            enableBtn('menu-generate-btn');
+        }
+    }
+    function renderRecipe(rec) {
+        const safe = s => String(s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const el = document.getElementById('menu-recipe');
+        el.innerHTML = `
+            <h2>${safe(rec.name)}</h2>
+            ${rec.region ? `<div class="region">${safe(rec.region)}</div>` : ''}
+            <div class="meta">
+                ${rec.serves   ? `<span>🍽 ${safe(rec.serves)}</span>` : ''}
+                ${rec.prepTime ? `<span>⏱ Prep ${safe(rec.prepTime)}</span>` : ''}
+                ${rec.cookTime ? `<span>🔥 Cook ${safe(rec.cookTime)}</span>` : ''}
+            </div>
+            ${rec.description ? `<div class="desc">${safe(rec.description)}</div>` : ''}
+            <h3>Ingredients</h3>
+            <ul>${(rec.ingredients || []).map(i => `<li>${safe(i)}</li>`).join('')}</ul>
+            <h3>Steps</h3>
+            <ol>${(rec.steps || []).map(s => `<li>${safe(s)}</li>`).join('')}</ol>
+            ${rec.tip ? `<div class="tip"><b>Chef's tip:</b> ${safe(rec.tip)}</div>` : ''}
+        `;
+        el.style.display = 'block';
+        el.scrollTop = 0;
+    }
+
+    /* ================== PARTICLES (LIGHT) ================== */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0;
+    function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1 : 1.5);
+        W = canvas.width = innerWidth * dpr;
+        H = canvas.height = innerHeight * dpr;
+        canvas.style.width = innerWidth + 'px';
+        canvas.style.height = innerHeight + 'px';
+        ctx.scale(dpr, dpr);
+    }
+    addEventListener('resize', resize);
+    resize();
+
+    const particles = [];
+    class P {
+        constructor() { this.reset(true); }
+        reset(spawnAnywhere) {
+            this.x = Math.random() * innerWidth;
+            this.y = spawnAnywhere ? Math.random() * innerHeight : innerHeight + 10;
+            this.size = Math.random() * 1.8 + 0.6;
+            this.sy = Math.random() * -0.4 - 0.15;
+            this.sx = Math.random() * 0.3 - 0.15;
+            this.tw = Math.random() * Math.PI * 2;
+            const palette = ['#d4af37', '#f5d98a', '#bfa1e6', '#ffffff'];
+            this.color = palette[Math.floor(Math.random() * palette.length)];
+        }
+        step() {
+            this.x += this.sx; this.y += this.sy;
+            this.tw += 0.03;
+            if (this.y < -10) this.reset(false);
+        }
+        draw() {
+            const a = 0.4 + Math.sin(this.tw) * 0.3;
+            ctx.globalAlpha = a;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, 6.283);
+            ctx.fill();
+        }
+    }
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new P());
+
+    let rafId = null;
+    let visible = true;
+    document.addEventListener('visibilitychange', () => {
+        visible = !document.hidden;
+        if (visible && !rafId && PARTICLE_COUNT > 0) loop();
+    });
+    function loop() {
+        if (!visible) { rafId = null; return; }
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        for (let i = 0; i < particles.length; i++) { particles[i].step(); particles[i].draw(); }
+        ctx.globalAlpha = 1;
+        rafId = requestAnimationFrame(loop);
+    }
+    if (PARTICLE_COUNT > 0) loop();
+
+    /* ================== BIRTHDAY ================== */
+    function isBirthday(d = new Date()) { return d.getMonth() === 3 && d.getDate() === 24; } // April = 3
+
+    const BDAY_WISHES = [
+        "Another year of you lighting up every room you walk into — happy birthday, Rakshi. The world got lucky the day you arrived.",
+        "Cake, chaos, and every good thing in between — wishing you a birthday as magical as you make everyone around you feel.",
+        "May this year hand you every single thing you've been quietly hoping for. Happy birthday, sunshine.",
+        "Today the sanctuary exists just for you. Happy birthday, Rakshi — keep being the kind of person who deserves days this good."
+    ];
+
+    function triggerBirthdayIfDue() {
+        if (!isBirthday()) return;
+        const key = 'bday-shown-' + new Date().getFullYear();
+        document.getElementById('bday-msg').textContent = BDAY_WISHES[Math.floor(Math.random() * BDAY_WISHES.length)];
+        document.getElementById('bday-overlay').classList.add('show');
+        document.getElementById('bday-banner').classList.add('show');
+        startConfetti();
+        sessionStorage.setItem(key, '1');
+    }
+
+    function replayBirthday() {
+        if (!isBirthday()) return;
+        document.getElementById('bday-msg').textContent = BDAY_WISHES[Math.floor(Math.random() * BDAY_WISHES.length)];
+        document.getElementById('bday-overlay').classList.add('show');
+        startConfetti();
+    }
+    function closeBirthday() {
+        document.getElementById('bday-overlay').classList.remove('show');
+        setTimeout(stopConfetti, 2500);
+    }
+
+    /* Confetti */
+    const confettiCanvas = document.getElementById('confetti');
+    const cctx = confettiCanvas.getContext('2d');
+    let confetti = [];
+    let confettiRAF = null;
+    function sizeConfetti() { confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight; }
+    addEventListener('resize', sizeConfetti);
+    sizeConfetti();
+
+    function startConfetti() {
+        if (CONFETTI_COUNT === 0) return;
+        confetti = [];
+        for (let i = 0; i < CONFETTI_COUNT; i++) {
+            confetti.push({
+                x: Math.random() * innerWidth,
+                y: Math.random() * -innerHeight,
+                w: 6 + Math.random() * 6,
+                h: 8 + Math.random() * 8,
+                vy: 2 + Math.random() * 3,
+                vx: (Math.random() - 0.5) * 1.5,
+                rot: Math.random() * Math.PI,
+                vrot: (Math.random() - 0.5) * 0.2,
+                color: ['#ff6a88','#d4af37','#8a2be2','#6fcf97','#6ba6ff','#f5d98a'][Math.floor(Math.random()*6)]
+            });
+        }
+        confettiCanvas.classList.add('show');
+        if (!confettiRAF) drawConfetti();
+        setTimeout(() => { /* auto stop after ~8s if user leaves it */ stopConfetti(); }, 8000);
+    }
+    function stopConfetti() {
+        confetti = [];
+        if (confettiRAF) { cancelAnimationFrame(confettiRAF); confettiRAF = null; }
+        cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+        confettiCanvas.classList.remove('show');
+    }
+    function drawConfetti() {
+        cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+        for (const c of confetti) {
+            c.x += c.vx; c.y += c.vy; c.rot += c.vrot;
+            cctx.save();
+            cctx.translate(c.x, c.y);
+            cctx.rotate(c.rot);
+            cctx.fillStyle = c.color;
+            cctx.fillRect(-c.w/2, -c.h/2, c.w, c.h);
+            cctx.restore();
+        }
+        confetti = confetti.filter(c => c.y < innerHeight + 20);
+        if (confetti.length > 0) confettiRAF = requestAnimationFrame(drawConfetti);
+        else { confettiRAF = null; confettiCanvas.classList.remove('show'); }
+    }
+
+    // Keep the page fresh if left open overnight — re-check once an hour.
+    setInterval(() => {
+        if (isBirthday() && !sessionStorage.getItem('bday-shown-' + new Date().getFullYear())) {
+            triggerBirthdayIfDue();
+        }
+    }, 60 * 60 * 1000);
+
+    // Run on load
+    triggerBirthdayIfDue();
     </script>
 </body>
 </html>
