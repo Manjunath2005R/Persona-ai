@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Rakshi's Magical Sanctuary ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap');
+
+        :root {
+            --gold: #d4af37; --gold-soft: #f5d98a;
+            --violet: #8a2be2; --violet-deep: #3b0764;
+            --ink: #0a0514;
+            --gryff: #7c1a1a; --slyth: #1a5e3a; --rave: #1f3a8a; --huff: #d4a017;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; padding: 0; }
+        body {
+            background:
+              radial-gradient(ellipse at 30% 10%, #2a1048 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 90%, #1a0838 0%, transparent 60%),
+              #060214;
+            color: #fff; font-family: 'Poppins', sans-serif;
+            height: 100dvh; overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .sky {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+              radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent),
+              radial-gradient(1px 1px at 30% 80%, #fff, transparent),
+              radial-gradient(1.5px 1.5px at 60% 40%, #f5d98a, transparent),
+              radial-gradient(1px 1px at 75% 15%, #fff, transparent),
+              radial-gradient(1.2px 1.2px at 85% 70%, #fff, transparent),
+              radial-gradient(1px 1px at 15% 55%, #f5d98a, transparent),
+              radial-gradient(1px 1px at 45% 25%, #fff, transparent),
+              radial-gradient(1.3px 1.3px at 92% 35%, #fff, transparent),
+              radial-gradient(1px 1px at 25% 90%, #fff, transparent),
+              radial-gradient(1px 1px at 55% 65%, #fff, transparent),
+              radial-gradient(1.2px 1.2px at 70% 95%, #f5d98a, transparent),
+              radial-gradient(1px 1px at 5% 70%, #fff, transparent);
+            animation: twinkle 6s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle { from { opacity: 0.6; } to { opacity: 1; } }
+        .moon {
+            position: fixed; top: 5%; right: 5%; width: 70px; height: 70px;
+            background: radial-gradient(circle at 35% 35%, #fff8e7, #f5d98a 60%, #b8860b);
+            border-radius: 50%; box-shadow: 0 0 45px rgba(245,217,138,0.5); z-index: 1;
+        }
+        #particles { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+
+        .view {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; visibility: hidden;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(8px); padding: 20px;
+        }
+        .active-view { opacity: 1; pointer-events: all; visibility: visible; z-index: 10; transform: translateY(0); }
+
+        /* ===== GATES ===== */
+        #gate-view { z-index: 100; flex-direction: row; padding: 0; transform: none; }
+        .gate-panel {
+            width: 50vw; height: 100vh; position: relative;
+            background:
+              repeating-linear-gradient(90deg, #0a0a0a, #0a0a0a 20px, #141018 20px, #141018 60px),
+              linear-gradient(to bottom, #1a1018, #000);
+            border: 5px solid #222; transform-origin: left;
+            transition: transform 2s cubic-bezier(.77,0,.18,1);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9); pointer-events: all;
+        }
+        .gate-panel.right { transform-origin: right; border-left: 2px solid #333; }
+        .gate-panel.left { border-right: 2px solid #333; }
+        .gate-open .gate-panel.left  { transform: rotateY(-100deg); }
+        .gate-open .gate-panel.right { transform: rotateY( 100deg); }
+        .gate-open #gate-note { opacity: 0; transform: translate(-50%,-50%) scale(0.6); pointer-events: none; }
+        #gate-note {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: linear-gradient(180deg, #f8efd8, #ecd9ad);
+            padding: 26px 36px; border-radius: 5px;
+            box-shadow: 0 0 40px rgba(255,215,0,0.4), 0 8px 20px rgba(0,0,0,0.5);
+            text-align: center; color: #4a0e17; cursor: pointer;
+            border: 2px solid var(--gold); z-index: 101; pointer-events: all;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        #gate-note h2 { font-family: 'Cinzel', serif; margin: 0 0 5px 0; font-size: 24px; letter-spacing: 2px; }
+        #gate-note p { font-family: 'Cormorant Garamond', serif; font-style: italic; margin: 0; font-size: 17px; font-weight: 600; }
+        .seal { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle, #a8002b, #4a0e17); margin: 10px auto 0; }
+
+        /* ===== CARD ===== */
+        .card {
+            width: 100%; max-width: 580px; padding: 24px 22px;
+            background: rgba(22, 12, 40, 0.78);
+            border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center; z-index: 20; position: relative;
+            max-height: calc(100dvh - 40px); overflow-y: auto;
+        }
+        .card::-webkit-scrollbar { width: 6px; }
+        .card::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 10px; }
+
+        h1 {
+            font-family: 'Cinzel', serif; font-size: 1.9rem; color: var(--gold);
+            margin: 0 0 4px 0; letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212,175,55,0.4);
+        }
+        .sub { color: #bfa1e6; margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.02rem; }
+
+        select, input[type="text"], textarea {
+            width: 100%; padding: 13px; margin: 8px 0;
+            background: rgba(0,0,0,0.7); color: #fff;
+            border: 1px solid var(--violet); border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: 0.95rem; cursor: pointer;
+            resize: vertical;
+        }
+        textarea { min-height: 90px; font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+
+        button {
+            padding: 13px; border: none; border-radius: 12px; cursor: pointer;
+            font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 0.92rem;
+            transition: transform 0.15s ease, filter 0.15s ease;
+            color: white; position: relative; z-index: 30;
+        }
+        button:active { transform: scale(0.96); }
+        @media (hover: hover) { button:hover { filter: brightness(1.12); } }
+
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .btn-full { grid-column: 1 / -1; }
+
+        .btn-spell   { background: linear-gradient(135deg, #7c22ce, #3b0764); }
+        .btn-game    { background: linear-gradient(135deg, #005f73, #0a9396); }
+        .btn-trip    { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-fun     { background: linear-gradient(135deg, #e63946, #9b2226); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-caption { background: linear-gradient(135deg, #ff9a8b, #d64c7f); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-menu    { background: linear-gradient(135deg, #f59e0b, #b45309); font-family: 'Cinzel', serif; font-weight: bold; color: #000; }
+        .btn-owl     { background: linear-gradient(135deg, #6b4423, #2c1810); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-proph   { background: linear-gradient(135deg, #4a148c, #1a0033); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-garden  { background: linear-gradient(135deg, #2e7d32, #1b5e20); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-mirror  { background: linear-gradient(135deg, #b0bec5, #546e7a); color: #000; font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-spell-day { background: linear-gradient(135deg, #1e88e5, #0d47a1); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-journal { background: linear-gradient(135deg, #6d4c41, #3e2723); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-back    { background: transparent; border: 1px solid #bfa1e6; color: #bfa1e6; width: 100%; margin-top: 12px; }
+        .btn-chip    { background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.4); color: #fff; padding: 12px 10px; font-size: 0.9rem; }
+        .btn-chip.selected { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-weight: 700; }
+
+        .message-box {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem; font-style: italic; color: #efe2ff;
+            min-height: 60px; max-height: 30vh; overflow-y: auto;
+            margin-top: 12px; padding: 12px 14px;
+            background: rgba(0,0,0,0.25); border-radius: 12px;
+            border: 1px solid rgba(212,175,55,0.15); line-height: 1.55;
+        }
+        .message-box.revealed { border-color: rgba(212,175,55,0.45); }
+        .message-box::-webkit-scrollbar { width: 6px; }
+        .message-box::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 10px; }
+        .loading-text { color: var(--gold); display: inline-flex; gap: 8px; align-items: center; }
+        .orbit { width: 12px; height: 12px; border-radius: 50%; border: 2px dashed var(--gold); animation: spin 1.2s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== PERSONA STRIP ===== */
+        .persona-strip {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+            padding: 10px 8px; margin: 0 0 10px 0;
+            background: rgba(0,0,0,0.35); border-radius: 14px;
+            border: 1px solid rgba(212,175,55,0.25);
+        }
+        .persona-cell { text-align: center; padding: 4px 2px; }
+        .persona-cell .big { font-size: 1.3rem; line-height: 1; margin-bottom: 2px; }
+        .persona-cell .label { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 1.5px; color: var(--gold-soft); opacity: 0.75; }
+        .persona-cell .value { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; color: #fff; line-height: 1.15; margin-top: 2px; }
+        .streak-fire { color: #ff9a3d; }
+
+        .top-banner {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.75rem; color: var(--gold-soft);
+            margin-bottom: 8px; letter-spacing: 1px; font-family: 'Cinzel', serif;
+        }
+        .birthday-countdown { color: #ff9a8b; font-weight: 600; }
+
+        .badge {
+            display: inline-block; padding: 2px 8px; border-radius: 10px;
+            background: #c41e3a; color: #fff; font-size: 0.7rem;
+            font-family: 'Cinzel', serif; margin-left: 6px;
+            vertical-align: middle; box-shadow: 0 0 10px rgba(196,30,58,0.6);
+            animation: pulseBadge 1.5s ease-in-out infinite;
+        }
+        @keyframes pulseBadge { 50% { transform: scale(1.08); } }
+
+        .level-panel {
+            margin: 0 0 10px;
+            padding: 11px 12px;
+            background: rgba(0,0,0,0.28);
+            border: 1px solid rgba(212,175,55,0.22);
+            border-radius: 14px;
+            text-align: left;
+        }
+        .level-row {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 10px; color: var(--gold-soft);
+            font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 1.4px;
+        }
+        .xp-bar {
+            height: 8px; margin-top: 8px; overflow: hidden;
+            border-radius: 20px; background: rgba(255,255,255,0.1);
+        }
+        .xp-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #d4af37, #ff9a8b, #8a2be2);
+            border-radius: inherit; transition: width 0.45s ease;
+        }
+        .daily-ritual {
+            margin: 0 0 10px; padding: 10px;
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 14px;
+        }
+        .ritual-head {
+            display: flex; justify-content: space-between; gap: 10px;
+            font-family: 'Cinzel', serif; color: var(--gold-soft);
+            font-size: 0.7rem; letter-spacing: 1.5px; margin-bottom: 8px;
+        }
+        .ritual-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+        .ritual-item {
+            min-height: 56px; padding: 7px 4px;
+            border-radius: 10px; background: rgba(0,0,0,0.22);
+            border: 1px solid rgba(255,255,255,0.08);
+            text-align: center; color: #cdb8e8;
+            font-size: 0.62rem; line-height: 1.15;
+        }
+        .ritual-item .mark { display: block; font-size: 1.05rem; line-height: 1; margin-bottom: 4px; }
+        .ritual-item.done {
+            color: #fff; border-color: rgba(212,175,55,0.55);
+            background: rgba(212,175,55,0.14);
+        }
+        .btn-common { background: linear-gradient(135deg, #3949ab, #11164f); font-family: 'Cinzel', serif; font-weight: bold; }
+        .btn-pensieve { background: linear-gradient(135deg, #00acc1, #31506b); font-family: 'Cinzel', serif; font-weight: bold; }
+
+        .collection-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+            margin: 10px 0; text-align: left;
+        }
+        .collectible {
+            min-height: 96px; padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(212,175,55,0.16), rgba(138,43,226,0.14));
+            border: 1px solid rgba(212,175,55,0.35);
+            box-shadow: inset 0 0 18px rgba(255,255,255,0.04);
+        }
+        .collectible.locked {
+            filter: grayscale(1); opacity: 0.55;
+            background: rgba(0,0,0,0.25);
+        }
+        .collectible .c-icon { font-size: 1.6rem; margin-bottom: 5px; }
+        .collectible .c-name { font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.82rem; letter-spacing: 1px; }
+        .collectible .c-desc { color: #efe2ff; font-size: 0.78rem; line-height: 1.35; margin-top: 4px; }
+        .achievement-row {
+            display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 10px;
+        }
+        .achievement-pill {
+            padding: 5px 8px; border-radius: 999px;
+            background: rgba(212,175,55,0.12);
+            border: 1px solid rgba(212,175,55,0.28);
+            color: var(--gold-soft); font-size: 0.72rem;
+        }
+        .memory-constellation {
+            min-height: 118px; margin: 10px 0; padding: 14px;
+            border-radius: 14px; text-align: left; line-height: 1.9;
+            background:
+              radial-gradient(circle at 15% 25%, rgba(245,217,138,0.35), transparent 2px),
+              radial-gradient(circle at 65% 35%, rgba(255,255,255,0.28), transparent 2px),
+              radial-gradient(circle at 38% 70%, rgba(179,157,219,0.28), transparent 2px),
+              rgba(0,0,0,0.25);
+            border: 1px solid rgba(179,157,219,0.25);
+            font-size: 1.35rem;
+        }
+        .memory-entry {
+            text-align: left; padding: 10px 12px; margin: 8px 0;
+            border-left: 3px solid #00acc1; border-radius: 8px;
+            background: rgba(0,0,0,0.22);
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .memory-entry .m-date { color: var(--gold-soft); font-size: 0.75rem; letter-spacing: 1px; }
+        .memory-entry .m-text { color: #f4ecd8; margin-top: 3px; line-height: 1.45; }
+
+        /* ===== ONBOARDING ===== */
+        #onboard-view { z-index: 120; }
+        .onb-title { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 6px; }
+        .onb-step  { margin-bottom: 12px; font-family: 'Cormorant Garamond', serif; font-style: italic; color: #f4ecd8; font-size: 1.05rem; line-height: 1.5; }
+        .onb-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+        .onb-opt {
+            padding: 12px; border-radius: 10px; cursor: pointer;
+            background: rgba(138,43,226,0.15); border: 1px solid rgba(212,175,55,0.3);
+            color: #fff; font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; line-height: 1.3;
+            transition: all 0.2s;
+        }
+        .onb-opt:active { transform: scale(0.97); }
+        .onb-opt:hover { background: rgba(212,175,55,0.18); border-color: var(--gold); }
+        .reveal-big {
+            font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold);
+            letter-spacing: 3px; text-shadow: 0 0 20px rgba(212,175,55,0.6);
+            animation: revealFade 1.2s ease-out;
+        }
+        @keyframes revealFade { from { opacity: 0; transform: translateY(20px) scale(0.8);} to { opacity: 1; transform: translateY(0) scale(1);} }
+        .wand-display {
+            padding: 18px; margin: 14px 0; border-radius: 14px;
+            background: linear-gradient(135deg, rgba(139,94,60,0.3), rgba(62,39,35,0.5));
+            border: 1px solid rgba(212,175,55,0.4);
+            font-family: 'Cormorant Garamond', serif; text-align: center;
+        }
+        .wand-display .w-name { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.3rem; margin-bottom: 4px; }
+        .wand-display .w-detail { color: #f4ecd8; font-size: 0.95rem; line-height: 1.5; }
+
+        /* ===== SNITCH ===== */
+        #game-ui { position: absolute; top: 20px; right: 20px; z-index: 200; display: none; }
+        .btn-stop { background: #d00000; padding: 10px 20px; font-size: 0.9rem; }
+        #snitch {
+            position: absolute; width: 34px; height: 34px;
+            background: radial-gradient(circle at 35% 30%, #fff8c5, #ffea00 35%, #b8860b);
+            border-radius: 50%; box-shadow: 0 0 25px #ffea00;
+            cursor: pointer; z-index: 100; display: none;
+            transition: top 0.55s cubic-bezier(.25,1,.5,1), left 0.55s cubic-bezier(.25,1,.5,1);
+        }
+        #snitch::before, #snitch::after {
+            content: ''; position: absolute; top: 12px; width: 28px; height: 10px;
+            background: rgba(255,255,255,0.85); border-radius: 50%;
+            animation: flap 0.12s infinite alternate;
+        }
+        #snitch::before { left: -24px; transform-origin: right; }
+        #snitch::after  { right: -24px; transform-origin: left; }
+        @keyframes flap { from { transform: rotate(25deg);} to { transform: rotate(-25deg);} }
+
+        /* ===== HOGWARTS ===== */
+        #hogwarts-view {
+            background:
+              radial-gradient(ellipse at 50% 90%, rgba(255,100,0,0.15), transparent 50%),
+              linear-gradient(rgba(15,5,5,0.9), rgba(0,0,0,1));
+            z-index: 50;
+        }
+        .fire-glow {
+            position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
+            width: 80vw; height: 80vw; max-width: 600px; max-height: 600px;
+            background: radial-gradient(ellipse, rgba(255,120,20,0.3) 0%, transparent 70%);
+            pointer-events: none; animation: firePulse 2s ease-in-out infinite alternate;
+        }
+        @keyframes firePulse { from { opacity: 0.75; } to { opacity: 1; } }
+        .dialogue-box {
+            width: 92%; max-width: 720px; background: rgba(14,7,7,0.9);
+            border: 2px solid var(--gold); border-radius: 16px;
+            padding: 24px; z-index: 20; position: relative;
+            box-shadow: 0 0 40px rgba(212,175,55,0.18);
+            max-height: calc(100dvh - 40px); display: flex; flex-direction: column;
+        }
+        .character-header { display: flex; align-items: center; margin-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 10px; }
+        .char-avatar {
+            width: 52px; height: 52px; border-radius: 50%;
+            margin-right: 14px; background: #d4af37;
+            box-shadow: 0 0 20px currentColor;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700;
+            color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .character-name { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.25rem; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        .character-house { display: block; font-size: 0.62rem; color: #bfa1e6; letter-spacing: 3px; margin-top: 2px; font-weight: 300; }
+        .dialogue-progress { margin-left: auto; font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--gold-soft); letter-spacing: 1px; }
+        .dialogue-text {
+            font-size: 1.08rem; line-height: 1.7; color: #f4ecd8;
+            min-height: 90px; flex: 1; overflow-y: auto; padding-right: 10px;
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+        }
+        .dialogue-text::-webkit-scrollbar { width: 6px; }
+        .dialogue-text::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .typewriter-cursor { display: inline-block; width: 6px; height: 1.1em; margin-left: 2px; background: var(--gold); animation: blink 0.7s infinite; vertical-align: middle; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .btn-next { background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; margin-top: 12px; font-family: 'Cinzel', serif; letter-spacing: 2px; }
+
+        /* ===== CAPTION ===== */
+        .cap-zone {
+            position: relative; margin: 10px 0; border: 2px dashed rgba(212,175,55,0.5);
+            border-radius: 14px; padding: 22px 12px; background: rgba(214,76,127,0.08);
+            cursor: pointer;
+        }
+        .cap-icon { font-size: 2.2rem; margin-bottom: 6px; }
+        .cap-text { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; color: #f4ecd8; }
+        .cap-preview-frame {
+            position: relative; margin: 10px auto; width: 100%;
+            max-height: 240px; border-radius: 12px; overflow: hidden;
+            border: 2px solid var(--gold);
+        }
+        .cap-preview-frame img { display: block; width: 100%; max-height: 240px; object-fit: cover; }
+
+        /* ===== RECIPE ===== */
+        .menu-categories { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; }
+        .recipe {
+            text-align: left; margin-top: 12px; padding: 14px;
+            background: rgba(0,0,0,0.3); border-radius: 12px;
+            border: 1px solid rgba(212,175,55,0.35);
+            max-height: 42vh; overflow-y: auto;
+        }
+        .recipe h2 { font-family: 'Cinzel', serif; color: var(--gold); margin: 0 0 4px 0; font-size: 1.3rem; letter-spacing: 1px; }
+        .recipe .region { color: #bfa1e6; font-style: italic; font-size: 0.85rem; margin-bottom: 8px; font-family: 'Cormorant Garamond', serif; }
+        .recipe .meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+        .recipe .meta span { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.35); padding: 4px 9px; border-radius: 16px; font-size: 0.74rem; color: var(--gold-soft); }
+        .recipe .desc { font-family: 'Cormorant Garamond', serif; font-style: italic; color: #f4ecd8; margin-bottom: 10px; line-height: 1.4; }
+        .recipe h3 { font-family: 'Cinzel', serif; color: var(--gold-soft); margin: 10px 0 5px; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
+        .recipe ul, .recipe ol { margin: 0; padding-left: 18px; color: #efe2ff; }
+        .recipe li { margin-bottom: 5px; line-height: 1.45; font-size: 0.92rem; }
+        .recipe .tip {
+            margin-top: 10px; padding: 9px 11px;
+            background: rgba(138,43,226,0.15); border-left: 3px solid var(--violet);
+            border-radius: 6px; font-size: 0.9rem; color: #efe2ff;
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+        }
+
+        /* ===== OWL LETTER ===== */
+        .owl-parchment {
+            margin: 12px 0; padding: 20px;
+            background: linear-gradient(180deg, #f0e3c4, #d9c9a0);
+            color: #3e2414; border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif; font-size: 1rem; line-height: 1.65;
+            box-shadow: inset 0 0 25px rgba(139,69,19,0.3), 0 8px 18px rgba(0,0,0,0.4);
+            white-space: pre-wrap; text-align: left;
+            position: relative; animation: parchmentIn 0.8s cubic-bezier(.22,1,.36,1);
+        }
+        @keyframes parchmentIn {
+            from { transform: translateY(30px) rotate(-1deg); opacity: 0; }
+            to   { transform: translateY(0) rotate(0); opacity: 1; }
+        }
+        .owl-parchment::before {
+            content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle, #8b0000, #4a0000);
+            box-shadow: 0 0 20px rgba(139,0,0,0.6);
+        }
+        .owl-from { font-family: 'Cinzel', serif; color: #4a0e17; font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 6px; text-align: center; }
+
+        /* ===== CRYSTAL BALL / PROPHECY ===== */
+        .crystal-ball {
+            width: 160px; height: 160px; border-radius: 50%;
+            margin: 10px auto 14px;
+            background:
+              radial-gradient(circle at 35% 30%, rgba(255,255,255,0.6), transparent 40%),
+              radial-gradient(circle at 50% 50%, #b39ddb 0%, #4a148c 60%, #1a0033 100%);
+            box-shadow:
+              0 0 60px rgba(138,43,226,0.5),
+              inset 0 -15px 30px rgba(0,0,0,0.4),
+              inset 0 15px 30px rgba(255,255,255,0.15);
+            position: relative;
+            animation: ballFloat 4s ease-in-out infinite alternate;
+        }
+        @keyframes ballFloat { from { transform: translateY(0);} to { transform: translateY(-6px);} }
+        .crystal-ball::after {
+            content: ''; position: absolute; inset: -6px;
+            border: 1px dashed rgba(212,175,55,0.5); border-radius: 50%;
+            animation: spin 30s linear infinite;
+        }
+        .prophecy-text {
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+            font-size: 1.08rem; color: #e1bee7; line-height: 1.7;
+            padding: 14px; background: rgba(74,20,140,0.2);
+            border-radius: 12px; border: 1px solid rgba(179,157,219,0.3);
+            text-align: left;
+        }
+
+        /* ===== GARDEN ===== */
+        .garden-bed {
+            min-height: 80px; padding: 14px 10px; margin: 10px 0;
+            background: linear-gradient(180deg, rgba(46,125,50,0.2), rgba(27,94,32,0.3));
+            border: 1px solid rgba(144,238,144,0.3); border-radius: 14px;
+            font-size: 1.6rem; line-height: 1.8; word-spacing: 4px; text-align: left;
+        }
+        .gratitude-list {
+            text-align: left; max-height: 180px; overflow-y: auto;
+            padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;
+            font-family: 'Cormorant Garamond', serif; color: #efe2ff; font-size: 0.9rem;
+        }
+        .gratitude-list::-webkit-scrollbar { width: 6px; }
+        .gratitude-list::-webkit-scrollbar-thumb { background: #2e7d32; border-radius: 10px; }
+        .gratitude-list div { padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+        .gratitude-list div:last-child { border-bottom: none; }
+        .gratitude-list .g-date { color: var(--gold-soft); font-size: 0.78rem; margin-right: 6px; }
+
+        /* ===== MIRROR ===== */
+        .mirror-frame {
+            width: 100%; max-width: 280px; aspect-ratio: 3/4;
+            margin: 10px auto; border-radius: 140px 140px 20px 20px;
+            background:
+              radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.15), transparent 60%),
+              linear-gradient(180deg, #2a2a3e, #0d0d1a);
+            border: 6px solid var(--gold);
+            box-shadow: 0 0 40px rgba(212,175,55,0.4), inset 0 0 30px rgba(0,0,0,0.8);
+            position: relative; overflow: hidden;
+        }
+        .mirror-frame::before {
+            content: 'Erised stra ehru oyt ube cafru oyt on wohsi';
+            position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+            font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.55rem;
+            letter-spacing: 1.5px; opacity: 0.5; width: 95%; text-align: center;
+        }
+        .mirror-reflection {
+            position: absolute; inset: 20% 10% 10%; display: flex;
+            align-items: center; justify-content: center; text-align: center;
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+            color: #f4ecd8; font-size: 0.92rem; line-height: 1.55;
+            opacity: 0; transition: opacity 0.8s;
+        }
+        .mirror-reflection.show { opacity: 1; }
+
+        /* ===== SPELL OF THE DAY ===== */
+        .spell-card {
+            margin: 12px 0; padding: 18px;
+            background: linear-gradient(135deg, rgba(30,136,229,0.15), rgba(13,71,161,0.25));
+            border: 1px solid rgba(100,181,246,0.4); border-radius: 14px;
+            text-align: left;
+        }
+        .spell-card .spell-name {
+            font-family: 'Cinzel', serif; color: #90caf9; font-size: 1.8rem;
+            text-shadow: 0 0 15px rgba(100,181,246,0.6); margin-bottom: 4px;
+            letter-spacing: 2px;
+        }
+        .spell-card .spell-pron { color: var(--gold-soft); font-size: 0.82rem; margin-bottom: 8px; font-style: italic; }
+        .spell-card .spell-desc { font-family: 'Cormorant Garamond', serif; color: #f4ecd8; font-size: 0.98rem; line-height: 1.55; }
+
+        /* ===== JOURNAL ===== */
+        .journal-entry {
+            text-align: left; margin: 8px 0; padding: 10px 12px;
+            background: rgba(0,0,0,0.2); border-left: 3px solid var(--gold);
+            border-radius: 6px; font-family: 'Cormorant Garamond', serif;
+        }
+        .journal-entry .je-date { font-size: 0.74rem; color: var(--gold-soft); letter-spacing: 1px; }
+        .journal-entry .je-mood { font-size: 0.78rem; color: #bfa1e6; margin-left: 6px; }
+        .journal-entry .je-text { color: #fff; font-size: 0.95rem; margin: 4px 0; }
+        .journal-entry .je-reply { color: #efe2ff; font-style: italic; font-size: 0.88rem; opacity: 0.9; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 5px; margin-top: 5px; }
+
+        /* ===== BIRTHDAY ===== */
+        #bday-overlay { position: fixed; inset: 0; z-index: 500; display: none; align-items: center; justify-content: center; background: rgba(5,2,20,0.85); padding: 20px; }
+        #bday-overlay.show { display: flex; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .bday-card {
+            background: linear-gradient(180deg, #2a1048, #0d0620);
+            border: 2px solid var(--gold); border-radius: 20px;
+            padding: 28px 24px; max-width: 420px; width: 100%;
+            text-align: center; box-shadow: 0 0 60px rgba(255,120,200,0.4);
+        }
+        .bday-card h1 {
+            font-size: 1.7rem; margin-bottom: 8px;
+            background: linear-gradient(90deg, #ff9a8b, #d4af37, #8a2be2);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowShift 4s linear infinite;
+        }
+        @keyframes rainbowShift { from { filter: hue-rotate(0deg);} to { filter: hue-rotate(360deg);} }
+        .cake { font-size: 3.6rem; margin: 8px 0; animation: bounceCake 1.5s ease-in-out infinite alternate; display: inline-block; }
+        @keyframes bounceCake { from { transform: translateY(0) rotate(-3deg);} to { transform: translateY(-10px) rotate(3deg);} }
+        .bday-msg { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: #f4ecd8; line-height: 1.6; margin: 10px 0 16px; }
+        .confetti-canvas { position: fixed; inset: 0; z-index: 499; pointer-events: none; display: none; }
+        .confetti-canvas.show { display: block; }
+        .bday-banner {
+            display: none; position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(90deg, #d4af37, #ff9a8b); color: #000;
+            font-family: 'Cinzel', serif; font-weight: 700;
+            padding: 8px 16px; border-radius: 20px; font-size: 0.82rem;
+            box-shadow: 0 4px 20px rgba(255,154,139,0.4); z-index: 400;
+            letter-spacing: 1px; cursor: pointer; max-width: 90vw; text-align: center;
+        }
+        .bday-banner.show { display: block; }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.55rem; }
+            .moon { width: 50px; height: 50px; top: 3%; right: 3%; }
+            .card { padding: 20px 14px; }
+            .persona-strip { grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; }
+            .persona-cell .label { font-size: 0.5rem; }
+            .persona-cell .value { font-size: 0.72rem; }
+            .ritual-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+            .ritual-item { min-height: 50px; font-size: 0.55rem; padding: 6px 2px; }
+            .collection-grid { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.1s !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sky"></div>
+    <div class="moon"></div>
+    <canvas id="particles"></canvas>
+
+    <!-- Birthday -->
+    <div id="bday-banner" class="bday-banner" onclick="replayBirthday()">🎉 Tap for a Birthday Surprise 🎂</div>
+    <canvas id="confetti" class="confetti-canvas"></canvas>
+    <div id="bday-overlay">
+        <div class="bday-card">
+            <div class="cake">🎂</div>
+            <h1>Happy Birthday, Rakshi!</h1>
+            <div class="bday-msg" id="bday-msg">Loading wishes...</div>
+            <button class="btn-trip btn-full" onclick="closeBirthday()">✨ Enter the Sanctuary</button>
+        </div>
+    </div>
+
+    <!-- Snitch -->
+    <div id="game-ui"><button class="btn-stop" onclick="stopGame()">End Game 🛑</button></div>
+    <div id="snitch" onclick="catchSnitch()"></div>
+
+    <!-- VIEW: GATES -->
+    <div id="gate-view" class="view active-view">
+        <div class="gate-panel left"></div>
+        <div class="gate-panel right"></div>
+        <div id="gate-note" onclick="openGates()">
+            <h2>To: Rakshi</h2>
+            <p>Push to enter...</p>
+            <div class="seal"></div>
+        </div>
+    </div>
+
+    <!-- VIEW: ONBOARDING -->
+    <div id="onboard-view" class="view">
+        <div class="card">
+            <div id="onb-content"></div>
+        </div>
+    </div>
+
+    <!-- VIEW: DASHBOARD -->
+    <div id="dashboard-view" class="view">
+        <div class="card">
+            <div class="top-banner">
+                <span id="day-motto">Tuesday · of wonder</span>
+                <span id="bday-countdown" class="birthday-countdown"></span>
+            </div>
+
+            <h1 id="greeting">Hey Rakshi ✨</h1>
+            <p class="sub" id="sub-line">What is your heart feeling today?</p>
+
+            <div class="persona-strip" id="persona-strip">
+                <div class="persona-cell"><div class="big" id="p-house-icon">🏰</div><div class="label">HOUSE</div><div class="value" id="p-house">—</div></div>
+                <div class="persona-cell"><div class="big">🪄</div><div class="label">WAND</div><div class="value" id="p-wand">—</div></div>
+                <div class="persona-cell"><div class="big" id="p-patronus-icon">✨</div><div class="label">PATRONUS</div><div class="value" id="p-patronus">—</div></div>
+                <div class="persona-cell"><div class="big streak-fire">🔥</div><div class="label">STREAK</div><div class="value" id="p-streak">0 days</div></div>
+            </div>
+
+            <div class="level-panel">
+                <div class="level-row">
+                    <span id="level-title">Level 1 · First Year</span>
+                    <span id="xp-text">0 XP</span>
+                </div>
+                <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
+            </div>
+
+            <div class="daily-ritual">
+                <div class="ritual-head">
+                    <span>Daily Ritual</span>
+                    <span id="ritual-progress">0/5 complete</span>
+                </div>
+                <div class="ritual-grid" id="ritual-grid"></div>
+            </div>
+
+            <select id="mood-selector">
+                <option>Sadness</option><option>Anger</option><option>Fear</option><option>Disgust</option>
+                <option>Surprise</option><option>Trust</option><option>Anticipation</option><option>Admiration</option>
+                <option>Adoration</option><option>Aesthetic Appreciation</option><option>Amusement</option><option>Anxiety</option>
+                <option>Awe</option><option>Awkwardness</option><option>Boredom</option><option>Calmness</option>
+                <option>Confusion</option><option>Craving</option><option>Empathetic Pain</option><option>Entrancement</option>
+                <option>Envy</option><option>Excitement</option><option>Horror</option><option>Interest</option>
+                <option>Joy</option><option>Loneliness</option><option>Love</option><option>Nostalgia</option>
+                <option>Romance</option><option>Satisfaction</option><option>Sympathy</option><option>Triumph</option>
+                <option>Shame</option><option>Guilt</option><option>Pride</option><option>Embarrassment</option>
+                <option>Jealousy</option><option>Contempt</option><option>Optimism</option><option>Remorse</option>
+                <option>Submission</option><option>Aggression</option>
+            </select>
+
+            <div class="action-grid">
+                <button class="btn-owl btn-full" onclick="openOwl()">🦉 Daily Owl Post <span id="owl-badge" class="badge" style="display:none;">NEW</span></button>
+                <button class="btn-proph" onclick="openProphecy()">📜 Daily Prophecy</button>
+                <button class="btn-spell-day" onclick="openSpellOfDay()">🔮 Spell of the Day</button>
+                <button class="btn-garden" onclick="openGarden()">🌱 Gratitude Garden</button>
+                <button class="btn-journal" onclick="openJournal()">📓 Mood Journal</button>
+                <button class="btn-mirror btn-full" onclick="openMirror()">🪞 Mirror of Erised</button>
+                <button class="btn-pensieve" onclick="openPensieve()">🌌 Pensieve</button>
+                <button class="btn-common" onclick="openCommonRoom()">🏆 Common Room</button>
+                <button class="btn-spell" onclick="castAISpell()">🪄 Cast Spell</button>
+                <button class="btn-game" onclick="startGame()">🧹 Catch Snitch</button>
+                <button class="btn-trip" id="trip-btn" onclick="startTrip()">🚂 Hogwarts Trip</button>
+                <button class="btn-fun" onclick="openFunZone()">🎭 Fun Zone</button>
+                <button class="btn-caption btn-full" onclick="openCaption()">📸 Magical Caption</button>
+                <button class="btn-menu btn-full" onclick="openMenu()">🍲 Magical Menu</button>
+            </div>
+
+            <div id="message-box" class="message-box">Select how you feel, and let the magic find its words...</div>
+        </div>
+    </div>
+
+    <!-- VIEW: FUN ZONE -->
+    <div id="funzone-view" class="view">
+        <div class="card">
+            <h1>Fun Zone 🎭</h1>
+            <p class="sub">Who stars in today's trailer?</p>
+            <select id="friend-selector">
+                <option value="Manjunath">Manjunath</option>
+                <option value="Ankush">Ankush</option>
+                <option value="Vidya">Vidya</option>
+                <option value="Manoj">Manoj</option>
+            </select>
+            <button class="btn-fun btn-full" onclick="generateFunStory()">📖 Roll the Trailer</button>
+            <div id="fun-message-box" class="message-box">Pick a hero above...</div>
+            <button class="btn-back" onclick="closeFunZone()">🔙 Back to Main Menu</button>
+        </div>
+    </div>
+
+    <!-- VIEW: HOGWARTS -->
+    <div id="hogwarts-view" class="view">
+        <div class="fire-glow"></div>
+        <div class="dialogue-box">
+            <div class="character-header">
+                <div class="char-avatar" id="char-avatar">?</div>
+                <div>
+                    <div class="character-name" id="char-name">Waiting...</div>
+                    <span class="character-house" id="char-house">&nbsp;</span>
+                </div>
+                <div class="dialogue-progress" id="dialogue-progress">0 / 0</div>
+            </div>
+            <div class="dialogue-text"><span id="dialogue-text"></span><span class="typewriter-cursor"></span></div>
+            <button class="btn-next" id="btn-next" onclick="nextDialogue()">Continue ▸</button>
+        </div>
+    </div>
+
+    <!-- VIEW: CAPTION -->
+    <div id="caption-view" class="view">
+        <div class="card">
+            <h1>Magical Caption 📸</h1>
+            <p class="sub">Feed the oracle an image; it will whisper the perfect words back.</p>
+            <div id="cap-upload-zone" class="cap-zone" onclick="document.getElementById('cap-file').click()">
+                <div class="cap-icon">🖼️</div>
+                <div class="cap-text">Tap to choose an image<br><span style="opacity:0.7; font-size:0.85rem;">(under 4 MB)</span></div>
+                <input type="file" id="cap-file" accept="image/*" style="display:none" onchange="handleImageChosen(event)">
+            </div>
+            <div id="cap-preview-wrap" style="display:none;">
+                <div class="cap-preview-frame"><img id="cap-preview" alt=""></div>
+                <button class="btn-back" style="margin-top:4px;" onclick="resetCaption()">🔁 Choose a different image</button>
+            </div>
+            <div id="cap-message-box" class="message-box">Your caption will appear here...</div>
+            <div class="action-grid" style="margin-top: 10px;">
+                <button id="cap-generate-btn" class="btn-caption" onclick="generateCaption(false)" disabled style="opacity:0.5;">✨ Generate Caption</button>
+                <button id="cap-regen-btn" class="btn-spell" onclick="generateCaption(true)" disabled style="opacity:0.5;">🔮 Generate Again</button>
+            </div>
+            <button class="btn-back" onclick="exitCaption()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: MENU -->
+    <div id="menu-view" class="view">
+        <div class="card">
+            <h1>Magical Menu 🍲</h1>
+            <p class="sub">Pick a kitchen — the oracle will cook up a dish for you.</p>
+            <div class="menu-categories">
+                <button class="btn-chip" data-cat="North" onclick="selectMenuCat('North')">🍛 North</button>
+                <button class="btn-chip" data-cat="South" onclick="selectMenuCat('South')">🥥 South</button>
+                <button class="btn-chip" data-cat="Snacks" onclick="selectMenuCat('Snacks')">🥟 Snacks</button>
+            </div>
+            <div class="action-grid" style="margin-top: 8px;">
+                <button id="menu-generate-btn" class="btn-menu" onclick="generateMenu(false)" disabled style="opacity:0.5;">🍳 Generate Recipe</button>
+                <button id="menu-regen-btn" class="btn-spell" onclick="generateMenu(true)" disabled style="opacity:0.5;">🔮 Generate Again</button>
+            </div>
+            <div id="menu-recipe" class="recipe" style="display:none;"></div>
+            <div id="menu-status" class="message-box">Select a category above...</div>
+            <button class="btn-back" onclick="exitMenu()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: OWL POST -->
+    <div id="owl-view" class="view">
+        <div class="card">
+            <h1>The Owl Post 🦉</h1>
+            <p class="sub">A letter from the castle, written just for you today.</p>
+            <div id="owl-content"><div class="message-box"><span class="loading-text"><span class="orbit"></span> The owls are arriving...</span></div></div>
+            <button class="btn-back" onclick="exitOwl()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: PROPHECY -->
+    <div id="prophecy-view" class="view">
+        <div class="card">
+            <h1>Daily Prophecy 📜</h1>
+            <p class="sub">The crystal ball awakens, once per day...</p>
+            <div class="crystal-ball"></div>
+            <div id="prophecy-content"><div class="prophecy-text"><span class="loading-text"><span class="orbit"></span> The mists are clearing...</span></div></div>
+            <button class="btn-back" onclick="exitProphecy()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: GARDEN -->
+    <div id="garden-view" class="view">
+        <div class="card">
+            <h1>Gratitude Garden 🌱</h1>
+            <p class="sub">One small gratitude, once a day. Watch the garden grow.</p>
+            <div class="garden-bed" id="garden-bed">🌱</div>
+            <div id="garden-count" style="color: var(--gold-soft); font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 6px; font-family: 'Cinzel', serif;">0 GRATITUDES PLANTED</div>
+            <textarea id="garden-input" placeholder="Today I am grateful for..."></textarea>
+            <button class="btn-garden btn-full" id="garden-plant-btn" onclick="plantGratitude()">🌸 Plant this gratitude</button>
+            <div id="garden-status" style="margin-top: 8px; font-size: 0.88rem; color: #bfa1e6; font-style: italic;"></div>
+            <h3 style="font-family:'Cinzel',serif; color: var(--gold-soft); font-size: 0.85rem; letter-spacing:2px; margin: 14px 0 6px;">RECENT ENTRIES</h3>
+            <div class="gratitude-list" id="gratitude-list"></div>
+            <button class="btn-back" onclick="exitGarden()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: MIRROR -->
+    <div id="mirror-view" class="view">
+        <div class="card">
+            <h1>Mirror of Erised 🪞</h1>
+            <p class="sub">I show not your face, but your heart's desire...</p>
+            <div class="mirror-frame">
+                <div class="mirror-reflection" id="mirror-reflection">Whisper a wish below.</div>
+            </div>
+            <textarea id="mirror-wish" placeholder="I wish for..." maxlength="300"></textarea>
+            <button class="btn-mirror btn-full" onclick="consultMirror()">✨ Gaze into the Mirror</button>
+            <button class="btn-back" onclick="exitMirror()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: SPELL OF THE DAY -->
+    <div id="spellday-view" class="view">
+        <div class="card">
+            <h1>Spell of the Day 🔮</h1>
+            <p class="sub">One new spell for your spellbook, every day.</p>
+            <div id="spellday-content"></div>
+            <button class="btn-back" onclick="exitSpellDay()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: JOURNAL -->
+    <div id="journal-view" class="view">
+        <div class="card">
+            <h1>Mood Journal 📓</h1>
+            <p class="sub">A private page. The guardian spirit reads every line.</p>
+            <select id="journal-mood">
+                <option>Calmness</option><option>Joy</option><option>Love</option><option>Sadness</option>
+                <option>Anger</option><option>Fear</option><option>Anxiety</option><option>Loneliness</option>
+                <option>Nostalgia</option><option>Pride</option><option>Confusion</option><option>Gratitude</option>
+                <option>Excitement</option><option>Tired</option>
+            </select>
+            <textarea id="journal-input" placeholder="What's true for you right now?"></textarea>
+            <button class="btn-journal btn-full" onclick="saveJournal()">🕯 Save & Reflect</button>
+            <div id="journal-status" class="message-box" style="display:none;"></div>
+            <h3 style="font-family:'Cinzel',serif; color: var(--gold-soft); font-size: 0.85rem; letter-spacing:2px; margin: 14px 0 6px;">PAST ENTRIES</h3>
+            <div id="journal-list" style="max-height: 220px; overflow-y: auto;"></div>
+            <button class="btn-back" onclick="exitJournal()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: PENSIEVE -->
+    <div id="pensieve-view" class="view">
+        <div class="card">
+            <h1>Pensieve 🌌</h1>
+            <p class="sub">One memory can be kept each day. The sky grows around her story.</p>
+            <div class="memory-constellation" id="memory-constellation">✦</div>
+            <textarea id="memory-input" placeholder="Keep today's memory..."></textarea>
+            <button class="btn-pensieve btn-full" id="memory-save-btn" onclick="saveMemory()">✨ Keep this memory</button>
+            <div id="memory-status" style="margin-top: 8px; font-size: 0.88rem; color: #bfa1e6; font-style: italic;"></div>
+            <h3 style="font-family:'Cinzel',serif; color: var(--gold-soft); font-size: 0.85rem; letter-spacing:2px; margin: 14px 0 6px;">MEMORY SKY</h3>
+            <div id="memory-list" style="max-height: 210px; overflow-y: auto;"></div>
+            <button class="btn-back" onclick="exitPensieve()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <!-- VIEW: COMMON ROOM -->
+    <div id="common-view" class="view">
+        <div class="card">
+            <h1>Common Room 🏆</h1>
+            <p class="sub">Her trophies, cards, rituals, and quiet victories stay here.</p>
+            <div class="level-panel">
+                <div class="level-row">
+                    <span id="common-level-title">Level 1 · First Year</span>
+                    <span id="common-xp-text">0 XP</span>
+                </div>
+                <div class="xp-bar"><div class="xp-fill" id="common-xp-fill"></div></div>
+            </div>
+            <h3 style="font-family:'Cinzel',serif; color: var(--gold-soft); font-size: 0.85rem; letter-spacing:2px; margin: 14px 0 6px;">ACHIEVEMENTS</h3>
+            <div class="achievement-row" id="achievement-row"></div>
+            <h3 style="font-family:'Cinzel',serif; color: var(--gold-soft); font-size: 0.85rem; letter-spacing:2px; margin: 14px 0 6px;">CHOCOLATE FROG CARDS</h3>
+            <div class="collection-grid" id="collection-grid"></div>
+            <button class="btn-back" onclick="exitCommonRoom()">🚪 Exit to Home</button>
+        </div>
+    </div>
+
+    <script>
+    'use strict';
+
+    /* ========== DEVICE ========== */
+    const IS_MOBILE = matchMedia('(pointer: coarse)').matches || innerWidth < 720;
+    const REDUCED   = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const PARTICLE_COUNT = REDUCED ? 0 : (IS_MOBILE ? 22 : 45);
+    const CONFETTI_COUNT = REDUCED ? 0 : (IS_MOBILE ? 80 : 140);
+
+    /* ========== STATE (persisted) ========== */
+    const STATE_KEY = 'sanctuary.v3';
+    const DEFAULT_STATE = {
+        v: 3, firstVisit: true,
+        name: 'Rakshi',
+        house: null, wand: null, patronus: null,
+        streak: { count: 0, lastISO: null },
+        xp: 0,
+        gratitude: [],          // [{ date: 'YYYY-MM-DD', text: '...', emoji: '🌸' }]
+        moodLog: [],            // [{ date, mood, note, reflection }]
+        lastOwlDate: null, lastOwlContent: null, lastOwlFrom: null, owlUnread: false,
+        lastProphecyDate: null, lastProphecy: null,
+        daily: { date: null, owl: false, prophecy: false, spell: false, gratitude: false, journal: false, memory: false, completed: false },
+        memories: [],           // [{ date, text, star }]
+        collectibles: [],       // card ids
+        achievements: []        // achievement ids
+    };
+    let STATE = loadState();
+    function loadState() {
+        try {
+            const raw = localStorage.getItem(STATE_KEY);
+            if (!raw) return structuredClone(DEFAULT_STATE);
+            const obj = JSON.parse(raw);
+            const merged = Object.assign(structuredClone(DEFAULT_STATE), obj);
+            merged.streak = Object.assign(structuredClone(DEFAULT_STATE.streak), obj.streak || {});
+            merged.daily = Object.assign(structuredClone(DEFAULT_STATE.daily), obj.daily || {});
+            merged.gratitude = Array.isArray(obj.gratitude) ? obj.gratitude : [];
+            merged.moodLog = Array.isArray(obj.moodLog) ? obj.moodLog : [];
+            merged.memories = Array.isArray(obj.memories) ? obj.memories : [];
+            merged.collectibles = Array.isArray(obj.collectibles) ? obj.collectibles : [];
+            merged.achievements = Array.isArray(obj.achievements) ? obj.achievements : [];
+            return merged;
+        } catch (e) { return structuredClone(DEFAULT_STATE); }
+    }
+    function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(STATE)); } catch(e){} }
+
+    /* ========== DATE HELPERS ========== */
+    function todayISO() {
+        const d = new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    }
+    function dayOfYear() { const d = new Date(), s = new Date(d.getFullYear(),0,0); return Math.floor((d - s)/86400000); }
+    function daysBetween(aISO, bISO) {
+        if (!aISO) return Infinity;
+        const a = new Date(aISO), b = new Date(bISO);
+        return Math.round((b - a) / 86400000);
+    }
+
+    /* ========== CHARACTER PROFILES ========== */
+    const CHAR_PROFILES = {
+        hermione:   { name: "Hermione Granger",    color: "#b7132e", house: "GRYFFINDOR",     initial: "H", glow: "#ff5c6c" },
+        harry:      { name: "Harry Potter",        color: "#1a3c8a", house: "GRYFFINDOR",     initial: "H", glow: "#6ba6ff" },
+        ron:        { name: "Ron Weasley",         color: "#d87c1f", house: "GRYFFINDOR",     initial: "R", glow: "#ffb870" },
+        luna:       { name: "Luna Lovegood",       color: "#3f6cc8", house: "RAVENCLAW",      initial: "L", glow: "#9ecbff" },
+        dumbledore: { name: "Albus Dumbledore",    color: "#7a5fb5", house: "HEADMASTER",     initial: "A", glow: "#c7b0ff" },
+        mcgonagall: { name: "Minerva McGonagall",  color: "#1f5e3a", house: "GRYFFINDOR",     initial: "M", glow: "#6fcf97" },
+        hagrid:     { name: "Rubeus Hagrid",       color: "#5a3b1d", house: "KEEPER OF KEYS", initial: "H", glow: "#c89a62" },
+        neville:    { name: "Neville Longbottom",  color: "#9b2226", house: "GRYFFINDOR",     initial: "N", glow: "#ff8a80" },
+        ginny:      { name: "Ginny Weasley",       color: "#c13515", house: "GRYFFINDOR",     initial: "G", glow: "#ff8a5c" },
+        fred:       { name: "Fred Weasley",        color: "#e25822", house: "GRYFFINDOR",     initial: "F", glow: "#ffa070" },
+        remus:      { name: "Remus Lupin",         color: "#6d4c41", house: "GRYFFINDOR",     initial: "R", glow: "#a1887f" }
+    };
+    function resolveChar(rawName) {
+        const k = (rawName || "").toLowerCase();
+        for (const key in CHAR_PROFILES) if (k.includes(key)) return CHAR_PROFILES[key];
+        return { name: rawName, color: "#4B0082", house: "FRIEND", initial: (rawName||'?').charAt(0).toUpperCase(), glow: "#b38cff" };
+    }
+
+    /* ========== NAV ========== */
+    function show(id) { document.getElementById(id).classList.add('active-view'); }
+    function hide(id) { document.getElementById(id).classList.remove('active-view'); }
+
+    function openGates() {
+        document.getElementById("gate-view").classList.add("gate-open");
+        setTimeout(() => {
+            hide("gate-view");
+            if (STATE.firstVisit || !STATE.house) { beginOnboarding(); }
+            else { enterDashboard(); }
+        }, 1400);
+    }
+
+    function enterDashboard() {
+        renderPersona();
+        updateStreakOnOpen();
+        updateDailyBanners();
+        refreshOwlBadge();
+        renderDashboardExtras();
+        show("dashboard-view");
+    }
+
+    /* ========== ONBOARDING FLOW ========== */
+    let onbState = { step: 0, answers: [], house: null, wand: null, patronus: null };
+    function beginOnboarding() {
+        onbState = { step: 0, answers: [], house: null, wand: null, patronus: null };
+        show("onboard-view");
+        renderOnboard();
+    }
+
+    const SORTING_QUESTIONS = [
+        { q: "Dawn finds you awake because...",
+          opts: [
+            { t: "you're restless, ready to move", h: "G" },
+            { t: "you stayed up helping a friend", h: "H" },
+            { t: "you were reading something new", h: "R" },
+            { t: "you were planning something big", h: "S" }
+          ]},
+        { q: "A stranger cries on the bus. You...",
+          opts: [
+            { t: "sit beside them, say nothing kindly", h: "H" },
+            { t: "find out who wronged them", h: "G" },
+            { t: "offer a book you love", h: "R" },
+            { t: "remember their face — you'll see them right later", h: "S" }
+          ]},
+        { q: "Your secret fear is...",
+          opts: [
+            { t: "being helpless when it matters", h: "G" },
+            { t: "being forgotten by people you love", h: "H" },
+            { t: "being foolish in public", h: "R" },
+            { t: "being ordinary", h: "S" }
+          ]},
+        { q: "If magic failed you once, you would...",
+          opts: [
+            { t: "fight harder — again, and again", h: "G" },
+            { t: "be kind to yourself about it", h: "H" },
+            { t: "study exactly why it failed", h: "R" },
+            { t: "never speak of it. Outgrow it.", h: "S" }
+          ]}
+    ];
+
+    const HOUSES = {
+        G: { name: "Gryffindor", icon: "🦁", line: "Brave at heart. Daring, nerve, and fire." },
+        H: { name: "Hufflepuff", icon: "🦡", line: "True and fair. Patient, loyal, quietly strong." },
+        R: { name: "Ravenclaw",  icon: "🦅", line: "Wit beyond measure. Curious, creative, kind." },
+        S: { name: "Slytherin",  icon: "🐍", line: "Cunning and resourceful. Ambitious, sharp, loyal to your own." }
+    };
+
+    const WOOD_LIST = ["Holly", "Elder", "Willow", "Vine", "Cedar", "Cherry", "Hawthorn", "Oak", "Rowan", "Yew", "Pine", "Walnut"];
+    const CORE_LIST = ["phoenix feather", "unicorn hair", "dragon heartstring", "thestral tail hair"];
+    const FLEX_LIST = ["supple", "unyielding", "surprisingly swishy", "quite bendy", "solid"];
+
+    const PATRONUS_LIST = [
+        { a: "Otter", icon: "🦦", line: "Playful, bright, fiercely loving." },
+        { a: "Doe", icon: "🦌", line: "Gentle, protective, guided by memory." },
+        { a: "Fox", icon: "🦊", line: "Clever, warm, a little mysterious." },
+        { a: "Wolf", icon: "🐺", line: "Loyal to your chosen pack." },
+        { a: "Hare", icon: "🐇", line: "Quick, wise, moonlit." },
+        { a: "Phoenix", icon: "🔥", line: "Reborn stronger, again and again." },
+        { a: "Swan", icon: "🦢", line: "Graceful, watchful, inwardly fierce." },
+        { a: "Horse", icon: "🐴", line: "Free-hearted, carries others when needed." },
+        { a: "Cat", icon: "🐈", line: "Independent, deeply perceptive, selectively affectionate." },
+        { a: "Hummingbird", icon: "🐦", line: "Small, impossible, made of light." }
+    ];
+
+    function renderOnboard() {
+        const el = document.getElementById('onb-content');
+        const s = onbState.step;
+
+        if (s === 0) {
+            el.innerHTML = `
+                <div class="reveal-big">The Sanctuary</div>
+                <div class="onb-step">Welcome. Before you enter, there is a small ceremony. It happens once. After that, the castle will always know you.</div>
+                <button class="btn-trip btn-full" onclick="onbNext()">Begin ceremony ✦</button>
+            `;
+        } else if (s >= 1 && s <= 4) {
+            const q = SORTING_QUESTIONS[s-1];
+            el.innerHTML = `
+                <div class="onb-title">The Sorting Hat · ${s}/4</div>
+                <div class="onb-step">${q.q}</div>
+                <div class="onb-options">
+                    ${q.opts.map((o, i) => `<div class="onb-opt" onclick="onbAnswer('${o.h}')">${o.t}</div>`).join('')}
+                </div>
+            `;
+        } else if (s === 5) {
+            // Sorting reveal
+            const tally = { G:0, H:0, R:0, S:0 };
+            onbState.answers.forEach(h => tally[h]++);
+            const sorted = Object.entries(tally).sort((a,b) => b[1] - a[1]);
+            const winner = sorted[0][0];
+            onbState.house = HOUSES[winner].name;
+            el.innerHTML = `
+                <div class="onb-title">The Hat has decided...</div>
+                <div class="reveal-big">${HOUSES[winner].icon} ${HOUSES[winner].name}!</div>
+                <div class="onb-step" style="margin-top:10px;">${HOUSES[winner].line}</div>
+                <button class="btn-trip btn-full" onclick="onbNext()">To Ollivander's ▸</button>
+            `;
+        } else if (s === 6) {
+            // Wand ceremony (random pick)
+            const wood = WOOD_LIST[Math.floor(Math.random()*WOOD_LIST.length)];
+            const core = CORE_LIST[Math.floor(Math.random()*CORE_LIST.length)];
+            const length = (9 + Math.random() * 5).toFixed(1);
+            const flex = FLEX_LIST[Math.floor(Math.random()*FLEX_LIST.length)];
+            onbState.wand = { wood, core, length, flex };
+            el.innerHTML = `
+                <div class="onb-title">Ollivander turns to you...</div>
+                <div class="onb-step">"Curious... very curious. This one has been waiting a long time. Go on — try it."</div>
+                <div class="wand-display">
+                    <div class="w-name">${wood}, ${core}</div>
+                    <div class="w-detail">${length} inches · ${flex}</div>
+                </div>
+                <div class="onb-step" style="font-size:0.92rem;">A warm spark travels up your arm. The wand has chosen.</div>
+                <button class="btn-trip btn-full" onclick="onbNext()">To the Patronus ▸</button>
+            `;
+        } else if (s === 7) {
+            el.innerHTML = `
+                <div class="onb-title">Expecto Patronum</div>
+                <div class="onb-step">Close your eyes. Think of your happiest memory. When safety takes a shape for you... what shape is it?</div>
+                <div class="onb-options">
+                    ${PATRONUS_LIST.slice(0,6).map((p, i) => `<div class="onb-opt" onclick="pickPatronus(${i})">${p.icon} ${p.a}</div>`).join('')}
+                </div>
+                <div class="onb-options">
+                    ${PATRONUS_LIST.slice(6).map((p, i) => `<div class="onb-opt" onclick="pickPatronus(${i+6})">${p.icon} ${p.a}</div>`).join('')}
+                </div>
+            `;
+        } else if (s === 8) {
+            const p = onbState.patronus;
+            el.innerHTML = `
+                <div class="onb-title">A bright shape leaps from the tip of your wand...</div>
+                <div class="reveal-big">${p.icon} ${p.a}</div>
+                <div class="onb-step" style="margin-top:10px;">${p.line}</div>
+                <button class="btn-trip btn-full" onclick="completeOnboarding()">Enter the Sanctuary ✨</button>
+            `;
+        }
+    }
+    function onbAnswer(h) { onbState.answers.push(h); onbState.step++; renderOnboard(); }
+    function onbNext() { onbState.step++; renderOnboard(); }
+    function pickPatronus(i) { onbState.patronus = PATRONUS_LIST[i]; onbState.step = 8; renderOnboard(); }
+
+    function completeOnboarding() {
+        STATE.firstVisit = false;
+        STATE.house = onbState.house;
+        STATE.wand = onbState.wand;
+        STATE.patronus = { animal: onbState.patronus.a, icon: onbState.patronus.icon };
+        STATE.xp += 50;
+        saveState();
+        hide("onboard-view");
+        enterDashboard();
+    }
+
+    /* ========== PERSONA + STREAK ========== */
+    function renderPersona() {
+        document.getElementById('p-house').textContent    = STATE.house || '—';
+        document.getElementById('p-house-icon').textContent = STATE.house ? (HOUSES[Object.keys(HOUSES).find(k => HOUSES[k].name === STATE.house)]?.icon || '🏰') : '🏰';
+        document.getElementById('p-wand').textContent     = STATE.wand ? `${STATE.wand.wood}` : '—';
+        document.getElementById('p-patronus').textContent = STATE.patronus ? STATE.patronus.animal : '—';
+        document.getElementById('p-patronus-icon').textContent = STATE.patronus ? STATE.patronus.icon : '✨';
+        document.getElementById('p-streak').textContent   = `${STATE.streak.count} day${STATE.streak.count === 1 ? '' : 's'}`;
+        document.getElementById('greeting').textContent   = `Welcome back, ${STATE.name} ✨`;
+    }
+    function updateStreakOnOpen() {
+        const today = todayISO();
+        if (STATE.streak.lastISO === today) return;
+        const gap = daysBetween(STATE.streak.lastISO, today);
+        if (gap === 1) STATE.streak.count += 1;
+        else if (gap > 1 || !STATE.streak.lastISO) STATE.streak.count = 1;
+        STATE.streak.lastISO = today;
+        STATE.xp += 5;
+        saveState();
+        renderPersona();
+    }
+    function updateDailyBanners() {
+        const d = new Date();
+        const dow = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+        const mottos = ['of rest','of beginning','of wonder','of softness','of fire','of joy','of quiet'];
+        document.getElementById('day-motto').textContent = `${dow} · ${mottos[d.getDay()]}`;
+
+        // Birthday countdown (skip if today is birthday)
+        if (!(d.getMonth() === 3 && d.getDate() === 24)) {
+            const thisYear = new Date(d.getFullYear(), 3, 24);
+            const target = (thisYear < d) ? new Date(d.getFullYear()+1, 3, 24) : thisYear;
+            const days = Math.ceil((target - d) / 86400000);
+            document.getElementById('bday-countdown').textContent = `🎂 ${days} day${days===1?'':'s'} until your birthday`;
+        } else {
+            document.getElementById('bday-countdown').textContent = '';
+        }
+    }
+    function refreshOwlBadge() {
+        const today = todayISO();
+        const newOwl = STATE.lastOwlDate !== today;
+        document.getElementById('owl-badge').style.display = newOwl ? 'inline-block' : 'none';
+    }
+
+    const DAILY_ITEMS = [
+        { key: 'owl', label: 'Owl', icon: '🦉' },
+        { key: 'prophecy', label: 'Prophecy', icon: '📜' },
+        { key: 'spell', label: 'Spell', icon: '🔮' },
+        { key: 'gratitude', label: 'Garden', icon: '🌱' },
+        { key: 'journal', label: 'Journal', icon: '📓' }
+    ];
+    const LEVEL_NAMES = ['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year', 'Prefect', 'Head Student', 'Auror'];
+    const FROG_CARDS = [
+        { id: 'hermione', icon: '📚', name: 'Hermione Granger', desc: 'For showing up with heart and brains.' },
+        { id: 'luna', icon: '🌙', name: 'Luna Lovegood', desc: 'For seeing wonder where others rush past.' },
+        { id: 'mcgonagall', icon: '🪶', name: 'Minerva McGonagall', desc: 'For quiet discipline and fierce care.' },
+        { id: 'dumbledore', icon: '🕯', name: 'Albus Dumbledore', desc: 'For choosing light in small daily ways.' },
+        { id: 'ginny', icon: '🔥', name: 'Ginny Weasley', desc: 'For brave laughter and bright confidence.' },
+        { id: 'neville', icon: '🌿', name: 'Neville Longbottom', desc: 'For growing stronger than yesterday.' },
+        { id: 'remus', icon: '☕', name: 'Remus Lupin', desc: 'For gentleness that still protects.' },
+        { id: 'hedwig', icon: '✉️', name: 'Hedwig', desc: 'For loyalty carried across any distance.' }
+    ];
+    const ACHIEVEMENTS = {
+        ceremony: 'Chosen by Wand, House, and Patronus',
+        streak3: 'Three-Day Flame',
+        streak7: 'Week at Hogwarts',
+        streak30: 'Unbreakable Month',
+        garden7: 'Seven Blossoms',
+        journal7: 'Seven Honest Pages',
+        memories7: 'Seven Stars Kept',
+        ritual: 'Completed a Full Daily Ritual',
+        collector4: 'Chocolate Frog Collector'
+    };
+
+    function resetDailyIfNeeded() {
+        const today = todayISO();
+        if (STATE.daily.date === today) return;
+        STATE.daily = { date: today, owl: false, prophecy: false, spell: false, gratitude: false, journal: false, memory: false, completed: false };
+    }
+    function getLevelInfo() {
+        const level = Math.floor(STATE.xp / 100) + 1;
+        const title = LEVEL_NAMES[Math.min(level - 1, LEVEL_NAMES.length - 1)];
+        return { level, title, progress: STATE.xp % 100 };
+    }
+    function renderLevel(prefix = '') {
+        const info = getLevelInfo();
+        const title = document.getElementById(`${prefix}level-title`);
+        const xp = document.getElementById(`${prefix}xp-text`);
+        const fill = document.getElementById(`${prefix}xp-fill`);
+        if (title) title.textContent = `Level ${info.level} · ${info.title}`;
+        if (xp) xp.textContent = `${STATE.xp} XP`;
+        if (fill) fill.style.width = `${info.progress}%`;
+    }
+    function renderRituals() {
+        resetDailyIfNeeded();
+        const done = DAILY_ITEMS.filter(i => STATE.daily[i.key]).length;
+        const grid = document.getElementById('ritual-grid');
+        if (grid) {
+            grid.innerHTML = DAILY_ITEMS.map(i => `
+                <div class="ritual-item ${STATE.daily[i.key] ? 'done' : ''}">
+                    <span class="mark">${STATE.daily[i.key] ? '✓' : i.icon}</span>${i.label}
+                </div>
+            `).join('');
+        }
+        const progress = document.getElementById('ritual-progress');
+        if (progress) progress.textContent = `${done}/${DAILY_ITEMS.length} complete`;
+    }
+    function evaluateAchievements() {
+        const earned = new Set(STATE.achievements);
+        if (!STATE.firstVisit && STATE.house && STATE.wand && STATE.patronus) earned.add('ceremony');
+        if (STATE.streak.count >= 3) earned.add('streak3');
+        if (STATE.streak.count >= 7) earned.add('streak7');
+        if (STATE.streak.count >= 30) earned.add('streak30');
+        if (STATE.gratitude.length >= 7) earned.add('garden7');
+        if (STATE.moodLog.length >= 7) earned.add('journal7');
+        if (STATE.memories.length >= 7) earned.add('memories7');
+        if (STATE.daily.completed) earned.add('ritual');
+        if (STATE.collectibles.length >= 4) earned.add('collector4');
+        const next = Array.from(earned);
+        if (next.length !== STATE.achievements.length) {
+            STATE.achievements = next;
+            saveState();
+        }
+    }
+    function unlockCard(seed = todayISO()) {
+        if (STATE.collectibles.length >= FROG_CARDS.length) return null;
+        let idx = Math.abs(hashString(seed)) % FROG_CARDS.length;
+        for (let i = 0; i < FROG_CARDS.length; i++) {
+            const card = FROG_CARDS[(idx + i) % FROG_CARDS.length];
+            if (!STATE.collectibles.includes(card.id)) {
+                STATE.collectibles.push(card.id);
+                return card;
+            }
+        }
+        return null;
+    }
+    function markDaily(key) {
+        resetDailyIfNeeded();
+        if (STATE.daily[key]) return;
+        STATE.daily[key] = true;
+        STATE.xp += 4;
+        const complete = DAILY_ITEMS.every(i => STATE.daily[i.key]);
+        if (complete && !STATE.daily.completed) {
+            STATE.daily.completed = true;
+            STATE.xp += 25;
+            const card = unlockCard(`${todayISO()}-${STATE.house || 'castle'}`);
+            const msg = document.getElementById('message-box');
+            if (msg && card) msg.textContent = `Daily ritual complete. New Chocolate Frog card unlocked: ${card.name}.`;
+        }
+        evaluateAchievements();
+        saveState();
+        renderDashboardExtras();
+    }
+    function renderDashboardExtras() {
+        resetDailyIfNeeded();
+        evaluateAchievements();
+        renderLevel('');
+        renderRituals();
+    }
+    function hashString(s) {
+        let h = 0;
+        for (let i = 0; i < String(s).length; i++) h = ((h << 5) - h + String(s).charCodeAt(i)) | 0;
+        return h;
+    }
+
+    /* ========== EXISTING FEATURES ========== */
+    async function castAISpell() {
+        const mood = document.getElementById("mood-selector").value;
+        const msg = document.getElementById("message-box");
+        msg.classList.remove('revealed');
+        msg.innerHTML = '<span class="loading-text"><span class="orbit"></span> Brewing magic just for you...</span>';
+        try {
+            const r = await fetch('/api/magic', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ emotion: mood }) });
+            const d = await r.json();
+            await revealTextInto(msg, d.message);
+            msg.classList.add('revealed');
+        } catch (e) {
+            msg.innerHTML = `"I am always in your corner, ${STATE.name}. Even when the magic rests."`;
+        }
+    }
+
+    async function generateFunStory() {
+        const friend = document.getElementById("friend-selector").value;
+        const msg = document.getElementById("fun-message-box");
+        msg.classList.remove('revealed');
+        msg.innerHTML = '<span class="loading-text"><span class="orbit"></span> Rolling the trailer...</span>';
+        try {
+            const r = await fetch('/api/funzone', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ friendName: friend }) });
+            const d = await r.json();
+            msg.innerHTML = d.message; msg.classList.add('revealed');
+        } catch (e) {
+            msg.innerHTML = `The storyteller is resting.`;
+        }
+    }
+
+    function openFunZone()  { hide('dashboard-view'); show('funzone-view'); }
+    function closeFunZone() { hide('funzone-view'); show('dashboard-view'); document.getElementById("fun-message-box").innerHTML = "Pick a hero above..."; }
+    function openCaption()  { hide('dashboard-view'); show('caption-view'); }
+    function exitCaption()  { resetCaption(); hide('caption-view'); show('dashboard-view'); }
+    function openMenu()     { hide('dashboard-view'); show('menu-view'); }
+    function exitMenu()     { resetMenu(); hide('menu-view'); show('dashboard-view'); }
+
+    /* ========== HOGWARTS DIALOGUE ========== */
+    let currentScript = [], scriptIndex = 0, typeInterval = null;
+    async function startTrip() {
+        const mood = document.getElementById("mood-selector").value;
+        const btn = document.getElementById("trip-btn"); const orig = btn.innerHTML;
+        btn.innerHTML = "🚂 Boarding...";
+        try {
+            const r = await fetch('/api/hogwarts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ emotion: mood }) });
+            const d = await r.json();
+            currentScript = (d.script || []).map(l => ({ ...l, _profile: resolveChar(l.name) }));
+            if (!currentScript.length) throw new Error('empty');
+        } catch (e) {
+            currentScript = [
+                { name: "Hermione", text: "Come and sit — the fire is warmest here, and whatever this is, we will think it through together." },
+                { name: "Ron",      text: "Budge up, you lot. Honestly, there's room for four if Harry stops hogging the armrest." },
+                { name: "Harry",    text: "I know that ache. It doesn't ask permission; it just shows up. You don't have to talk." },
+                { name: "Luna",     text: "The feeling doesn't go away. It just becomes less sharp around the edges." }
+            ].map(l => ({ ...l, _profile: resolveChar(l.name) }));
+        }
+        btn.innerHTML = orig;
+        hide('dashboard-view'); show('hogwarts-view');
+        scriptIndex = 0;
+        setTimeout(playDialogue, 300);
+    }
+    function playDialogue() {
+        if (scriptIndex >= currentScript.length) { hide('hogwarts-view'); show('dashboard-view'); return; }
+        if (typeInterval) clearInterval(typeInterval);
+        const line = currentScript[scriptIndex]; const p = line._profile || resolveChar(line.name);
+        document.getElementById("char-name").textContent = p.name;
+        document.getElementById("char-house").textContent = p.house;
+        const av = document.getElementById("char-avatar");
+        av.style.background = `radial-gradient(circle at 35% 30%, ${p.glow}, ${p.color})`;
+        av.style.color = p.glow; av.textContent = p.initial;
+        document.getElementById("dialogue-progress").textContent = `${scriptIndex+1} / ${currentScript.length}`;
+        document.getElementById("btn-next").textContent = (scriptIndex === currentScript.length - 1) ? 'Close the Portrait ✦' : 'Continue ▸';
+        const box = document.getElementById("dialogue-text"); box.textContent = "";
+        let i = 0;
+        typeInterval = setInterval(() => {
+            if (i < line.text.length) { box.textContent += line.text.charAt(i); i++; }
+            else { clearInterval(typeInterval); typeInterval = null; }
+        }, 26);
+    }
+    function nextDialogue() {
+        if (typeInterval) { clearInterval(typeInterval); typeInterval = null; document.getElementById("dialogue-text").textContent = currentScript[scriptIndex].text; return; }
+        scriptIndex++; playDialogue();
+    }
+
+    /* ========== SNITCH ========== */
+    let snitchTimer;
+    function startGame() {
+        document.getElementById("game-ui").style.display = "block";
+        const s = document.getElementById("snitch"); s.style.display = "block";
+        document.getElementById("message-box").textContent = "Catch it! 🧹";
+        snitchTimer = setInterval(() => {
+            s.style.top = Math.random() * 75 + 10 + "%";
+            s.style.left = Math.random() * 75 + 10 + "%";
+        }, 700);
+    }
+    function catchSnitch() {
+        stopGame();
+        document.getElementById("message-box").textContent = "🎉 150 POINTS TO " + STATE.name.toUpperCase() + "! 🎉";
+        STATE.xp += 15; saveState(); renderPersona();
+    }
+    function stopGame() {
+        clearInterval(snitchTimer);
+        document.getElementById("snitch").style.display = "none";
+        document.getElementById("game-ui").style.display = "none";
+    }
+
+    /* ========== CAPTION ========== */
+    let capImageData = null, capLastCaption = '';
+    function resetCaption() {
+        capImageData = null; capLastCaption = '';
+        document.getElementById('cap-preview-wrap').style.display = 'none';
+        document.getElementById('cap-upload-zone').style.display = 'block';
+        document.getElementById('cap-file').value = '';
+        const mb = document.getElementById('cap-message-box');
+        mb.textContent = 'Your caption will appear here...'; mb.classList.remove('revealed');
+        disableBtn('cap-generate-btn'); disableBtn('cap-regen-btn');
+    }
+    function disableBtn(id) { const b=document.getElementById(id); b.disabled=true; b.style.opacity=0.5; b.style.cursor='not-allowed'; }
+    function enableBtn(id)  { const b=document.getElementById(id); b.disabled=false; b.style.opacity=1; b.style.cursor='pointer'; }
+    function handleImageChosen(e) {
+        const f = e.target.files && e.target.files[0]; if (!f) return;
+        if (f.size > 4*1024*1024) { document.getElementById('cap-message-box').textContent = 'That image is above 4 MB.'; return; }
+        const rd = new FileReader();
+        rd.onload = ev => {
+            capImageData = ev.target.result;
+            document.getElementById('cap-preview').src = capImageData;
+            document.getElementById('cap-upload-zone').style.display = 'none';
+            document.getElementById('cap-preview-wrap').style.display = 'block';
+            enableBtn('cap-generate-btn');
+            document.getElementById('cap-message-box').innerHTML = 'Image received. Tap <b>Generate Caption</b>.';
+        };
+        rd.readAsDataURL(f);
+    }
+    async function generateCaption(isRegen) {
+        if (!capImageData) return;
+        const mb = document.getElementById('cap-message-box');
+        mb.classList.remove('revealed');
+        mb.innerHTML = '<span class="loading-text"><span class="orbit"></span> The oracle is gazing...</span>';
+        disableBtn('cap-generate-btn'); disableBtn('cap-regen-btn');
+        try {
+            const r = await fetch('/api/caption', { method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ imageBase64: capImageData, regenerate: !!isRegen, avoid: isRegen ? capLastCaption : '' }) });
+            const d = await r.json();
+            if (!r.ok) mb.textContent = d.message || 'The oracle could not read this one.';
+            else {
+                capLastCaption = d.caption || '';
+                await revealTextInto(mb, capLastCaption);
+                mb.classList.add('revealed');
+                if (d.style) mb.innerHTML += `<br><br><span style="font-size:0.8rem; color: var(--gold); letter-spacing:2px;">— [ ${d.style.toUpperCase()} ] —</span>`;
+            }
+        } catch (err) { mb.textContent = 'The oracle is resting.'; }
+        finally { enableBtn('cap-generate-btn'); enableBtn('cap-regen-btn'); }
+    }
+
+    /* ========== MENU ========== */
+    let menuCat = null, menuHistory = { North: [], South: [], Snacks: [] };
+    function selectMenuCat(cat) {
+        menuCat = cat;
+        document.querySelectorAll('.btn-chip').forEach(b => b.classList.toggle('selected', b.dataset.cat === cat));
+        enableBtn('menu-generate-btn'); disableBtn('menu-regen-btn');
+        document.getElementById('menu-recipe').style.display = 'none';
+        document.getElementById('menu-status').innerHTML = `Category set to <b>${cat}</b>.`;
+    }
+    function resetMenu() {
+        menuCat = null;
+        document.querySelectorAll('.btn-chip').forEach(b => b.classList.remove('selected'));
+        document.getElementById('menu-recipe').style.display = 'none';
+        document.getElementById('menu-recipe').innerHTML = '';
+        document.getElementById('menu-status').textContent = 'Select a category above...';
+        disableBtn('menu-generate-btn'); disableBtn('menu-regen-btn');
+    }
+    async function generateMenu(isRegen) {
+        if (!menuCat) return;
+        const status = document.getElementById('menu-status'); const el = document.getElementById('menu-recipe');
+        status.innerHTML = '<span class="loading-text"><span class="orbit"></span> Stirring the pot...</span>';
+        el.style.display = 'none';
+        disableBtn('menu-generate-btn'); disableBtn('menu-regen-btn');
+        try {
+            const r = await fetch('/api/menu', { method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ category: menuCat, avoidList: menuHistory[menuCat] }) });
+            const d = await r.json();
+            if (!r.ok || !d.recipe) { status.textContent = d.message || 'The kitchen is closed.'; return; }
+            const rec = d.recipe;
+            if (!menuHistory[menuCat].some(n => n.toLowerCase() === rec.name.toLowerCase())) menuHistory[menuCat].push(rec.name);
+            if (menuHistory[menuCat].length > 20) menuHistory[menuCat].shift();
+            renderRecipe(rec);
+            status.textContent = 'Hot and ready. Like it? Cook it. Not feeling it? Generate again.';
+            enableBtn('menu-regen-btn');
+        } catch (err) { status.textContent = 'The oracle is resting.'; }
+        finally { enableBtn('menu-generate-btn'); }
+    }
+    function renderRecipe(rec) {
+        const safe = s => String(s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        document.getElementById('menu-recipe').innerHTML = `
+            <h2>${safe(rec.name)}</h2>
+            ${rec.region ? `<div class="region">${safe(rec.region)}</div>` : ''}
+            <div class="meta">
+                ${rec.serves ? `<span>🍽 ${safe(rec.serves)}</span>` : ''}
+                ${rec.prepTime ? `<span>⏱ Prep ${safe(rec.prepTime)}</span>` : ''}
+                ${rec.cookTime ? `<span>🔥 Cook ${safe(rec.cookTime)}</span>` : ''}
+            </div>
+            ${rec.description ? `<div class="desc">${safe(rec.description)}</div>` : ''}
+            <h3>Ingredients</h3>
+            <ul>${(rec.ingredients||[]).map(i => `<li>${safe(i)}</li>`).join('')}</ul>
+            <h3>Steps</h3>
+            <ol>${(rec.steps||[]).map(s => `<li>${safe(s)}</li>`).join('')}</ol>
+            ${rec.tip ? `<div class="tip"><b>Chef's tip:</b> ${safe(rec.tip)}</div>` : ''}
+        `;
+        document.getElementById('menu-recipe').style.display = 'block';
+        document.getElementById('menu-recipe').scrollTop = 0;
+    }
+
+    /* ========== OWL POST ========== */
+    async function openOwl() {
+        hide('dashboard-view'); show('owl-view');
+        const today = todayISO();
+        const box = document.getElementById('owl-content');
+        if (STATE.lastOwlDate === today && STATE.lastOwlContent) {
+            renderOwl(STATE.lastOwlContent, STATE.lastOwlFrom);
+            markDaily('owl');
+            return;
+        }
+        box.innerHTML = '<div class="message-box"><span class="loading-text"><span class="orbit"></span> The owls are arriving from the castle...</span></div>';
+        try {
+            const r = await fetch('/api/owl', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ house: STATE.house, wand: STATE.wand ? `${STATE.wand.wood}, ${STATE.wand.core}` : null, patronus: STATE.patronus ? STATE.patronus.animal : null, date: today }) });
+            const d = await r.json();
+            STATE.lastOwlDate = today; STATE.lastOwlContent = d.letter; STATE.lastOwlFrom = d.from;
+            STATE.owlUnread = false;
+            STATE.xp += 10;
+            saveState();
+            renderOwl(d.letter, d.from);
+            refreshOwlBadge();
+            markDaily('owl');
+        } catch (e) {
+            box.innerHTML = '<div class="message-box">No owl reached the castle today. Try again later.</div>';
+        }
+    }
+    function renderOwl(letter, from) {
+        const safe = String(letter||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        document.getElementById('owl-content').innerHTML = `<div class="owl-parchment"><div class="owl-from">— Sealed by ${from || 'the castle'} —</div>${safe}</div>`;
+    }
+    function exitOwl() { hide('owl-view'); show('dashboard-view'); }
+
+    /* ========== DAILY PROPHECY ========== */
+    async function openProphecy() {
+        hide('dashboard-view'); show('prophecy-view');
+        const today = todayISO();
+        const box = document.getElementById('prophecy-content');
+        if (STATE.lastProphecyDate === today && STATE.lastProphecy) {
+            box.innerHTML = `<div class="prophecy-text">${escapeHtml(STATE.lastProphecy)}</div>`;
+            markDaily('prophecy');
+            return;
+        }
+        box.innerHTML = '<div class="prophecy-text"><span class="loading-text"><span class="orbit"></span> The mists are clearing...</span></div>';
+        try {
+            const mood = document.getElementById('mood-selector').value;
+            const r = await fetch('/api/prophecy', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ house: STATE.house, patronus: STATE.patronus?.animal, mood, date: today }) });
+            const d = await r.json();
+            STATE.lastProphecyDate = today; STATE.lastProphecy = d.prophecy;
+            STATE.xp += 8; saveState();
+            box.innerHTML = `<div class="prophecy-text">${escapeHtml(d.prophecy)}</div>`;
+            markDaily('prophecy');
+        } catch (e) { box.innerHTML = '<div class="prophecy-text">The mists refused to part today.</div>'; }
+    }
+    function exitProphecy() { hide('prophecy-view'); show('dashboard-view'); }
+
+    /* ========== GRATITUDE GARDEN ========== */
+    const FLOWERS = ['🌸','🌺','🌼','🌻','🌷','🌹','💐','🪻','🌱','🍀','🌿','🪷','🌾','🌳','🌲'];
+    function openGarden() { hide('dashboard-view'); show('garden-view'); renderGarden(); }
+    function exitGarden() { hide('garden-view'); show('dashboard-view'); }
+    function renderGarden() {
+        const bed = document.getElementById('garden-bed');
+        const list = document.getElementById('gratitude-list');
+        const count = document.getElementById('garden-count');
+        const status = document.getElementById('garden-status');
+        const btn = document.getElementById('garden-plant-btn');
+        const today = todayISO();
+        const alreadyToday = STATE.gratitude.some(g => g.date === today);
+        bed.textContent = STATE.gratitude.length === 0 ? '🌱' : STATE.gratitude.map(g => g.emoji).join(' ');
+        count.textContent = `${STATE.gratitude.length} GRATITUDE${STATE.gratitude.length === 1 ? '' : 'S'} PLANTED`;
+        list.innerHTML = STATE.gratitude.slice().reverse().slice(0, 30).map(g => `<div><span class="g-date">${g.date}</span>${g.emoji} ${escapeHtml(g.text)}</div>`).join('') || '<div style="opacity:0.6">The garden is quiet. Plant the first.</div>';
+        if (alreadyToday) { btn.disabled = true; btn.style.opacity = 0.5; status.textContent = 'You have watered the garden today. Come back tomorrow 🌙'; }
+        else { btn.disabled = false; btn.style.opacity = 1; status.textContent = ''; }
+    }
+    function plantGratitude() {
+        const input = document.getElementById('garden-input');
+        const text = input.value.trim();
+        if (!text) { document.getElementById('garden-status').textContent = 'Write what you are grateful for.'; return; }
+        const today = todayISO();
+        if (STATE.gratitude.some(g => g.date === today)) return;
+        const emoji = FLOWERS[Math.floor(Math.random()*FLOWERS.length)];
+        STATE.gratitude.push({ date: today, text, emoji });
+        STATE.xp += 10; saveState();
+        input.value = '';
+        renderGarden();
+        markDaily('gratitude');
+    }
+
+    /* ========== MIRROR OF ERISED ========== */
+    function openMirror() { hide('dashboard-view'); show('mirror-view'); document.getElementById('mirror-reflection').classList.remove('show'); document.getElementById('mirror-reflection').textContent = 'Whisper a wish below.'; }
+    function exitMirror() { hide('mirror-view'); show('dashboard-view'); }
+    async function consultMirror() {
+        const wish = document.getElementById('mirror-wish').value.trim();
+        if (!wish) return;
+        const ref = document.getElementById('mirror-reflection');
+        ref.classList.remove('show'); ref.textContent = 'Gazing...';
+        setTimeout(() => ref.classList.add('show'), 50);
+        try {
+            const r = await fetch('/api/mirror', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ wish }) });
+            const d = await r.json();
+            ref.classList.remove('show');
+            setTimeout(() => { ref.textContent = d.reflection || 'The glass remains silent today.'; ref.classList.add('show'); }, 400);
+            STATE.xp += 5; saveState();
+        } catch (e) { ref.textContent = 'The glass is cloudy just now.'; ref.classList.add('show'); }
+    }
+
+    /* ========== SPELL OF THE DAY ========== */
+    const SPELLS = [
+        { name: 'Lumos', pron: 'LOO-mos', desc: 'Creates a small bright light at the tip of your wand. Perfect for dark corridors, midnight reading, and moments you need to see your own way.' },
+        { name: 'Nox', pron: 'NOKS', desc: 'Extinguishes the wand light. The quiet sister of Lumos — for when you need the dark back.' },
+        { name: 'Alohomora', pron: 'ah-LOH-ha-MOR-ah', desc: 'Unlocks doors. And sometimes, metaphorically, people.' },
+        { name: 'Expecto Patronum', pron: 'ex-PEK-toh pah-TROH-num', desc: 'Conjures a guardian from your happiest memory. The deepest protective charm in wizardkind.' },
+        { name: 'Wingardium Leviosa', pron: 'win-GAR-dee-um levi-OH-sa', desc: 'Lifts an object into the air. It\'s levi-OH-sa, not leviosAH.' },
+        { name: 'Expelliarmus', pron: 'ex-PEL-ee-AR-mus', desc: 'Disarms your opponent. Harry\'s favourite — a spell for people who would rather not harm.' },
+        { name: 'Accio', pron: 'AK-ee-oh', desc: 'Summons an object to your hand across any distance. For lost keys, stray books, wandering hearts.' },
+        { name: 'Reparo', pron: 'reh-PAR-oh', desc: 'Mends broken things. Works on glasses, teacups — and, some say, beginnings.' },
+        { name: 'Protego', pron: 'proh-TAY-goh', desc: 'Creates an invisible shield in front of you. For curses, unkind words, and bad days.' },
+        { name: 'Riddikulus', pron: 'ri-di-KOO-lus', desc: 'Turns a Boggart into something laughable. The spell that reminds you fear is only a shape.' },
+        { name: 'Obliviate', pron: 'oh-BLIV-ee-ate', desc: 'Erases memory. Use sparingly. Some things deserve to be remembered even when they hurt.' },
+        { name: 'Finite Incantatem', pron: 'fi-NEE-tay in-kan-TAH-tem', desc: 'Ends most spells currently in effect. A clean slate in one breath.' },
+        { name: 'Aguamenti', pron: 'ah-gwah-MEN-tee', desc: 'Produces a jet of clean water. Tiny but life-saving.' },
+        { name: 'Silencio', pron: 'sil-EN-see-oh', desc: 'Silences the target. For loud rooms, loud minds, loud days.' },
+        { name: 'Lumos Maxima', pron: 'LOO-mos MAX-i-ma', desc: 'A burst of bright light — stronger than Lumos. For when the dark is particularly stubborn.' },
+        { name: 'Episkey', pron: 'eh-PIS-key', desc: 'Heals minor injuries. Perfect for small cuts, stubbed toes, and tiny broken things.' }
+    ];
+    function openSpellOfDay() {
+        hide('dashboard-view'); show('spellday-view');
+        const idx = dayOfYear() % SPELLS.length;
+        const s = SPELLS[idx];
+        document.getElementById('spellday-content').innerHTML = `
+            <div class="spell-card">
+                <div class="spell-name">${s.name}</div>
+                <div class="spell-pron">Pronounced: ${s.pron}</div>
+                <div class="spell-desc">${s.desc}</div>
+            </div>
+            <p class="sub" style="text-align:center;">Come back tomorrow for the next spell in your grimoire.</p>
+        `;
+        markDaily('spell');
+    }
+    function exitSpellDay() { hide('spellday-view'); show('dashboard-view'); }
+
+    /* ========== MOOD JOURNAL ========== */
+    function openJournal() { hide('dashboard-view'); show('journal-view'); renderJournalList(); document.getElementById('journal-status').style.display = 'none'; }
+    function exitJournal() { hide('journal-view'); show('dashboard-view'); }
+    async function saveJournal() {
+        const mood = document.getElementById('journal-mood').value;
+        const note = document.getElementById('journal-input').value.trim();
+        if (!note) return;
+        const status = document.getElementById('journal-status');
+        status.style.display = 'block';
+        status.innerHTML = '<span class="loading-text"><span class="orbit"></span> The guardian is reading your page...</span>';
+        let reflection = '';
+        try {
+            const r = await fetch('/api/journal', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ mood, note }) });
+            const d = await r.json();
+            reflection = d.reflection || '';
+        } catch (e) { reflection = 'The guardian was called away, but your page has been kept safe.'; }
+        STATE.moodLog.push({ date: todayISO(), time: new Date().toLocaleTimeString(), mood, note, reflection });
+        if (STATE.moodLog.length > 200) STATE.moodLog.shift();
+        STATE.xp += 10; saveState();
+        document.getElementById('journal-input').value = '';
+        status.textContent = reflection;
+        renderJournalList();
+        markDaily('journal');
+    }
+    function renderJournalList() {
+        const list = document.getElementById('journal-list');
+        if (STATE.moodLog.length === 0) { list.innerHTML = '<div style="opacity:0.6; font-style:italic; padding:10px;">No entries yet. Your first page is a brave one.</div>'; return; }
+        list.innerHTML = STATE.moodLog.slice().reverse().slice(0, 40).map(e => `
+            <div class="journal-entry">
+                <span class="je-date">${e.date}</span><span class="je-mood">· ${escapeHtml(e.mood)}</span>
+                <div class="je-text">${escapeHtml(e.note)}</div>
+                ${e.reflection ? `<div class="je-reply">${escapeHtml(e.reflection)}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    /* ========== PENSIEVE + COMMON ROOM ========== */
+    const MEMORY_STARS = ['✦','✧','✶','✷','✹','✺','✵','✴'];
+    function openPensieve() {
+        hide('dashboard-view');
+        show('pensieve-view');
+        renderPensieve();
+    }
+    function exitPensieve() { hide('pensieve-view'); show('dashboard-view'); renderDashboardExtras(); }
+    function renderPensieve() {
+        const today = todayISO();
+        const alreadyToday = STATE.memories.some(m => m.date === today);
+        const sky = document.getElementById('memory-constellation');
+        const list = document.getElementById('memory-list');
+        const btn = document.getElementById('memory-save-btn');
+        const status = document.getElementById('memory-status');
+        const stars = STATE.memories.slice(-40).map(m => m.star).join(' ');
+        sky.textContent = stars || '✦';
+        list.innerHTML = STATE.memories.slice().reverse().slice(0, 40).map(m => `
+            <div class="memory-entry">
+                <div class="m-date">${m.date}</div>
+                <div class="m-text">${escapeHtml(m.text)}</div>
+            </div>
+        `).join('') || '<div style="opacity:0.6; font-style:italic; padding:10px;">The Pensieve is waiting for its first memory.</div>';
+        if (alreadyToday) {
+            btn.disabled = true; btn.style.opacity = 0.5;
+            status.textContent = 'Today already has a star. Come back tomorrow for the next memory.';
+        } else {
+            btn.disabled = false; btn.style.opacity = 1;
+            status.textContent = '';
+        }
+    }
+    function saveMemory() {
+        resetDailyIfNeeded();
+        const input = document.getElementById('memory-input');
+        const text = input.value.trim();
+        if (!text) { document.getElementById('memory-status').textContent = 'Write the memory you want the castle to keep.'; return; }
+        const today = todayISO();
+        if (STATE.memories.some(m => m.date === today)) return;
+        const star = MEMORY_STARS[Math.abs(hashString(`${today}-${text}`)) % MEMORY_STARS.length];
+        STATE.memories.push({ date: today, text, star });
+        if (STATE.memories.length > 365) STATE.memories.shift();
+        STATE.daily.memory = true;
+        STATE.xp += 10;
+        input.value = '';
+        evaluateAchievements();
+        saveState();
+        renderPensieve();
+        renderDashboardExtras();
+    }
+    function openCommonRoom() {
+        hide('dashboard-view');
+        show('common-view');
+        renderCommonRoom();
+    }
+    function exitCommonRoom() { hide('common-view'); show('dashboard-view'); renderDashboardExtras(); }
+    function renderCommonRoom() {
+        evaluateAchievements();
+        renderLevel('common-');
+        const ach = document.getElementById('achievement-row');
+        ach.innerHTML = STATE.achievements.length
+            ? STATE.achievements.map(id => `<span class="achievement-pill">${escapeHtml(ACHIEVEMENTS[id] || id)}</span>`).join('')
+            : '<span class="achievement-pill">No badges yet</span>';
+        const owned = new Set(STATE.collectibles);
+        document.getElementById('collection-grid').innerHTML = FROG_CARDS.map(card => `
+            <div class="collectible ${owned.has(card.id) ? '' : 'locked'}">
+                <div class="c-icon">${owned.has(card.id) ? card.icon : '🔒'}</div>
+                <div class="c-name">${owned.has(card.id) ? card.name : 'Locked Card'}</div>
+                <div class="c-desc">${owned.has(card.id) ? card.desc : 'Complete a full Daily Ritual to reveal this card.'}</div>
+            </div>
+        `).join('');
+    }
+
+    /* ========== UTILITIES ========== */
+    function escapeHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    async function revealTextInto(el, text) {
+        el.innerHTML = '"<span id="reveal-target"></span>"';
+        const t = el.querySelector('#reveal-target');
+        for (let i = 0; i < text.length; i++) { t.textContent += text.charAt(i); await new Promise(r => setTimeout(r, 16)); }
+    }
+
+    /* ========== PARTICLES ========== */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1 : 1.5);
+        canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
+        canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px';
+        ctx.scale(dpr, dpr);
+    }
+    addEventListener('resize', resize); resize();
+    const particles = [];
+    class P {
+        constructor() { this.reset(true); }
+        reset(anywhere) {
+            this.x = Math.random()*innerWidth; this.y = anywhere ? Math.random()*innerHeight : innerHeight+10;
+            this.size = Math.random()*1.8+0.6; this.sy = Math.random()*-0.4-0.15; this.sx = Math.random()*0.3-0.15;
+            this.tw = Math.random()*6.28;
+            this.color = ['#d4af37','#f5d98a','#bfa1e6','#ffffff'][Math.floor(Math.random()*4)];
+        }
+        step() { this.x+=this.sx; this.y+=this.sy; this.tw+=0.03; if (this.y<-10) this.reset(false); }
+        draw() { ctx.globalAlpha = 0.4 + Math.sin(this.tw)*0.3; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,6.283); ctx.fill(); }
+    }
+    for (let i=0;i<PARTICLE_COUNT;i++) particles.push(new P());
+    let rafId=null, visible=true;
+    document.addEventListener('visibilitychange', () => { visible = !document.hidden; if (visible && !rafId && PARTICLE_COUNT>0) loop(); });
+    function loop() {
+        if (!visible) { rafId=null; return; }
+        ctx.clearRect(0,0,innerWidth,innerHeight);
+        for (let i=0;i<particles.length;i++) { particles[i].step(); particles[i].draw(); }
+        ctx.globalAlpha=1; rafId=requestAnimationFrame(loop);
+    }
+    if (PARTICLE_COUNT>0) loop();
+
+    /* ========== BIRTHDAY ========== */
+    function isBirthday(d = new Date()) { return d.getMonth() === 3 && d.getDate() === 24; }
+    const BDAY_WISHES = [
+        "Another year of you lighting up every room you walk into — happy birthday, Rakshi. The world got lucky the day you arrived.",
+        "Cake, chaos, and every good thing in between — wishing you a birthday as magical as you make everyone around you feel.",
+        "May this year hand you every single thing you've been quietly hoping for. Happy birthday, sunshine.",
+        "Today the sanctuary exists just for you. Happy birthday — keep being the kind of person who deserves days this good."
+    ];
+    function triggerBirthdayIfDue() {
+        if (!isBirthday()) return;
+        document.getElementById('bday-msg').textContent = BDAY_WISHES[Math.floor(Math.random() * BDAY_WISHES.length)];
+        document.getElementById('bday-overlay').classList.add('show');
+        document.getElementById('bday-banner').classList.add('show');
+        startConfetti();
+    }
+    function replayBirthday() { if (!isBirthday()) return; document.getElementById('bday-msg').textContent = BDAY_WISHES[Math.floor(Math.random() * BDAY_WISHES.length)]; document.getElementById('bday-overlay').classList.add('show'); startConfetti(); }
+    function closeBirthday() { document.getElementById('bday-overlay').classList.remove('show'); setTimeout(stopConfetti, 2500); }
+    const confettiCanvas = document.getElementById('confetti'); const cctx = confettiCanvas.getContext('2d');
+    let confetti = [], confettiRAF = null;
+    function sizeConfetti() { confettiCanvas.width=innerWidth; confettiCanvas.height=innerHeight; }
+    addEventListener('resize', sizeConfetti); sizeConfetti();
+    function startConfetti() {
+        if (CONFETTI_COUNT===0) return;
+        confetti = [];
+        for (let i=0;i<CONFETTI_COUNT;i++) {
+            confetti.push({ x: Math.random()*innerWidth, y: Math.random()*-innerHeight, w: 6+Math.random()*6, h: 8+Math.random()*8, vy: 2+Math.random()*3, vx: (Math.random()-0.5)*1.5, rot: Math.random()*Math.PI, vrot:(Math.random()-0.5)*0.2, color: ['#ff6a88','#d4af37','#8a2be2','#6fcf97','#6ba6ff','#f5d98a'][Math.floor(Math.random()*6)] });
+        }
+        confettiCanvas.classList.add('show');
+        if (!confettiRAF) drawConfetti();
+        setTimeout(stopConfetti, 8000);
+    }
+    function stopConfetti() { confetti = []; if (confettiRAF) { cancelAnimationFrame(confettiRAF); confettiRAF=null; } cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); confettiCanvas.classList.remove('show'); }
+    function drawConfetti() {
+        cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+        for (const c of confetti) { c.x+=c.vx; c.y+=c.vy; c.rot+=c.vrot; cctx.save(); cctx.translate(c.x,c.y); cctx.rotate(c.rot); cctx.fillStyle=c.color; cctx.fillRect(-c.w/2,-c.h/2,c.w,c.h); cctx.restore(); }
+        confetti = confetti.filter(c => c.y < innerHeight+20);
+        if (confetti.length>0) confettiRAF = requestAnimationFrame(drawConfetti);
+        else { confettiRAF=null; confettiCanvas.classList.remove('show'); }
+    }
+    setInterval(() => { if (isBirthday()) triggerBirthdayIfDue(); }, 60*60*1000);
+    triggerBirthdayIfDue();
+    </script>
+</body>
+</html>
